@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="exit_application">Uygulamadan Çık</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">Bu uygulamadan çıkmak istediğinizden emin misiniz?</string>
+    <string name="no">Hayır</string>
+    <string name="yes">Evet</string>
+    <string name="cancel">İptal</string>
+    <string name="exit">Çıkış</string>
+    <string name="do_you_want_to_open_network_settings">Ağ ayarlarını açmak istiyor musunuz?</string>
+    <string name="no_internet_connection">İnternet bağlantısı yok!</string>
+
+
+
+    <string name="skip">Atla</string>
+    <string name="continuee">Devam Et</string>
+    <string name="get_started">Başlayın</string>
+    <string name="nav_home">Ana Sayfa</string>
+        <string name="unable_to_load_ad">Reklam yüklenemedi</string>
+    <string name="remove_ads">Reklamları Kaldır</string>
+    <string name="home">Ana Sayfa</string>
+    <string name="settings">Ayarlar</string>
+    <string name="rate_app">Uygulamayı Değerlendir</string>
+    <string name="share_this_app">Bu Uygulamayı Paylaş</string>
+    <string name="send_feedback">Geri Bildirim Gönder</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="change_language">Dili Değiştir</string>
+    <string name="wow_thank_you_so_much">Vay! Çok Teşekkür Ederim</string>
+    <string name="help_us_reach_perfection">Geri bildiriminizle mükemmelliğe ulaşmamıza yardımcı olun.</string>
+    <string name="rate_on_play_store">Play Store\'da Değerlendir</string>
+    <string name="error">Hata</string>
+    <string name="something_went_wrong">Bir şeyler yanlış gitti</string>
+    <string name="retry">Yeniden Dene</string>
+    <string name="wait">Bekleyin</string>
+    <string name="unlock_premium_features">Premium Özelliklerin Kilidini Aç</string>
+    <string name="daily_notification">Günlük Bildirim</string>
+    <string name="free">Ücretsiz</string>
+    <string name="features">Özellikler</string>
+    <string name="unlock_all_features">Tüm Özelliklerin Kilidini Aç</string>
+    <string name="premium">Premium</string>
+    <string name="_3_days_free_trial">3 GÜNLÜK ÜCRETSİZ DENEMEYE BAŞLA</string>
+    <string name="most_popular">En Popüler</string>
+    <string name="start_free_trial">3 Günlük Ücretsiz Denemeyi Başlat</string>
+    <string name="subscribe_monthly_with_price">Aylık Abonelik – %1$s</string>
+    <string name="subscribe_weekly_with_price">Haftalık Abonelik – %1$s</string>
+    <string name="purchase_successfully">Başarıyla Satın Alındı</string>
+    <string name="subscribe_weekly">Haftalık Abone Ol</string>
+    <string name="subscribe_monthly">Aylık Abone Ol</string>
+    <string name="premium_error_dialog_message">Aboneliğinizle ilgili bir sorun var. Ödeme yönteminizi düzeltmek için Google Play abonelik ayarlarına gitmek üzere DEVAM ET\'e tıklayın.</string>
+    <string name="weekly_subscription">Haftalık Abonelik</string>
+    <string name="monthly_subscription">Aylık Abonelik</string>
+    <string name="free_trial_disclaimer">3 günlük ÜCRETSİZ denemeden sonra haftalık %1$s</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Deneme başlatmıyorsanız, satın alma onayınızın sonunda ödeme Google Play hesabınızdan tahsil edilecektir. Abonelik, deneme veya geçerli döneminizin sonundan en az 24 saat önce iptal edilmediği sürece otomatik olarak yenilenir. Hesabınızdan ücret tahsil edilecektir.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Abonelikler, mevcut dönemin sonundan en az 24 saat önce iptal edilmediği sürece otomatik olarak yenilenir. Hesabınıza, mevcut dönemin sonundan saatler önce yenileme için fatura kesilir. Aboneliğinizi Google Play Store üzerinden istediğiniz zaman yönetebilir ve iptal edebilirsiniz.</string>
+    <string name="loading">Yükleniyor</string>
+    <string name="allow">İzin Ver</string>
+    <string name="not_now">Şimdi Değil</string>
+    <string name="stay_updated_with_notifications">Bildirimlerle Güncel Kalın</string>
+    <string name="notification_description">Sizi önemli güncellemeler hakkında bilgilendirmek için bildirim iznine ihtiyacımız var. Bu, zamanında uyarılarla daha iyi bir kullanıcı deneyimi sağlar.</string>
+    <string name="allow_access">Erişime İzin Ver</string>
+    <string name="maybe_later">Belki Sonra</string>
+
+    <string name="image_flag">Resim Bayrağı</string>
+    <string name="icon_checked">İşaretli Simge</string>
+    <string name="done">Tamamlandı</string>
+    <string name="choose_language">Dil Seçin</string>
+    <string name="icon_back">Geri Simgesi</string>
+    <string name="please_select_a_language">Lütfen bir dil seçin</string>
+</resources>

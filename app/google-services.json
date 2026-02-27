@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "839298419303",
+    "project_id": "playstorebaseproject-85915",
+    "storage_bucket": "playstorebaseproject-85915.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839298419303:android:87d5101d7f4b37f13622c2",
+        "android_client_info": {
+          "package_name": "com.professor.baseproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHivsY2ilJmmBa0_nsO-87J--mQHZLx-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+<defaultsMap>
+    <!-- Example of setting default values for different types -->
+    <entry>
+        <key>firs_launch</key>
+        <value>0</value>
+    </entry>
+</defaultsMap>

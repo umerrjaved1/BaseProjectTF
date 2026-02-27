@@ -1,0 +1,2 @@
+show_ads = false boolean
+first_launch = 0 num

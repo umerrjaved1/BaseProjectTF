@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <!--    App colors-->
+    <color name="text_color_primary">#1D1B20</color>
+    <color name="text_color_dark">#161717</color>
+    <color name="text_color_secondary">#6A7984</color>
+
+    <color name="primary_color">#007AFF</color>
+    <color name="primary_color_14">#24007AFF</color>
+    <color name="primary_color_6">#0F007AFF</color>
+    <color name="accent_color">#007AFF</color>
+    <color name="primary_color_light">#E6F4FF</color>
+    <color name="stroke_color">#E9ECEF</color>
+    <color name="dot_color">#737F8D4D</color>
+    <color name="bg_color">#F8F9FA</color>
+    <color name="red">#DE2525</color>
+    <color name="red_14">#24DE2525</color>
+    <color name="green">#2AD352</color>
+
+
+
+    <!--ads color-->
+
+    <color name="ad_btn_color2">#FB7E6A</color>
+    <color name="ad_btn_color">#007AFF</color>
+    <color name="ad_color">#FFBE2D</color>
+    <color name="ad_bg_color">#EBEBEB</color>
+    <color name="ad_title_color">#04061A</color>
+    <color name="ad_body_color">#6F6F6F</color>
+    <color name="shimmer_color">#666666</color>
+    <color name="accent_light">#E3FFFA</color>
+    <color name="light_bg">#6F6F6F</color>
+    <color name="grey_color">#6F6F6F</color>
+
+</resources>

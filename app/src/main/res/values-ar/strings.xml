@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="exit_application">خروج من التطبيق</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">هل أنت متأكد أنك تريد الخروج من هذا التطبيق؟</string>
+    <string name="no">لا</string>
+    <string name="yes">نعم</string>
+    <string name="cancel">إلغاء</string>
+    <string name="exit">خروج</string>
+    <string name="do_you_want_to_open_network_settings">هل تريد فتح إعدادات الشبكة؟</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت!</string>
+    <string name="skip">تخطي</string>
+    <string name="continuee">متابعة</string>
+    <string name="get_started">ابدأ الآن</string>
+    <string name="nav_home">الرئيسية</string>
+        <string name="unable_to_load_ad">تعذر تحميل الإعلان</string>
+    <string name="remove_ads">إزالة الإعلانات</string>
+    <string name="home">الرئيسية</string>
+    <string name="settings">الإعدادات</string>
+    <string name="rate_app">قيم التطبيق</string>
+    <string name="share_this_app">شارك هذا التطبيق</string>
+    <string name="send_feedback">أرسل ملاحظاتك</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="change_language">تغيير اللغة</string>
+    <string name="wow_thank_you_so_much">واو! شكرًا جزيلاً لك</string>
+    <string name="help_us_reach_perfection">ساعدنا في الوصول إلى الكمال بملاحظاتك.</string>
+    <string name="rate_on_play_store">قيم على متجر Play</string>
+    <string name="error">خطأ</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="wait">انتظر</string>
+    <string name="unlock_premium_features">فتح الميزات المميزة</string>
+    <string name="daily_notification">إشعار يومي</string>
+    <string name="free">مجاني</string>
+    <string name="features">الميزات</string>
+    <string name="unlock_all_features">فتح جميع الميزات</string>
+    <string name="premium">مميز</string>
+    <string name="_3_days_free_trial">ابدأ تجربة مجانية لمدة 3 أيام</string>
+    <string name="most_popular">الأكثر شيوعًا</string>
+    <string name="start_free_trial">ابدأ تجربة مجانية لمدة 3 أيام</string>
+    <string name="subscribe_monthly_with_price">اشترك شهريًا – %1$s</string>
+    <string name="subscribe_weekly_with_price">اشترك أسبوعيًا – %1$s</string>
+    <string name="purchase_successfully">تم الشراء بنجاح</string>
+    <string name="subscribe_weekly">اشترك أسبوعيًا</string>
+    <string name="subscribe_monthly">اشترك شهريًا</string>
+    <string name="premium_error_dialog_message">هناك مشكلة في اشتراكك. انقر فوق متابعة للذهاب إلى إعدادات الاشتراك في Google Play لإصلاح طريقة الدفع الخاصة بك.</string>
+    <string name="weekly_subscription">اشتراك أسبوعي</string>
+    <string name="monthly_subscription">اشتراك شهري</string>
+    <string name="free_trial_disclaimer">%1$s/أسبوعيًا بعد تجربة مجانية لمدة 3 أيام</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">سيتم تحصيل المبلغ من حساب Google Play الخاص بك في نهاية فترة التجربة إذا لم تبدأ تجربة. يتم تجديد الاشتراك تلقائيًا ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية فترة التجربة أو الفترة الحالية. سيتم تحصيل المبلغ من حسابك.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">يتم تجديد الاشتراكات تلقائيًا ما لم يتم إلغاؤها قبل 24 ساعة على الأقل من نهاية الفترة الحالية. سيتم تحصيل مبلغ التجديد من حسابك خلال الساعات السابقة لنهاية الفترة الحالية. يمكنك إدارة وإلغاء اشتراكك في أي وقت عبر متجر Google Play.</string>
+    <string name="loading">جاري التحميل</string>
+    <string name="allow">السماح</string>
+    <string name="not_now">ليس الآن</string>
+    <string name="stay_updated_with_notifications">ابق على اطلاع بالإشعارات</string>
+    <string name="notification_description">نحتاج إلى إذن الإشعارات لإبقائك على اطلاع بالتحديثات المهمة. يضمن ذلك تجربة مستخدم أفضل مع تنبيهات في الوقت المناسب.</string>
+    <string name="allow_access">السماح بالوصول</string>
+    <string name="maybe_later">ربما لاحقًا</string>
+
+
+    <string name="image_flag">علامة الصورة</string>
+    <string name="icon_checked">أيقونة مؤشرة</string>
+    <string name="done">تم</string>
+    <string name="choose_language">اختر اللغة</string>
+    <string name="icon_back">أيقونة الرجوع</string>
+    <string name="please_select_a_language">يرجى اختيار اللغة</string>
+</resources>

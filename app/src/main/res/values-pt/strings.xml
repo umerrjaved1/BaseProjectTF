@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <string name="exit_application">Sair do Aplicativo</string>
+   <string name="are_you_sure_you_want_to_exit_this_application">Tem certeza de que deseja sair deste aplicativo?</string>
+   <string name="no">Não</string>
+   <string name="yes">Sim</string>
+   <string name="cancel">Cancelar</string>
+   <string name="exit">Sair</string>
+   <string name="do_you_want_to_open_network_settings">Deseja abrir as configurações de rede?</string>
+   <string name="no_internet_connection">Sem conexão com a internet!</string>
+   <string name="skip">Pular</string>
+   <string name="continuee">Continuar</string>
+   <string name="get_started">Começar</string>
+   <string name="nav_home">Início</string>
+      <string name="unable_to_load_ad">Não foi possível carregar o anúncio</string>
+   <string name="remove_ads">Remover Anúncios</string>
+   <string name="home">Início</string>
+   <string name="settings">Configurações</string>
+   <string name="rate_app">Avaliar Aplicativo</string>
+   <string name="share_this_app">Compartilhar este Aplicativo</string>
+   <string name="send_feedback">Enviar Feedback</string>
+   <string name="privacy_policy">Política de Privacidade</string>
+   <string name="change_language">Alterar Idioma</string>
+   <string name="wow_thank_you_so_much">Uau! Muito Obrigado</string>
+   <string name="help_us_reach_perfection">Ajude-nos a alcançar a perfeição com seu feedback.</string>
+   <string name="rate_on_play_store">Avaliar na Play Store</string>
+   <string name="error">Erro</string>
+   <string name="something_went_wrong">Algo deu errado</string>
+   <string name="retry">Tentar Novamente</string>
+   <string name="wait">Aguarde</string>
+   <string name="unlock_premium_features">Desbloquear Recursos Premium</string>
+   <string name="daily_notification">Notificação Diária</string>
+   <string name="free">Grátis</string>
+   <string name="features">Recursos</string>
+   <string name="unlock_all_features">Desbloquear todos os recursos</string>
+   <string name="premium">Premium</string>
+   <string name="_3_days_free_trial">Comece TESTE GRATUITO DE 3 DIAS</string>
+   <string name="most_popular">Mais Popular</string>
+   <string name="start_free_trial">Começar Teste Gratuito de 3 Dias</string>
+   <string name="subscribe_monthly_with_price">Assinatura Mensal – %1$s</string>
+   <string name="subscribe_weekly_with_price">Assinatura Semanal – %1$s</string>
+   <string name="purchase_successfully">Compra Realizada com Sucesso</string>
+   <string name="subscribe_weekly">Assinar Semanalmente</string>
+   <string name="subscribe_monthly">Assinar Mensalmente</string>
+   <string name="premium_error_dialog_message">Há um problema com sua assinatura. Clique em CONTINUAR para ir às configurações de assinatura do Google Play e corrigir seu método de pagamento.</string>
+   <string name="weekly_subscription">Assinatura Semanal</string>
+   <string name="monthly_subscription">Assinatura Mensal</string>
+   <string name="free_trial_disclaimer">%1$s/semanal após TESTE GRATUITO de 3 dias</string>
+   <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">O pagamento será cobrado na sua conta do Google Play no final do seu período de teste, se você não estiver iniciando um teste. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do seu teste ou período atual. Sua conta será cobrada.</string>
+   <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">As assinaturas são renovadas automaticamente, a menos que canceladas pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de horas antes do final do período atual. Você pode gerenciar e cancelar sua assinatura a qualquer momento pela Google Play Store.</string>
+   <string name="loading">Carregando</string>
+   <string name="allow">Permitir</string>
+   <string name="not_now">Agora Não</string>
+   <string name="stay_updated_with_notifications">Mantenha-se Atualizado com Notificações</string>
+   <string name="notification_description">Precisamos de permissão de notificação para mantê-lo informado sobre atualizações importantes. Isso garante uma melhor experiência do usuário com alertas oportunos.</string>
+   <string name="allow_access">Permitir Acesso</string>
+   <string name="maybe_later">Talvez Mais Tarde</string>
+
+   <string name="image_flag">Bandeira da Imagem</string>
+   <string name="icon_checked">Ícone Marcado</string>
+   <string name="done">Concluído</string>
+   <string name="choose_language">Escolher Idioma</string>
+   <string name="icon_back">Ícone Voltar</string>
+   <string name="please_select_a_language">Por favor, selecione um idioma</string>
+   </resources>
