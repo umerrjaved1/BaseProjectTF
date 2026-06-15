@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admob_app_id" translatable="false">ca-app-pub-6412217023250030~5996179048</string>
+
+    
+    
+    <string name="splash_title">Splash Başlığı</string>
+    
+    
+    
+    
+    <string name="splash_description">Splash Açıklaması.</string>
+    
+    
+    
+    
+    <string name="onboarding_title_1">Otomatik Temizleyici</string>
+    <string name="onboarding_title_2">Manuel Kontrol</string>
+    <string name="onboarding_title_3">Titreşim Modu</string>
+    <string name="onboarding_desc_1">Optimize edilmiş ses frekanslarını kullanarak suyu otomatik olarak dışarı atın.</string>
+    <string name="onboarding_desc_2">Özel, güçlü bir temizlik deneyimi için frekansı ve sesi hassas bir şekilde ayarlayın.</string>
+    <string name="onboarding_desc_3">Derin titreşim darbeleriyle inatçı toz ve su parçacıklarını silkeleyin.</string>
+    <string name="iap_feature_1">Özellik 1</string>
+    
+    
+    
+    
+    <string name="iap_feature_2">Özellik 2</string>
+    
+    
+    
+    
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">Görüntü Bayrağı</string>
+    
+    
+    
+    
+    <string name="icon_checked">İşaretli İkon</string>
+    
+    
+    
+    
+    <string name="done">Bitti</string>
+    
+    
+    
+    
+    <string name="choose_language">Dil Seç</string>
+    
+    
+    
+    
+    <string name="language_subtitle">Arayüz ve talimatlar için tercih ettiğiniz dili seçin.</string>
+    
+    
+    
+    
+    <string name="icon_back">Geri İkonu</string>
+    
+    
+    
+    
+    <string name="please_select_a_language">Lütfen Bir Dil Seçin</string>
+    
+    
+    
+    
+    <string name="exit_application">Uygulamadan Çık</string>
+    
+    
+    
+    
+    <string name="are_you_sure_you_want_to_exit_this_application">Bu uygulamadan çıkmak istediğinizden emin misiniz?</string>
+    
+    
+    
+    
+    <string name="no">Hayır</string>
+    
+    
+    
+    
+    <string name="yes">Evet</string>
+    
+    
+    
+    
+    <string name="cancel">İptal</string>
+    
+    
+    
+    
+    <string name="exit">Çıkış</string>
+    
+    
+    
+    
+    <string name="do_you_want_to_open_network_settings">Ağ ayarlarını açmak istiyor musunuz?</string>
+    
+    
+    
+    
+    <string name="no_internet_connection">İnternet bağlantısı yok!</string>
+    
+    
+    
+    
+    <string name="skip">Atla</string>
+    
+    
+    
+    
+    <string name="continuee">Devam Et</string>
+    
+    
+    
+    
+    <string name="get_started">Başla</string>
+    
+    
+    
+    
+    <string name="nav_home">Ana Sayfa</string>
+    
+    
+    
+    
+    <string name="home_hero_title">Hoparlör Temizliği</string>
+    <string name="home_hero_subtitle">Suyu ve tozu anında çıkarın</string>
+    <string name="home_quick_actions">Hızlı İşlemler</string>
+    <string name="auto_cleaner">Otomatik Temizleyici</string>
+    <string name="manual_cleaner">Manuel</string>
+    <string name="vibration">Titreşim</string>
+    <string name="speaker_test">Hoparlör Testi</string>
+    <string name="auto_cleaner_hint">Tek dokunuşla düzeltme</string>
+    <string name="manual_cleaner_hint">Özel frekans</string>
+    <string name="vibration_hint">Derin sarsıntı</string>
+    <string name="speaker_test_hint">Kaliteyi kontrol et</string>
+    <string name="manual_cleaner_title">Manuel Temizleyici</string>
+    <string name="vibration_cleaner_title">Titreşim Temizleyici</string>
+    <string name="frequency_range">Frekans Aralığı</string>
+    <string name="frequency_range_value">100Hz – 1000Hz</string>
+    <string name="ejection_frequency">Atma Frekansı</string>
+    <string name="hz">Hz</string>
+    <string name="cleaning_duration">Temizlik Süresi</string>
+    <string name="seconds_30">30sn</string>
+    <string name="seconds_45">45sn</string>
+    <string name="seconds_60">60sn</string>
+    <string name="info">Bilgi</string>
+    
+    
+    
+    
+    <string name="icon_menu">Menü İkonu</string>
+    
+    
+    
+    
+    <string name="icon_premium">Premium İkonu</string>
+    
+    
+    
+    
+    <string name="icon_speaker_cleaning">Hoparlör Temizleme Simgesi</string>
+    <string name="navigation">Navigasyon</string>
+    <string name="ad">Reklam</string>
+    <string name="boost_battery_life">Pil Ömrünü Artır</string>
+    <string name="ad_download_companion">Yardımcı uygulamamızı indirin</string>
+    <string name="cleaning">Temizleniyor</string>
+    <string name="speaker">Hoparlör</string>
+    <string name="earphone">Kulaklık</string>
+    <string name="volume">Ses</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">Temizliği Başlat</string>
+    <string name="stop_cleaning">Temizliği Durdur</string>
+    <string name="start_vibration_test">Titreşim Testini Başlat</string>
+    <string name="stop_vibration_test">Titreşim Testini Durdur</string>
+    <string name="manual_test_hint_idle">Frekansı ayarlayın ve başlata dokunun.</string>
+    <string name="manual_test_hint_running">Ton çalınıyor… istediğiniz zaman durdurabilirsiniz.</string>
+    <string name="remaining_seconds">%1$dsn</string>
+    <string name="system_diagnostic_active">Sistem Tanısı Etkin</string>
+    <string name="left_speaker">Sol Hoparlör</string>
+    <string name="right_speaker">Sağ Hoparlör</string>
+    <string name="stereo_balance">Stereo Dengesi</string>
+    <string name="high_freq">Yüksek Frekans</string>
+    <string name="passed">Geçti</string>
+    <string name="running">Çalışıyor</string>
+    <string name="ready">Hazır</string>
+    <string name="run_full_diagnostic">Tam Tanılamayı Çalıştır</string>
+    <string name="cleaning_in_progress">Temizlik Devam Ediyor</string>
+    <string name="wait_until_vibration_finishes">Titreşim bitene kadar bekleyin</string>
+    <string name="vibration_test_ready">Titreşim Testi Hazır</string>
+    <string name="vibration_test_running">Titreşim Testi Çalışıyor</string>
+    <string name="vibration_test_hint">Titreşim modelini hissetmek için başlata dokunun.</string>
+    <string name="normal">Normal</string>
+    <string name="medium">Orta</string>
+    <string name="high">Yüksek</string>
+    <string name="sponsored">Sponsorlu</string>
+    
+    
+    
+    
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+    
+    
+    
+    
+    <string name="premium_protection_subtitle">Cihazınızı 24/7 temiz ve güvenli tutun</string>
+    
+    
+    
+    
+    <string name="learn_more">Daha Fazla Öğren</string>
+    
+    
+    
+    
+    <string name="icon_volume">Ses İkonu</string>
+    
+    
+    
+    
+    <string name="icon_ad">Reklam İkonu</string>
+    
+    
+    
+    
+    <string name="ad_title">Cihaz Sesini Artır</string>
+    
+    
+    
+    
+    <string name="ad_subtitle">Sesiniz için premium kalite.</string>
+    
+    
+    
+    
+    <string name="install">Yükle</string>
+    
+    
+    
+    
+    <string name="start_test">Testi Başlat</string>
+    <string name="stop_test">Testi Durdur</string>
+    <string name="testing">Test ediliyor</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">Tam hoparlör tanılamasını çalıştırmak için başlata dokunun.</string>
+    <string name="auto_test_hint_running">Tonlar çalınıyor… yakından dinleyin ve sesi sabit tutun.</string>
+    <string name="auto_test_hint_complete">Test tamamlandı. Sonuçlar açılıyor…</string>
+    <string name="unable_to_load_ad">Reklam yüklenemedi</string>
+    
+    
+    
+    
+    <string name="remove_ads">Reklamları Kaldır</string>
+    
+    
+    
+    
+    <string name="home">Ana Sayfa</string>
+    
+    
+    
+    
+    <string name="settings">Ayarlar</string>
+    
+    
+    
+    
+    <string name="rate_app">Uygulamayı Değerlendir</string>
+    
+    
+    
+    
+    <string name="share_this_app">Bu Uygulamayı Paylaş</string>
+    
+    
+    
+    
+    <string name="send_feedback">Geri Bildirim Gönder</string>
+    
+    
+    
+    
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    
+    
+    
+    
+    <string name="change_language">Dili Değiştir</string>
+    
+    
+    
+    
+    <string name="wow_thank_you_so_much">Vay! Çok Teşekkür Ederim</string>
+    
+    
+    
+    
+    <string name="help_us_reach_perfection">Geri bildiriminizle mükemmelliğe ulaşmamıza yardımcı olun.</string>
+    
+    
+    
+    
+    <string name="rate_on_play_store">Play Store da Değerlendir</string>
+    
+    
+    
+    
+    <string name="error">Hata</string>
+    
+    
+    
+    
+    <string name="something_went_wrong">Bir şeyler yanlış gitti</string>
+    
+    
+    
+    
+    <string name="retry">Tekrar Dene</string>
+    
+    
+    
+    
+    <string name="wait">Bekle</string>
+    
+    
+    
+    
+    <string name="unlock_premium_features">Premium Özellikleri Aç</string>
+    
+    
+    
+    
+    <string name="daily_notification">Günlük Bildirim</string>
+    
+    
+    
+    
+    <string name="free">Ücretsiz</string>
+    
+    
+    
+    
+    <string name="features">Özellikler</string>
+    
+    
+    
+    
+    <string name="unlock_all_features">Tüm özellikleri aç</string>
+    
+    
+    
+    
+    <string name="premium">Premium</string>
+    
+    
+    
+    
+    <string name="_3_days_free_trial">3 GÜNLÜK ÜCRETSİZ DENEMEYE BAŞLA</string>
+    
+    
+    
+    
+    <string name="most_popular">En Popüler</string>
+    
+    
+    
+    
+    <string name="start_free_trial">3 günlük ücretsiz denemeye başla</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly_with_price">Aylık Abone Ol – %1$s</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly_with_price">Haftalık Abone Ol – %1$s</string>
+    
+    
+    
+    
+    <string name="purchase_successfully">Satın Alma Başarılı</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly">Haftalık Abone Ol</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly">Aylık Abone Ol</string>
+    
+    
+    
+    
+    <string name="premium_error_dialog_message">Aboneliğinizde bir sorun var. Ödeme yönteminizi düzeltmek için Google Play abonelik ayarlarına gitmek için DEVAM ET e tıklayın.</string>
+    
+    
+    
+    
+    <string name="success_title">Başarılı</string>
+    
+    
+    
+    
+    <string name="cleaning_complete">Temizleme Tamamlandı</string>
+    
+    
+    
+    
+    <string name="cleaning_complete_subtitle">Hoparlörünüz artık temiz ve optimize edildi</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete">Manuel Temizleme Tamamlandı</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete_subtitle">Manuel temizleme başarıyla tamamlandı</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete">Titreşim Temizleme Tamamlandı</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete_subtitle">Titreşim testi başarıyla tamamlandı</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete">Hoparlör Testi Tamamlandı</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete_subtitle">Tüm hoparlör tanıları başarılı</string>
+    
+    
+    
+    
+    <string name="test_speaker">Hoparlörü Test Et</string>
+    
+    
+    
+    
+    <string name="try_again">Tekrar Dene</string>
+    
+    
+    
+    
+    <string name="try_other_features">Diğer Özellikleri Dene</string>
+    
+    
+    
+    
+    <string name="smart_cleaning">Akıllı temizleme</string>
+    
+    
+    
+    
+    <string name="vibration_mode">Titreşim</string>
+    
+    
+    
+    
+    <string name="shake_out_dust">Tozı Salla</string>
+    
+    
+    
+    
+    <string name="manual_cleaner_subtitle">Elle ince ayar yap</string>
+    
+    
+
+    
+    <string name="close">Kapat</string>
+    
+    
+    
+    
+    <string name="weekly_subscription">Haftalık Abonelik</string>
+    
+    
+    
+    
+    <string name="monthly_subscription">Aylık Abonelik</string>
+    
+    
+    
+    
+    <string name="free_trial_disclaimer">ÜCRETSİZ 3 günlük denemeden sonra %1$s/haftalık</string>
+    
+    
+    
+    
+
+    
+    
+    <string name="loading">Yükleniyor</string>
+    
+    
+    
+    
+    <string name="allow">İzin Ver</string>
+    
+    
+    
+    
+    <string name="not_now">Şimdi Değil</string>
+    
+    
+    
+    
+    <string name="stay_updated_with_notifications">Bildirimlerle Güncel Kalın</string>
+    
+    
+    
+    
+    <string name="notification_description">Önemli güncellemeler hakkında sizi bilgilendirmek için bildirim iznine ihtiyacımız var. Bu, zamanında uyarılarla daha iyi bir kullanıcı deneyimi sağlar.</string>
+    
+    
+    
+    
+    <string name="allow_access">Erişime İzin Ver</string>
+    
+    
+    
+    
+    <string name="maybe_later">Belki Sonra</string>
+    
+    
+
+
+    
+    
+    <string name="initializing_speaker_cleaner">Hoparlör Temizleyici Başlatılıyor</string>
+    <string name="remove_water_amp_dust">Suyu ve Tozu Çıkarın</string>
+    <string name="intensity_level">Yoğunluk Seviyesi</string>
+    <string name="vibration_disabled_msg">Sistem titreşimi devre dışı. Bu özelliğin çalışması için lütfen titreşimi etkinleştirin.</string>
+    <string name="enable">Etkinleştir</string>
+    <string name="start_like_a_pro">Profesyonel gibi başla</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Abonelik, yenilemeden en az 24 saat önce iptal edilmezse otomatik olarak yenilenir.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Yenilemeden 24+ saat önce iptal edilmezse otomatik yenilenir. Google Play\'de istediğiniz zaman yönetin veya iptal edin.</string>
+    <string name="unlimited_cleaning">Sınırsız Temizlik</string>
+    <string name="deep_water_and_dust_removal">Derin Su ve Toz Giderme</string>
+    <string name="ad_free_experience">Reklamsız Deneyim</string>
+    <string name="boosted_sound_and_vibration">Geliştirilmiş Ses ve Titreşim</string>
+    <string name="open_document">Belge aç</string>
+    <string name="browse_files_securely">Dosyalarınıza güvenle göz atın</string>
+    <string name="browse_files">Dosyalara göz at</string>
+    <string name="quick_access">Hızlı erişim</string>
+    <string name="view_all">Tümünü gör</string>
+    <string name="no_recent_files">Henüz son dosya yok</string>
+    <string name="starred_content_subtitle">En önemli belgeleriniz tek bir yerde.</string>
+    <string name="no_favorites_yet">Henüz favori yok</string>
+    <string name="favorites_hint">Herhangi bir belgeyi favorilere eklemek için yıldız simgesine dokunun.</string>
+    <string name="settings_subtitle">Uygulama tercihlerinizi ve hesap ayrıntılarınızı yönetin.</string>
+    <string name="appearance">Görünüm</string>
+    <string name="about">Hakkında</string>
+    <string name="dark_mode">Karanlık mod</string>
+    <string name="language">Dil</string>
+    <string name="clear_history">Geçmişi temizle</string>
+    <string name="more_options">Daha fazla seçenek</string>
+    <string name="document_viewer">Belge görüntüleyici</string>
+    <string name="zoom_out">Uzaklaştır</string>
+    <string name="zoom_in">Yakınlaştır</string>
+    <string name="bookmark">Yer imi</string>
+    <string name="document_page">Belge sayfası</string>
+    <string name="document">Belge</string>
+    <string name="search">Ara</string>
+    <string name="open">Aç</string>
+    <string name="add_to_favorites">Favorilere ekle</string>
+    <string name="remove_from_favorites">Favorilerden kaldır</string>
+    <string name="share_file">Dosyayı paylaş</string>
+    <string name="file_details">Dosya ayrıntıları</string>
+    <string name="file_details_format">Ad: %1$s\nTür: %2$s\nBoyut: %3$d bayt</string>
+    <string name="file_name_value">Ad: %1$s</string>
+    <string name="file_type_value">Tür: %1$s</string>
+    <string name="file_size_value">Boyut: %1$s</string>
+    <string name="file_last_opened_value">Son açılma: %1$s</string>
+    <string name="preview_not_available">Önizleme kullanılamıyor</string>
+    <string name="unable_to_load_text">Metin yüklenemedi</string>
+    <string name="recent_files">Son dosyalar</string>
+    <string name="favorites">Favoriler</string>
+    <string name="history_cleared">Geçmiş temizlendi</string>
+</resources>

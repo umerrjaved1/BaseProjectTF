@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admob_app_id" translatable="false">ca-app-pub-6412217023250030~5996179048</string>
+
+    
+    
+    <string name="splash_title">Заголовок Splash</string>
+    
+    
+    
+    
+    <string name="splash_description">Описание Splash.</string>
+    
+    
+    
+    
+    <string name="onboarding_title_1">Автоматическая очистка</string>
+    <string name="onboarding_title_2">Ручное управление</string>
+    <string name="onboarding_title_3">Режим вибрации</string>
+    <string name="onboarding_desc_1">Автоматическое выталкивание воды с помощью оптимизированных звуковых частот.</string>
+    <string name="onboarding_desc_2">Тонкая настройка частоты и громкости для индивидуальной мощной очистки.</string>
+    <string name="onboarding_desc_3">Вытряхивание стойкой пыли и частиц воды с помощью глубоких вибрационных импульсов.</string>
+    <string name="iap_feature_1">Функция 1</string>
+    
+    
+    
+    
+    <string name="iap_feature_2">Функция 2</string>
+    
+    
+    
+    
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">Флаг Изображения</string>
+    
+    
+    
+    
+    <string name="icon_checked">Иконка Отмечена</string>
+    
+    
+    
+    
+    <string name="done">Готово</string>
+    
+    
+    
+    
+    <string name="choose_language">Выбрать Язык</string>
+    
+    
+    
+    
+    <string name="language_subtitle">Выберите предпочитаемый язык для интерфейса и инструкций.</string>
+    
+    
+    
+    
+    <string name="icon_back">Иконка Назад</string>
+    
+    
+    
+    
+    <string name="please_select_a_language">Пожалуйста, выберите язык</string>
+    
+    
+    
+    
+    <string name="exit_application">Выйти из Приложения</string>
+    
+    
+    
+    
+    <string name="are_you_sure_you_want_to_exit_this_application">Вы уверены, что хотите выйти из этого приложения?</string>
+    
+    
+    
+    
+    <string name="no">Нет</string>
+    
+    
+    
+    
+    <string name="yes">Да</string>
+    
+    
+    
+    
+    <string name="cancel">Отмена</string>
+    
+    
+    
+    
+    <string name="exit">Выход</string>
+    
+    
+    
+    
+    <string name="do_you_want_to_open_network_settings">Хотите открыть настройки сети?</string>
+    
+    
+    
+    
+    <string name="no_internet_connection">Нет интернет-соединения!</string>
+    
+    
+    
+    
+    <string name="skip">Пропустить</string>
+    
+    
+    
+    
+    <string name="continuee">Продолжить</string>
+    
+    
+    
+    
+    <string name="get_started">Начать</string>
+    
+    
+    
+    
+    <string name="nav_home">Главная</string>
+    
+    
+    
+    
+    <string name="home_hero_title">Очистка динамика</string>
+    <string name="home_hero_subtitle">Мгновенное удаление воды и пыли</string>
+    <string name="home_quick_actions">Быстрые действия</string>
+    <string name="auto_cleaner">Автоочиститель</string>
+    <string name="manual_cleaner">Вручную</string>
+    <string name="vibration">Вибрация</string>
+    <string name="speaker_test">Тест динамика</string>
+    <string name="auto_cleaner_hint">Исправление одним нажатием</string>
+    <string name="manual_cleaner_hint">Своя частота</string>
+    <string name="vibration_hint">Глубокая встряска</string>
+    <string name="speaker_test_hint">Проверить качество</string>
+    <string name="manual_cleaner_title">Ручной очиститель</string>
+    <string name="vibration_cleaner_title">Вибрационный очиститель</string>
+    <string name="frequency_range">Диапазон частот</string>
+    <string name="frequency_range_value">100 Гц – 1000 Гц</string>
+    <string name="ejection_frequency">Частота выталкивания</string>
+    <string name="hz">Гц</string>
+    <string name="cleaning_duration">Длительность очистки</string>
+    <string name="seconds_30">30 с</string>
+    <string name="seconds_45">45 с</string>
+    <string name="seconds_60">60 с</string>
+    <string name="info">Информация</string>
+    
+    
+    
+    
+    <string name="icon_menu">Иконка Меню</string>
+    
+    
+    
+    
+    <string name="icon_premium">Иконка Премиум</string>
+    
+    
+    
+    
+    <string name="icon_speaker_cleaning">Иконка очистки динамика</string>
+    <string name="navigation">Навигация</string>
+    <string name="ad">Реклама</string>
+    <string name="boost_battery_life">Увеличить срок службы батареи</string>
+    <string name="ad_download_companion">Загрузите наше сопутствующее приложение</string>
+    <string name="cleaning">Очистка</string>
+    <string name="speaker">Динамик</string>
+    <string name="earphone">Наушник</string>
+    <string name="volume">Громкость</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">Начать очистку</string>
+    <string name="stop_cleaning">Остановить очистку</string>
+    <string name="start_vibration_test">Начать тест вибрации</string>
+    <string name="stop_vibration_test">Остановить тест вибрации</string>
+    <string name="manual_test_hint_idle">Настройте частоту и нажмите &quot;Старт&quot;.</string>
+    <string name="manual_test_hint_running">Воспроизведение тона... вы можете остановиться в любой момент.</string>
+    <string name="remaining_seconds">%1$d с</string>
+    <string name="system_diagnostic_active">Системная диагностика активна</string>
+    <string name="left_speaker">Левый динамик</string>
+    <string name="right_speaker">Правый динамик</string>
+    <string name="stereo_balance">Стерео баланс</string>
+    <string name="high_freq">Высокая частота</string>
+    <string name="passed">Пройдено</string>
+    <string name="running">Выполняется</string>
+    <string name="ready">Готово</string>
+    <string name="run_full_diagnostic">Запустить полную диагностику</string>
+    <string name="cleaning_in_progress">Выполняется очистка</string>
+    <string name="wait_until_vibration_finishes">Подождите до завершения вибрации</string>
+    <string name="vibration_test_ready">Тест вибрации готов</string>
+    <string name="vibration_test_running">Тест вибрации выполняется</string>
+    <string name="vibration_test_hint">Нажмите &quot;Старт&quot;, чтобы почувствовать характер вибрации.</string>
+    <string name="normal">Нормальный</string>
+    <string name="medium">Средний</string>
+    <string name="high">Высокий</string>
+    <string name="sponsored">Спонсировано</string>
+    
+    
+    
+    
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+    
+    
+    
+    
+    <string name="premium_protection_subtitle">Держите ваше устройство чистым и безопасным 24/7</string>
+    
+    
+    
+    
+    <string name="learn_more">Узнать Больше</string>
+    
+    
+    
+    
+    <string name="icon_volume">Иконка Громкость</string>
+    
+    
+    
+    
+    <string name="icon_ad">Иконка Реклама</string>
+    
+    
+    
+    
+    <string name="ad_title">Улучшить Звук Устройства</string>
+    
+    
+    
+    
+    <string name="ad_subtitle">Премиум качество для вашего аудио.</string>
+    
+    
+    
+    
+    <string name="install">Установить</string>
+    
+    
+    
+    
+    <string name="start_test">Начать тест</string>
+    <string name="stop_test">Остановить тест</string>
+    <string name="testing">Тестирование</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">Нажмите &quot;Старт&quot;, чтобы запустить полную диагностику динамика.</string>
+    <string name="auto_test_hint_running">Воспроизведение тонов... слушайте внимательно и держите громкость стабильной.</string>
+    <string name="auto_test_hint_complete">Тест завершен. Открытие результатов...</string>
+    <string name="unable_to_load_ad">Не удалось загрузить рекламу</string>
+    
+    
+    
+    
+    <string name="remove_ads">Удалить Рекламу</string>
+    
+    
+    
+    
+    <string name="home">Главная</string>
+    
+    
+    
+    
+    <string name="settings">Настройки</string>
+    
+    
+    
+    
+    <string name="rate_app">Оценить Приложение</string>
+    
+    
+    
+    
+    <string name="share_this_app">Поделиться этим Приложением</string>
+    
+    
+    
+    
+    <string name="send_feedback">Отправить Обратную Связь</string>
+    
+    
+    
+    
+    <string name="privacy_policy">Политика Конфиденциальности</string>
+    
+    
+    
+    
+    <string name="change_language">Изменить Язык</string>
+    
+    
+    
+    
+    <string name="wow_thank_you_so_much">Вау! Большое Спасибо</string>
+    
+    
+    
+    
+    <string name="help_us_reach_perfection">Помогите нам достичь совершенства с вашей обратной связью.</string>
+    
+    
+    
+    
+    <string name="rate_on_play_store">Оценить в Play Store</string>
+    
+    
+    
+    
+    <string name="error">Ошибка</string>
+    
+    
+    
+    
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    
+    
+    
+    
+    <string name="retry">Повторить</string>
+    
+    
+    
+    
+    <string name="wait">Подождите</string>
+    
+    
+    
+    
+    <string name="unlock_premium_features">Разблокировать Премиум Функции</string>
+    
+    
+    
+    
+    <string name="daily_notification">Ежедневное Уведомление</string>
+    
+    
+    
+    
+    <string name="free">Бесплатно</string>
+    
+    
+    
+    
+    <string name="features">Функции</string>
+    
+    
+    
+    
+    <string name="unlock_all_features">Разблокировать все функции</string>
+    
+    
+    
+    
+    <string name="premium">Премиум</string>
+    
+    
+    
+    
+    <string name="_3_days_free_trial">Начать БЕСПЛАТНЫЙ ПРОБНЫЙ ПЕРИОД 3 ДНЯ</string>
+    
+    
+    
+    
+    <string name="most_popular">Самый Популярный</string>
+    
+    
+    
+    
+    <string name="start_free_trial">Начать бесплатный пробный период 3 дня</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly_with_price">Подписаться Ежемесячно – %1$s</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly_with_price">Подписаться Еженедельно – %1$s</string>
+    
+    
+    
+    
+    <string name="purchase_successfully">Покупка Успешна</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly">Подписаться Еженедельно</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly">Подписаться Ежемесячно</string>
+    
+    
+    
+    
+    <string name="premium_error_dialog_message">Есть проблема с вашей подпиской. Нажмите ПРОДОЛЖИТЬ, чтобы перейти к настройкам подписки Google Play, чтобы исправить ваш способ оплаты.</string>
+    
+    
+    
+    
+    <string name="success_title">Успех</string>
+    
+    
+    
+    
+    <string name="cleaning_complete">Очистка Завершена</string>
+    
+    
+    
+    
+    <string name="cleaning_complete_subtitle">Ваш динамик теперь чист и оптимизирован</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete">Ручная Очистка Завершена</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete_subtitle">Ручная очистка успешно завершена</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete">Вибрационная Очистка Завершена</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete_subtitle">Вибрационный тест успешно завершен</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete">Тест Динамика Завершен</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete_subtitle">Все диагностики динамика пройдены</string>
+    
+    
+    
+    
+    <string name="test_speaker">Тест Динамика</string>
+    
+    
+    
+    
+    <string name="try_again">Попробовать Снова</string>
+    
+    
+    
+    
+    <string name="try_other_features">Попробовать Другие Функции</string>
+    
+    
+    
+    
+    <string name="smart_cleaning">Умная очистка</string>
+    
+    
+    
+    
+    <string name="vibration_mode">Вибрация</string>
+    
+    
+    
+    
+    <string name="shake_out_dust">Вытряхнуть пыль</string>
+    
+    
+    
+    
+    <string name="manual_cleaner_subtitle">Точная настройка вручную</string>
+    
+    
+
+    
+    <string name="close">Закрыть</string>
+    
+    
+    
+    
+    <string name="weekly_subscription">Еженедельная Подписка</string>
+    
+    
+    
+    
+    <string name="monthly_subscription">Ежемесячная Подписка</string>
+    
+    
+    
+    
+    <string name="free_trial_disclaimer">%1$s/еженедельно после БЕСПЛАТНОГО пробного периода 3 дня</string>
+    
+    
+    
+
+    
+    
+    
+    <string name="loading">Загрузка</string>
+    
+    
+    
+    
+    <string name="allow">Разрешить</string>
+    
+    
+    
+    
+    <string name="not_now">Не Сейчас</string>
+    
+    
+    
+    
+    <string name="stay_updated_with_notifications">Оставайтесь в Курсе с Уведомлениями</string>
+    
+    
+    
+    
+    <string name="notification_description">Нам нужно разрешение на уведомления, чтобы держать вас в курсе важных обновлений. Это обеспечивает лучший пользовательский опыт с своевременными оповещениями.</string>
+    
+    
+    
+    
+    <string name="allow_access">Разрешить Доступ</string>
+    
+    
+    
+    
+    <string name="maybe_later">Возможно Позже</string>
+    
+    
+
+
+    
+    
+    <string name="initializing_speaker_cleaner">Инициализация очистителя динамика</string>
+    <string name="remove_water_amp_dust">Удалить воду и пыль</string>
+    <string name="intensity_level">Уровень интенсивности</string>
+    <string name="vibration_disabled_msg">Системная вибрация отключена. Пожалуйста, включите ее для работы этой функции.</string>
+    <string name="enable">Включить</string>
+    <string name="start_like_a_pro">Начните как профи</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Подписка продлевается автоматически, если не отменить её как минимум за 24 часа до продления.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Продлевается автоматически, если не отменить за 24+ часа до продления. Управляйте или отменяйте в Google Play в любое время.</string>
+    <string name="unlimited_cleaning">Неограниченная очистка</string>
+    <string name="deep_water_and_dust_removal">Глубокое удаление воды и пыли</string>
+    <string name="ad_free_experience">Без рекламы</string>
+    <string name="boosted_sound_and_vibration">Усиленный звук и вибрация</string>
+    <string name="open_document">Открыть документ</string>
+    <string name="browse_files_securely">Безопасно просматривайте свои файлы</string>
+    <string name="browse_files">Просмотреть файлы</string>
+    <string name="quick_access">Быстрый доступ</string>
+    <string name="view_all">Показать все</string>
+    <string name="no_recent_files">Пока нет недавних файлов</string>
+    <string name="starred_content_subtitle">Ваши самые важные документы в одном месте.</string>
+    <string name="no_favorites_yet">Пока нет избранного</string>
+    <string name="favorites_hint">Нажмите на значок звезды у любого документа, чтобы добавить его в избранное.</string>
+    <string name="settings_subtitle">Управляйте настройками приложения и данными аккаунта.</string>
+    <string name="appearance">Внешний вид</string>
+    <string name="about">О приложении</string>
+    <string name="dark_mode">Тёмная тема</string>
+    <string name="language">Язык</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="more_options">Ещё опции</string>
+    <string name="document_viewer">Просмотр документов</string>
+    <string name="zoom_out">Уменьшить</string>
+    <string name="zoom_in">Увеличить</string>
+    <string name="bookmark">Закладка</string>
+    <string name="document_page">Страница документа</string>
+    <string name="document">Документ</string>
+    <string name="search">Поиск</string>
+    <string name="open">Открыть</string>
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="remove_from_favorites">Удалить из избранного</string>
+    <string name="share_file">Поделиться файлом</string>
+    <string name="file_details">Сведения о файле</string>
+    <string name="file_details_format">Имя: %1$s\nТип: %2$s\nРазмер: %3$d байт</string>
+    <string name="file_name_value">Имя: %1$s</string>
+    <string name="file_type_value">Тип: %1$s</string>
+    <string name="file_size_value">Размер: %1$s</string>
+    <string name="file_last_opened_value">Последнее открытие: %1$s</string>
+    <string name="preview_not_available">Предпросмотр недоступен</string>
+    <string name="unable_to_load_text">Не удалось загрузить текст</string>
+    <string name="recent_files">Недавние файлы</string>
+    <string name="favorites">Избранное</string>
+    <string name="history_cleared">История очищена</string>
+</resources>

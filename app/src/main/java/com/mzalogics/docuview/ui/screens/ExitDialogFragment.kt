@@ -1,0 +1,88 @@
+package com.mzalogics.docuview.ui.screens
+
+import android.graphics.Color
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
+import androidx.fragment.app.DialogFragment
+import com.mzalogics.ads.domain.core.AdMobManager
+import com.mzalogics.docuview.app.AdIds
+import com.mzalogics.docuview.app.AnalyticsManager
+import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
+import com.mzalogics.docuview.utils.AdFrequencyControl
+import com.mzalogics.docuview.utils.AdUnitFrequencyController
+import com.mzalogics.docuview.utils.setClickWithTimeout
+import com.mzalogics.docuview.databinding.DialogExitBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class ExitDialogFragment : DialogFragment() {
+
+    private var _binding: DialogExitBinding? = null
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var adMobManager: AdMobManager
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
+
+    val TAG = "ExitDialogFragment"
+    private var onExitConfirmed: (() -> Unit)? = null
+
+    fun setOnExitConfirmedListener(listener: () -> Unit) {
+        onExitConfirmed = listener
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DialogExitBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setBackgroundDrawable(Color.WHITE.toDrawable())
+        dialog?.setCanceledOnTouchOutside(true)
+        loadAd()
+        binding.btnNo.setClickWithTimeout { dismiss() }
+        binding.btnYes.setClickWithTimeout {
+            onExitConfirmed?.invoke()
+            dismiss()
+        }
+    }
+
+
+
+    private fun loadAd() {
+        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+            binding.includeAd.root.visibility = View.GONE
+            return
+        }
+        val activity = activity ?: return
+        if (!AdFrequencyControl.canShowAd(activity, AdUnitFrequencyController.UNIT_BANNER)) {
+            binding.includeAd.root.visibility = View.GONE
+            return
+        }
+        adMobManager.bannerAdLoader.showMemRecBanner(
+            activity,
+            binding.includeAd.adFrame,
+            binding.includeAd.shimmerFbAd,
+            AdIds.getBannerAdIdExit()
+        )
+        AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_BANNER)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
+

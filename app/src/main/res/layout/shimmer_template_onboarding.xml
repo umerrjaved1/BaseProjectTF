@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:elevation="2dp"
+    android:padding="8dp">
+
+
+    <!-- Media View Placeholder -->
+    <View
+        android:id="@+id/shimmer_ad_media"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/shimmer_color"
+        app:layout_constraintEnd_toStartOf="@+id/shimmer_ad_right"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.45" />
+
+    <!-- Right section (icon + texts + button) -->
+    <LinearLayout
+        android:id="@+id/shimmer_ad_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/shimmer_ad_media"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- App icon placeholder -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/shimmer_color" />
+
+            <!-- Text placeholders -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="14dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@color/shimmer_color" />
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="12dp"
+                    android:background="@color/shimmer_color" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- CTA Button placeholder -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/shimmer_color"
+            android:backgroundTint="@color/shimmer_color" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

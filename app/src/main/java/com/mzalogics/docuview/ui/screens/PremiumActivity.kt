@@ -1,0 +1,520 @@
+package com.mzalogics.docuview.ui.screens
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.mzalogics.ads.domain.core.AdMobManager
+import com.mzalogics.docuview.R
+import com.mzalogics.docuview.app.AdIds
+import com.mzalogics.docuview.app.AnalyticsManager
+import com.mzalogics.docuview.app.AppPreferences
+import com.mzalogics.docuview.constants.Constants
+import com.mzalogics.docuview.databinding.ActivityPremiumBinding
+import com.mzalogics.docuview.iab.AppBillingClient
+import com.mzalogics.docuview.iab.ConnectResponse
+import com.mzalogics.docuview.iab.PurchaseResponse
+import com.mzalogics.docuview.iab.SubscriptionItem
+import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
+import com.mzalogics.docuview.ui.viewmodel.PremiumViewModel
+import com.mzalogics.docuview.utils.AdFrequencyControl
+import com.mzalogics.docuview.utils.AdUnitFrequencyController
+import com.mzalogics.docuview.utils.UIState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class PremiumActivity : AppCompatActivity(), View.OnClickListener {
+
+    @Inject
+    lateinit var adMobManager: AdMobManager
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
+    private lateinit var binding: ActivityPremiumBinding
+    private val viewModel: PremiumViewModel by viewModels()
+
+    private lateinit var billingClient: AppBillingClient
+    private var availableSubscriptions: List<SubscriptionItem> = emptyList()
+
+    private var fromProIcon: Boolean = false
+    private var fromOnboardingActivity: Boolean = false
+    private var fromSplashActivity: Boolean = false
+    private var fromResumeApp: Boolean = false
+
+    /**
+     * Tracks the currently selected subscription plan.
+     *
+     * Currently only WEEKLY is shown. When monthly/yearly plans go live:
+     *   1. Un-hide llMonthly / llYearly in the XML layout.
+     *   2. Uncomment their click listeners in [setupClickListeners].
+     *   3. Uncomment their SKU constants in Constants.kt & AppBillingClient.kt.
+     */
+    private var selectedPlan: PlanType = PlanType.WEEKLY
+
+    /** Supported subscription plan types. Add YEARLY here when ready. */
+    private enum class PlanType {
+        WEEKLY,
+        MONTHLY,
+        YEARLY;
+
+        /** Whether this plan has a free-trial offer attached. */
+        fun hasTrial(): Boolean = when (this) {
+            WEEKLY -> true          // 3-day trial via OFFER_ID_TRIAL
+            MONTHLY -> false        // TODO: set true if monthly gets a trial offer
+            YEARLY -> false         // TODO: set true if yearly  gets a trial offer
+        }
+
+        /** The offer ID to use when purchasing. Null = use base plan. */
+        fun offerId(): String? = when (this) {
+            WEEKLY -> Constants.OFFER_ID_TRIAL
+            MONTHLY -> null         // TODO: replace with Constants.OFFER_ID_MONTHLY_TRIAL if added
+            YEARLY -> null          // TODO: replace with Constants.OFFER_ID_YEARLY_TRIAL  if added
+        }
+
+        /** The product SKU for this plan. */
+        fun sku(): String = when (this) {
+            WEEKLY -> Constants.SKU_SUBSCRIPTION_WEEKLY
+            MONTHLY -> ""           // TODO: replace with Constants.SKU_SUBSCRIPTION_MONTHLY
+            YEARLY -> ""            // TODO: replace with Constants.SKU_SUBSCRIPTION_YEARLY
+        }
+    }
+
+    private val TAG = "PremiumActivity"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Setup window insets
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.isAppearanceLightStatusBars = true
+        window.statusBarColor = ContextCompat.getColor(this, R.color.bg_color)
+
+        binding = ActivityPremiumBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initializeActivity()
+        setupClickListeners()
+        initializeBilling()
+        setupObservers()
+
+        // Modern back-press handling — replaces deprecated onBackPressed()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() { handleClose() }
+        })
+
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, TAG)
+    }
+
+    private fun initializeActivity() {
+        fromProIcon = intent.getBooleanExtra(Constants.EXTRA_PREMIUM_FROM_ICON, false)
+        fromSplashActivity = intent.getBooleanExtra(Constants.EXTRA_PREMIUM_FROM_SPLASH, false)
+        fromOnboardingActivity =
+            intent.getBooleanExtra(Constants.EXTRA_PREMIUM_FROM_ONBOARDING, false)
+        fromResumeApp = intent.getBooleanExtra(Constants.EXTRA_PREMIUM_FROM_RESUME, false)
+
+        // Get billing client instance
+        billingClient = AppBillingClient.getInstance()
+
+        // Set initial UI state
+        setInitialUIState()
+
+        // Setup close button delay
+        setupCloseButtonDelay()
+    }
+
+    private fun setupClickListeners() {
+        // Weekly plan — always active
+        binding.llWeekly.setOnClickListener(this)
+
+        // Monthly plan — TODO: un-hide llMonthly in XML and uncomment when plan is live
+        // binding.llMonthly.setOnClickListener(this)
+
+        // Yearly plan  — TODO: un-hide llYearly  in XML and uncomment when plan is live
+        // binding.llYearly.setOnClickListener(this)
+
+        binding.ivClose.setOnClickListener(this)
+        binding.btnUpgradeNow.setOnClickListener(this)
+    }
+
+    private fun setInitialUIState() {
+        // Apply default selection (weekly)
+        applyPlanSelection(selectedPlan)
+
+        // Hide trial text until subscription details are loaded from billing
+        binding.tvFreeTry.visibility = View.GONE
+        binding.btnUpgradeNow.isEnabled = false
+    }
+
+    private fun setupCloseButtonDelay() {
+        lifecycleScope.launch {
+            binding.ivClose.visibility = View.INVISIBLE
+            val delay = RemoteConfigManager.getAdsConfig().premiumCloseBtnDelay
+            Log.d(TAG, "Close button delay: $delay ms")
+            delay(delay.toLong())
+            binding.ivClose.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initializeBilling() {
+        billingClient.initialize(this, object : ConnectResponse {
+            override fun onConnected(subscriptionItems: List<SubscriptionItem>) {
+                runOnUiThread {
+                    availableSubscriptions = subscriptionItems
+                    updateUIWithSubscriptions(subscriptionItems)
+                    binding.btnUpgradeNow.isEnabled = true
+                    Log.d(TAG, "Billing connected, ${subscriptionItems.size} subscriptions loaded")
+                }
+            }
+
+            override fun onDisconnected() {
+                runOnUiThread {
+                    showError("Billing service disconnected. Please try again.")
+                    binding.btnUpgradeNow.isEnabled = false
+                }
+            }
+
+            override fun onError(errorCode: Int, errorMessage: String) {
+                runOnUiThread {
+                    showError("Billing error: $errorMessage")
+                    binding.btnUpgradeNow.isEnabled = false
+                    Log.e(TAG, "Billing error: $errorCode - $errorMessage")
+                }
+            }
+        })
+    }
+
+    private fun setupObservers() {
+        lifecycleScope.launch {
+            // repeatOnLifecycle prevents emitting to a stopped/destroyed Activity
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is UIState.Loading -> Unit
+                        is UIState.Success -> {
+                            if (state.data.isPremium) navigateAfterPurchase()
+                        }
+                        is UIState.Error -> {
+                            showError(state.throwable.message ?: "An error occurred")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateUIWithSubscriptions(subscriptions: List<SubscriptionItem>) {
+        if (subscriptions.isEmpty()) {
+            showError("No subscription plans available")
+            return
+        }
+
+        // Populate price labels for every available plan
+        subscriptions.forEach { sub ->
+            when (sub.sku) {
+                Constants.SKU_SUBSCRIPTION_WEEKLY -> {
+                    binding.tvWeeklyPrice.text = sub.formattedPrice ?: ""
+                    analyticsManager.sendAnalytics("load", "${TAG}weekly_trial")
+                }
+                // TODO: uncomment when monthly plan is live
+                // Constants.SKU_SUBSCRIPTION_MONTHLY -> {
+                //     binding.tvMonthlyPrice.text = sub.formattedPrice ?: ""
+                //     analyticsManager.sendAnalytics("load", "${TAG}monthly")
+                // }
+                // TODO: uncomment when yearly plan is live
+                // Constants.SKU_SUBSCRIPTION_YEARLY -> {
+                //     binding.tvYearlyPrice.text = sub.formattedPrice ?: ""
+                //     analyticsManager.sendAnalytics("load", "${TAG}yearly")
+                // }
+            }
+        }
+
+        // Now apply the full UI state for the currently selected plan
+        applyPlanSelection(selectedPlan)
+
+        Log.d(TAG, "UI updated — ${subscriptions.size} subscription(s) loaded")
+    }
+
+    /**
+     * Central method that drives all UI state for a given [plan].
+     * Call this whenever the selected plan changes OR after prices are loaded.
+     *
+     * To support a new plan later:
+     *   1. Add the plan's card + price view to the XML.
+     *   2. Add a [when] branch here for the new plan.
+     *   3. That's it — no other structural change needed.
+     */
+    private fun applyPlanSelection(plan: PlanType) {
+        selectedPlan = plan
+
+        // --- Card highlight ---
+        setSelectedPlan(binding.llWeekly, isSelected = plan == PlanType.WEEKLY)
+        // setSelectedPlan(binding.llMonthly, isSelected = plan == PlanType.MONTHLY)  // TODO: monthly
+        // setSelectedPlan(binding.llYearly,  isSelected = plan == PlanType.YEARLY)   // TODO: yearly
+
+        // --- Check icons ---
+        binding.ivCheckWeekly.setImageResource(
+            if (plan == PlanType.WEEKLY) R.drawable.ic_check else R.drawable.ic_non_check
+        )
+        // TODO: uncomment when monthly card is visible
+        // binding.ivCheckMonthly.setImageResource(
+        //     if (plan == PlanType.MONTHLY) R.drawable.ic_check else R.drawable.ic_non_check
+        // )
+        // TODO: uncomment when yearly card is visible
+        // binding.ivCheckYearly.setImageResource(
+        //     if (plan == PlanType.YEARLY) R.drawable.ic_check else R.drawable.ic_non_check
+        // )
+
+        // --- Trial banner & privacy text ---
+        if (plan.hasTrial()) {
+            val price = availableSubscriptions
+                .find { it.sku == plan.sku() }?.formattedPrice ?: ""
+            binding.tvFreeTry.text = getString(R.string.free_trial_disclaimer, price)
+            binding.tvFreeTry.visibility = View.VISIBLE
+            binding.tvPrivacy.text =
+                getString(R.string.cancel_anytime_at_least_24_hours_before_renewal_trial)
+        } else {
+            binding.tvFreeTry.visibility = View.GONE
+            binding.tvPrivacy.text =
+                getString(R.string.cancel_anytime_at_least_24_hours_before_renewal_without_trial)
+        }
+
+        // --- CTA button label ---
+        binding.btnUpgradeNow.text = if (plan.hasTrial()) {
+            getString(R.string.start_free_trial)
+        } else {
+            getString(R.string.continuee)
+        }
+    }
+
+    private fun setSelectedPlan(planLayout: LinearLayout, isSelected: Boolean) {
+        planLayout.setBackgroundResource(
+            if (isSelected) R.drawable.sku_selected else R.drawable.sku_non_selected
+        )
+    }
+
+    private fun handlePlanSelection(plan: PlanType) {
+        applyPlanSelection(plan)
+        analyticsManager.sendAnalytics("clicked", "${TAG}select_${plan.name.lowercase()}")
+    }
+
+    private var isClosing = false
+
+    private fun handleClose() {
+        if (isClosing) return
+        isClosing = true
+
+        analyticsManager.sendAnalytics("clicked", "${TAG}close_button")
+
+        if (fromProIcon) {
+            finish()
+        } else if ( fromOnboardingActivity || fromResumeApp) {
+
+            showInterstitialAndNavigate()
+
+
+        }
+        else if ( fromSplashActivity){
+            navigateToMain()
+        }
+
+        else {
+            finish()
+        }
+
+
+
+    }
+
+    private fun handleUpgradeNow() {
+        analyticsManager.sendAnalytics(
+            "clicked",
+            "${TAG}subscribe_${selectedPlan.name.lowercase()}"
+        )
+        purchaseSubscription(selectedPlan)
+    }
+
+    private fun purchaseSubscription(plan: PlanType) {
+        showLoading(true)
+
+        val subscription = availableSubscriptions.find { it.sku == plan.sku() }
+        if (subscription == null) {
+            showError("Subscription not available. Please try again.")
+            showLoading(false)
+            return
+        }
+
+        // Use the plan's dedicated offer ID (e.g. trial). Falls back to base plan token.
+        val offerToken = plan.offerId()
+            ?.let { subscription.getOfferTokenById(it) }
+            ?: subscription.baseOfferToken
+
+        if (offerToken.isNullOrEmpty()) {
+            showError("Unable to process subscription. Please try again.")
+            showLoading(false)
+            return
+        }
+
+        Log.d(TAG, "Purchasing ${plan.name} with offer: ${plan.offerId() ?: "base"}")
+
+        billingClient.purchaseSubscription(
+            this,
+            subscription,
+            offerToken,
+            object : PurchaseResponse {
+                override fun onPurchaseSuccess(productId: String) {
+                    runOnUiThread {
+                        showLoading(false)
+                        handlePurchaseSuccess(productId)
+                    }
+                }
+
+                override fun onPurchasePending() {
+                    runOnUiThread {
+                        showLoading(false)
+                        showMessage("Purchase pending...")
+                    }
+                }
+
+                override fun onPurchaseCancelled() {
+                    runOnUiThread {
+                        showLoading(false)
+                        showMessage("Purchase cancelled")
+                        analyticsManager.sendAnalytics("purchase_cancelled", "${TAG}${plan.sku()}")
+                    }
+                }
+
+                override fun onPurchaseAlreadyOwned() {
+                    runOnUiThread {
+                        showLoading(false)
+                        handlePurchaseSuccess(plan.sku())
+                        showMessage("You already own this subscription")
+                    }
+                }
+
+                override fun onPurchaseError(errorCode: Int, errorMessage: String) {
+                    runOnUiThread {
+                        showLoading(false)
+                        showError("Purchase failed: $errorMessage")
+                        analyticsManager.sendAnalytics(
+                            "purchase_error",
+                            "${TAG}${errorCode}_${plan.sku()}"
+                        )
+                        Log.e(TAG, "Purchase error $errorCode: $errorMessage")
+                    }
+                }
+            }
+        )
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.btnUpgradeNow.isEnabled = !isLoading
+        binding.btnUpgradeNow.text = if (isLoading) {
+            getString(R.string.loading)
+        } else {
+            // Restore the correct label for the currently selected plan
+            if (selectedPlan.hasTrial()) getString(R.string.start_free_trial)
+            else getString(R.string.continuee)
+        }
+    }
+
+    private fun handlePurchaseSuccess(productId: String) {
+        // Update premium status
+        appPreferences.setBoolean(AppPreferences.IS_PREMIUM, true)
+        viewModel.setPremiumStatus(true)
+        AdMobManager.isPremium = true
+
+        // Show success message
+        Toast.makeText(
+            this,
+            getString(R.string.purchase_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        analyticsManager.sendAnalytics("purchase_success", "${TAG}$productId")
+
+        // Navigate to appropriate screen
+        navigateAfterPurchase()
+    }
+
+    private fun navigateAfterPurchase() {
+        // Always restart the app from the beginning so that billing verification,
+        // AdMobManager.isPremium, and all other app-level state are re-initialized
+        // cleanly — no stale pre-purchase state survives.
+        val restartIntent = Intent(this, StartActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(restartIntent)
+        finish()
+    }
+
+    // onBackPressed() removed — handled by OnBackPressedCallback registered in onCreate()
+
+    private fun showInterstitialAndNavigate() {
+        val isPremium = appPreferences.getBoolean(AppPreferences.IS_PREMIUM, false)
+        if (isPremium || !RemoteConfigManager.shouldShowAds()) {
+            navigateToMain()
+            return
+        }
+        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
+            navigateToMain()
+            return
+        }
+        adMobManager.interstitialAdLoader.loadAndShowAd(
+            this,
+            AdIds.getInterstitialSplashAdId(), true
+        ) {
+            AdFrequencyControl.recordAdShown(this@PremiumActivity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+            navigateToMain()
+        }
+    }
+
+    private fun navigateToMain() {
+        startActivity(Intent(this, MainActivity::class.java).apply {
+            putExtra(Constants.EXTRA_LANGUAGE_FROM_START, false)
+        })
+        finish()
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Log.e(TAG, message)
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Log.d(TAG, message)
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.ll_weekly -> handlePlanSelection(PlanType.WEEKLY)
+            // R.id.ll_monthly -> handlePlanSelection(PlanType.MONTHLY)  // TODO: monthly
+            // R.id.ll_yearly  -> handlePlanSelection(PlanType.YEARLY)   // TODO: yearly
+            R.id.iv_close -> handleClose()
+            R.id.btn_upgrade_now -> handleUpgradeNow()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billingClient.disconnect()
+        Log.d(TAG, "PremiumActivity destroyed")
+    }
+}

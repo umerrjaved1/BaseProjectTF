@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "81635910545",
+    "project_id": "document-viewer-14764",
+    "storage_bucket": "document-viewer-14764.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81635910545:android:775fe6a530e57ccf31b030",
+        "android_client_info": {
+          "package_name": "com.mzalogics.docuview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwjY5ZyOD3icJAepbiVNIc0AFqy-fdNTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

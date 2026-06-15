@@ -1,0 +1,41 @@
+{
+  "interstitialMaxTimer": 60,
+  "interstitialMinTimer": 45,
+  "interstitialCounter": 3,
+  "openAdResumeTimer": 30,
+  "firstOpenAdStrategy": 2,
+  "onBoardingCrossButtonVisible": true,
+  "onBoardingMonetizationStrategy": 0,
+  "startupTime": 8,
+  "premiumCloseBtnDelay": 3,
+  "interstitialDelay": 20,
+  "nativeConfig": [
+    {
+      "screen": "HOME",
+      "enabled": true,
+      "adPosition": 1,
+      "reloadTime": 60
+    }
+  ],
+  "appOpenAdID": "ca-app-pub-3940256099942544/3419835294",
+  "appOpenResumeAdID": "ca-app-pub-3940256099942544/5662855259",
+  "interstitialAdID": "ca-app-pub-3940256099942544/1033173712",
+  "interstitialSplashAdID": "ca-app-pub-3940256099942544/4411468910",
+  "nativeOnBoardingAdID": "ca-app-pub-3940256099942544/2247696110",
+  "fullNativeOnBoardingAdID": "ca-app-pub-3940256099942544/3986624511",
+  "bannerAdID": "ca-app-pub-3940256099942544/6300978111",
+  "bannerHomeAdID": "ca-app-pub-3940256099942544/6300978111",
+  "bannerExitAdID": "ca-app-pub-3940256099942544/6300978111",
+  "nativeAdvancedID": "ca-app-pub-3940256099942544/2247696110",
+  "nativeLanguageID": "ca-app-pub-3940256099942544/2247696110",
+  "maxAdsPerDay": 50,
+  "dailyResetHours": 24,
+  "maxAdsPerSession": 10,
+  "sessionCooldownSeconds": 30,
+  "interstitialMaxPerSession": 2,
+  "openAdMaxPerSession": 3,
+  "bannerMaxPerSession": 2,
+  "bannerCooldownSeconds": 0,
+  "nativeMaxPerSession": 2,
+  "nativeCooldownSeconds": 0
+}

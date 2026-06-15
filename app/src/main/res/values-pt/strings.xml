@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admob_app_id" translatable="false">ca-app-pub-6412217023250030~5996179048</string>
+
+    
+    
+    
+    <string name="splash_title">Título Splash</string>
+    
+    
+    
+    
+    <string name="splash_description">Descrição do Splash.</string>
+    
+    
+    
+    
+    <string name="onboarding_title_1">Limpeza Automática</string>
+    <string name="onboarding_title_2">Controle Manual</string>
+    <string name="onboarding_title_3">Modo Vibração</string>
+    <string name="onboarding_desc_1">Ejete a água automaticamente usando frequências de som otimizadas.</string>
+    <string name="onboarding_desc_2">Ajuste a frequência e o volume para uma experiência de limpeza personalizada e potente.</string>
+    <string name="onboarding_desc_3">Sacuda a poeira persistente e as partículas de água com pulsos de vibração profunda.</string>
+    <string name="iap_feature_1">Recurso 1</string>
+    
+    
+    
+    
+    <string name="iap_feature_2">Recurso 2</string>
+    
+    
+    
+    
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">Bandeira da Imagem</string>
+    
+    
+    
+    
+    <string name="icon_checked">Ícone Marcado</string>
+    
+    
+    
+    
+    <string name="done">Concluído</string>
+    
+    
+    
+    
+    <string name="choose_language">Escolher Idioma</string>
+    
+    
+    
+    
+    <string name="language_subtitle">Escolha seu idioma preferido para a interface e instruções.</string>
+    
+    
+    
+    
+    <string name="icon_back">Ícone Voltar</string>
+    
+    
+    
+    
+    <string name="please_select_a_language">Por favor, selecione um idioma</string>
+    
+    
+    
+    
+    <string name="exit_application">Sair do Aplicativo</string>
+    
+    
+    
+    
+    <string name="are_you_sure_you_want_to_exit_this_application">Tem certeza de que deseja sair deste aplicativo?</string>
+    
+    
+    
+    
+    <string name="no">Não</string>
+    
+    
+    
+    
+    <string name="yes">Sim</string>
+    
+    
+    
+    
+    <string name="cancel">Cancelar</string>
+    
+    
+    
+    
+    <string name="exit">Sair</string>
+    
+    
+    
+    
+    <string name="do_you_want_to_open_network_settings">Deseja abrir as configurações de rede?</string>
+    
+    
+    
+    
+    <string name="no_internet_connection">Sem conexão com a internet!</string>
+    
+    
+    
+    
+    <string name="skip">Pular</string>
+    
+    
+    
+    
+    <string name="continuee">Continuar</string>
+    
+    
+    
+    
+    <string name="get_started">Começar</string>
+    
+    
+    
+    
+    <string name="nav_home">Início</string>
+    
+    
+    
+    
+    <string name="home_hero_title">Limpeza de Alto-falante</string>
+    <string name="home_hero_subtitle">Remova água e poeira instantaneamente</string>
+    <string name="home_quick_actions">Ações Rápidas</string>
+    <string name="auto_cleaner">Limpador Automático</string>
+    <string name="manual_cleaner">Manual</string>
+    <string name="vibration">Vibração</string>
+    <string name="speaker_test">Teste de Alto-falante</string>
+    <string name="auto_cleaner_hint">Correção com um toque</string>
+    <string name="manual_cleaner_hint">Freq. personalizada</string>
+    <string name="vibration_hint">Agitação profunda</string>
+    <string name="speaker_test_hint">Verificar qualidade</string>
+    <string name="manual_cleaner_title">Limpador Manual</string>
+    <string name="vibration_cleaner_title">Limpador de Vibração</string>
+    <string name="frequency_range">Faixa de Frequência</string>
+    <string name="frequency_range_value">100Hz – 1000Hz</string>
+    <string name="ejection_frequency">Frequência de Ejeção</string>
+    <string name="hz">Hz</string>
+    <string name="cleaning_duration">Duração da Limpeza</string>
+    <string name="seconds_30">30s</string>
+    <string name="seconds_45">45s</string>
+    <string name="seconds_60">60s</string>
+    <string name="info">Informações</string>
+    
+    
+    
+    
+    <string name="icon_menu">Ícone Menu</string>
+    
+    
+    
+    
+    <string name="icon_premium">Ícone Premium</string>
+    
+    
+    
+    
+    <string name="icon_speaker_cleaning">Ícone Limpeza Alto-falante</string>
+    <string name="navigation">Navegação</string>
+    <string name="ad">Anúncio</string>
+    <string name="boost_battery_life">Melhorar Vida Útil da Bateria</string>
+    <string name="ad_download_companion">Baixe nosso aplicativo complementar</string>
+    <string name="cleaning">Limpando</string>
+    <string name="speaker">Alto-falante</string>
+    <string name="earphone">Fone de ouvido</string>
+    <string name="volume">Volume</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">Iniciar Limpeza</string>
+    <string name="stop_cleaning">Parar Limpeza</string>
+    <string name="start_vibration_test">Iniciar Teste de Vibração</string>
+    <string name="stop_vibration_test">Parar Teste de Vibração</string>
+    <string name="manual_test_hint_idle">Ajuste a frequência e toque em iniciar.</string>
+    <string name="manual_test_hint_running">Reproduzindo tom… você pode parar a qualquer momento.</string>
+    <string name="remaining_seconds">%1$ds</string>
+    <string name="system_diagnostic_active">Diagnóstico do Sistema Ativo</string>
+    <string name="left_speaker">Alto-falante Esquerdo</string>
+    <string name="right_speaker">Alto-falante Direito</string>
+    <string name="stereo_balance">Balanço Estéreo</string>
+    <string name="high_freq">Alta Freq.</string>
+    <string name="passed">Aprovado</string>
+    <string name="running">Executando</string>
+    <string name="ready">Pronto</string>
+    <string name="run_full_diagnostic">Executar Diagnóstico Completo</string>
+    <string name="cleaning_in_progress">Limpeza em Andamento</string>
+    <string name="wait_until_vibration_finishes">Aguarde até a vibração terminar</string>
+    <string name="vibration_test_ready">Teste de Vibração Pronto</string>
+    <string name="vibration_test_running">Teste de Vibração em Execução</string>
+    <string name="vibration_test_hint">Toque em iniciar para sentir o padrão de vibração.</string>
+    <string name="normal">Normal</string>
+    <string name="medium">Médio</string>
+    <string name="high">Alto</string>
+    <string name="sponsored">Patrocinado</string>
+    
+    
+    
+    
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+    
+    
+    
+    
+    <string name="premium_protection_subtitle">Mantenha seu dispositivo limpo e seguro 24/7</string>
+    
+    
+    
+    
+    <string name="learn_more">Saiba Mais</string>
+    
+    
+    
+    
+    <string name="icon_volume">Ícone Volume</string>
+    
+    
+    
+    
+    <string name="icon_ad">Ícone Anúncio</string>
+    
+    
+    
+    
+    <string name="ad_title">Aumentar Som do Dispositivo</string>
+    
+    
+    
+    
+    <string name="ad_subtitle">Qualidade premium para seu áudio.</string>
+    
+    
+    
+    
+    <string name="install">Instalar</string>
+    
+    
+    
+    
+    <string name="start_test">Iniciar Teste</string>
+    <string name="stop_test">Parar Teste</string>
+    <string name="testing">Testando</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">Toque em iniciar para executar o diagnóstico completo do alto-falante.</string>
+    <string name="auto_test_hint_running">Reproduzindo tons… ouça atentamente e mantenha o volume estável.</string>
+    <string name="auto_test_hint_complete">Teste concluído. Abrindo resultados…</string>
+    <string name="unable_to_load_ad">Não foi possível carregar o anúncio</string>
+    
+    
+    
+    
+    <string name="remove_ads">Remover Anúncios</string>
+    
+    
+    
+    
+    <string name="home">Início</string>
+    
+    
+    
+    
+    <string name="settings">Configurações</string>
+    
+    
+    
+    
+    <string name="rate_app">Avaliar App</string>
+    
+    
+    
+    
+    <string name="share_this_app">Compartilhar este App</string>
+    
+    
+    
+    
+    <string name="send_feedback">Enviar Feedback</string>
+    
+    
+    
+    
+    <string name="privacy_policy">Política de Privacidade</string>
+    
+    
+    
+    
+    <string name="change_language">Alterar Idioma</string>
+    
+    
+    
+    
+    <string name="wow_thank_you_so_much">Uau! Muito Obrigado</string>
+    
+    
+    
+    
+    <string name="help_us_reach_perfection">Ajude-nos a alcançar a perfeição com seu feedback.</string>
+    
+    
+    
+    
+    <string name="rate_on_play_store">Avaliar na Play Store</string>
+    
+    
+    
+    
+    <string name="error">Erro</string>
+    
+    
+    
+    
+    <string name="something_went_wrong">Algo deu errado</string>
+    
+    
+    
+    
+    <string name="retry">Tentar Novamente</string>
+    
+    
+    
+    
+    <string name="wait">Aguarde</string>
+    
+    
+    
+    
+    <string name="unlock_premium_features">Desbloquear Recursos Premium</string>
+    
+    
+    
+    
+    <string name="daily_notification">Notificação Diária</string>
+    
+    
+    
+    
+    <string name="free">Grátis</string>
+    
+    
+    
+    
+    <string name="features">Recursos</string>
+    
+    
+    
+    
+    <string name="unlock_all_features">Desbloquear todos os recursos</string>
+    
+    
+    
+    
+    <string name="premium">Premium</string>
+    
+    
+    
+    
+    <string name="_3_days_free_trial">Iniciar TESTE GRATUITO DE 3 DIAS</string>
+    
+    
+    
+    
+    <string name="most_popular">Mais Popular</string>
+    
+    
+    
+    
+    <string name="start_free_trial">Iniciar teste gratuito de 3 dias</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly_with_price">Assinar Mensalmente – %1$s</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly_with_price">Assinar Semanalmente – %1$s</string>
+    
+    
+    
+    
+    <string name="purchase_successfully">Compra Bem-sucedida</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly">Assinar Semanalmente</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly">Assinar Mensalmente</string>
+    
+    
+    
+    
+    <string name="premium_error_dialog_message">Há um problema com sua assinatura. Clique em CONTINUAR para ir às configurações de assinatura do Google Play para corrigir seu método de pagamento.</string>
+    
+    
+    
+    
+    <string name="success_title">Sucesso</string>
+    
+    
+    
+    
+    <string name="cleaning_complete">Limpeza Completa</string>
+    
+    
+    
+    
+    <string name="cleaning_complete_subtitle">Seu alto-falante agora está limpo e otimizado</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete">Limpeza Manual Completa</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete_subtitle">Limpeza manual finalizada com sucesso</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete">Limpeza por Vibração Completa</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete_subtitle">Teste de vibração finalizado com sucesso</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete">Teste de Alto-Falante Completo</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete_subtitle">Todos os diagnósticos do alto-falante passaram</string>
+    
+    
+    
+    
+    <string name="test_speaker">Testar Alto-Falante</string>
+    
+    
+    
+    
+    <string name="try_again">Tentar Novamente</string>
+    
+    
+    
+    
+    <string name="try_other_features">Tentar Outros Recursos</string>
+    
+    
+    
+    
+    <string name="smart_cleaning">Limpeza inteligente</string>
+    
+    
+    
+    
+    <string name="vibration_mode">Vibração</string>
+    
+    
+    
+    
+    <string name="shake_out_dust">Sacudir o pó</string>
+    
+    
+    
+    
+    <string name="manual_cleaner_subtitle">Ajuste fino à mão</string>
+    
+    
+
+    
+    <string name="close">Fechar</string>
+    
+    
+    
+    
+    <string name="weekly_subscription">Assinatura Semanal</string>
+    
+    
+    
+    
+    <string name="monthly_subscription">Assinatura Mensal</string>
+    
+    
+    
+    
+    <string name="free_trial_disclaimer">%1$s/semanal após TESTE GRATUITO de 3 dias</string>
+    
+    
+    
+    
+
+    
+    
+    
+    <string name="loading">Carregando</string>
+    
+    
+    
+    
+    <string name="allow">Permitir</string>
+    
+    
+    
+    
+    <string name="not_now">Agora Não</string>
+    
+    
+    
+    
+    <string name="stay_updated_with_notifications">Mantenha-se Atualizado com Notificações</string>
+    
+    
+    
+    
+    <string name="notification_description">Precisamos de permissão de notificação para mantê-lo informado sobre atualizações importantes. Isso garante uma melhor experiência do usuário com alertas oportunos.</string>
+    
+    
+    
+    
+    <string name="allow_access">Permitir Acesso</string>
+    
+    
+    
+    
+    <string name="maybe_later">Talvez Mais Tarde</string>
+    
+    
+
+
+    
+    
+    <string name="initializing_speaker_cleaner">Inicializando Limpador de Alto-falante</string>
+    <string name="remove_water_amp_dust">Remover Água e Poeira</string>
+    <string name="intensity_level">Nível de Intensidade</string>
+    <string name="vibration_disabled_msg">A vibração do sistema está desativada. Por favor, ative-a para que esta funcionalidade funcione.</string>
+    <string name="enable">Ativar</string>
+    <string name="start_like_a_pro">Comece como um profissional</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes da renovação.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Renova automaticamente, a menos que seja cancelada com 24+ horas de antecedência. Gerencie ou cancele a qualquer momento no Google Play.</string>
+    <string name="unlimited_cleaning">Limpeza ilimitada</string>
+    <string name="deep_water_and_dust_removal">Remoção profunda de água e poeira</string>
+    <string name="ad_free_experience">Experiência sem anúncios</string>
+    <string name="boosted_sound_and_vibration">Som e vibração aprimorados</string>
+    <string name="open_document">Abrir documento</string>
+    <string name="browse_files_securely">Navegue pelos seus arquivos com segurança</string>
+    <string name="browse_files">Navegar arquivos</string>
+    <string name="quick_access">Acesso rápido</string>
+    <string name="view_all">Ver tudo</string>
+    <string name="no_recent_files">Ainda não há arquivos recentes</string>
+    <string name="starred_content_subtitle">Seus documentos mais importantes em um só lugar.</string>
+    <string name="no_favorites_yet">Ainda não há favoritos</string>
+    <string name="favorites_hint">Toque no ícone de estrela em qualquer documento para adicioná-lo aos favoritos.</string>
+    <string name="settings_subtitle">Gerencie as preferências do app e os detalhes da sua conta.</string>
+    <string name="appearance">Aparência</string>
+    <string name="about">Sobre</string>
+    <string name="dark_mode">Modo escuro</string>
+    <string name="language">Idioma</string>
+    <string name="clear_history">Limpar histórico</string>
+    <string name="more_options">Mais opções</string>
+    <string name="document_viewer">Visualizador de documentos</string>
+    <string name="zoom_out">Diminuir zoom</string>
+    <string name="zoom_in">Aumentar zoom</string>
+    <string name="bookmark">Favorito</string>
+    <string name="document_page">Página do documento</string>
+    <string name="document">Documento</string>
+    <string name="search">Pesquisar</string>
+    <string name="open">Abrir</string>
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
+    <string name="remove_from_favorites">Remover dos favoritos</string>
+    <string name="share_file">Compartilhar arquivo</string>
+    <string name="file_details">Detalhes do arquivo</string>
+    <string name="file_details_format">Nome: %1$s\nTipo: %2$s\nTamanho: %3$d bytes</string>
+    <string name="file_name_value">Nome: %1$s</string>
+    <string name="file_type_value">Tipo: %1$s</string>
+    <string name="file_size_value">Tamanho: %1$s</string>
+    <string name="file_last_opened_value">Última abertura: %1$s</string>
+    <string name="preview_not_available">Pré-visualização indisponível</string>
+    <string name="unable_to_load_text">Não foi possível carregar o texto</string>
+    <string name="recent_files">Arquivos recentes</string>
+    <string name="favorites">Favoritos</string>
+    <string name="history_cleared">Histórico limpo</string>
+</resources>

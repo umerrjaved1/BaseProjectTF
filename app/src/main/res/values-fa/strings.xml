@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admob_app_id" translatable="false">ca-app-pub-6412217023250030~5996179048</string>
+
+    
+    
+    
+    
+    <string name="splash_title">عنوان اسپلش</string>
+    
+    
+    
+    
+    <string name="splash_description">توضیحات اسپلش.</string>
+    
+    
+    
+    
+    <string name="onboarding_title_1">پاک‌کننده خودکار</string>
+    <string name="onboarding_title_2">کنترل دستی</string>
+    <string name="onboarding_title_3">حالت لرزش</string>
+    <string name="onboarding_desc_1">تخلیه خودکار آب با استفاده از فرکانس‌های صوتی بهینه شده.</string>
+    <string name="onboarding_desc_2">تنظیم دقیق فرکانس و صدا برای یک تجربه پاک‌سازی قدرتمند و سفارشی.</string>
+    <string name="onboarding_desc_3">تکان دادن ذرات گرد و غبار و آب سرسخت با پالس‌های لرزشی عمیق.</string>
+    <string name="iap_feature_1">ویژگی 1</string>
+    
+    
+    
+    
+    <string name="iap_feature_2">ویژگی 2</string>
+    
+    
+    
+    
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">پرچم تصویر</string>
+    
+    
+    
+    
+    <string name="icon_checked">آیکون تیک خورده</string>
+    
+    
+    
+    
+    <string name="done">انجام شد</string>
+    
+    
+    
+    
+    <string name="choose_language">انتخاب زبان</string>
+    
+    
+    
+    
+    <string name="language_subtitle">زبان مورد نظر خود را برای رابط کاربری و دستورالعمل‌ها انتخاب کنید.</string>
+    
+    
+    
+    
+    <string name="icon_back">آیکون بازگشت</string>
+    
+    
+    
+    
+    <string name="please_select_a_language">لطفاً یک زبان انتخاب کنید</string>
+    
+    
+    
+    
+    <string name="exit_application">خروج از برنامه</string>
+    
+    
+    
+    
+    <string name="are_you_sure_you_want_to_exit_this_application">آیا مطمئن هستید که می‌خواهید از این برنامه خارج شوید؟</string>
+    
+    
+    
+    
+    <string name="no">خیر</string>
+    
+    
+    
+    
+    <string name="yes">بله</string>
+    
+    
+    
+    
+    <string name="cancel">لغو</string>
+    
+    
+    
+    
+    <string name="exit">خروج</string>
+    
+    
+    
+    
+    <string name="do_you_want_to_open_network_settings">آیا می‌خواهید تنظیمات شبکه را باز کنید؟</string>
+    
+    
+    
+    
+    <string name="no_internet_connection">اتصال به اینترنت وجود ندارد!</string>
+    
+    
+    
+    
+    <string name="skip">رد کردن</string>
+    
+    
+    
+    
+    <string name="continuee">ادامه</string>
+    
+    
+    
+    
+    <string name="get_started">شروع کنید</string>
+    
+    
+    
+    
+    <string name="nav_home">صفحه اصلی</string>
+    
+    
+    
+    
+    <string name="home_hero_title">پاک‌سازی اسپیکر</string>
+    <string name="home_hero_subtitle">حذف فوری آب و گرد و غبار</string>
+    <string name="home_quick_actions">اقدامات سریع</string>
+    <string name="auto_cleaner">پاک‌کننده خودکار</string>
+    <string name="manual_cleaner">دستی</string>
+    <string name="vibration">لرزش</string>
+    <string name="speaker_test">تست اسپیکر</string>
+    <string name="auto_cleaner_hint">رفع با یک ضربه</string>
+    <string name="manual_cleaner_hint">فرکانس سفارشی</string>
+    <string name="vibration_hint">تکان عمیق</string>
+    <string name="speaker_test_hint">بررسی کیفیت</string>
+    <string name="manual_cleaner_title">پاک‌کننده دستی</string>
+    <string name="vibration_cleaner_title">پاک‌کننده لرزشی</string>
+    <string name="frequency_range">محدوده فرکانس</string>
+    <string name="frequency_range_value">100 هرتز – 1000 هرتز</string>
+    <string name="ejection_frequency">فرکانس تخلیه</string>
+    <string name="hz">هرتز</string>
+    <string name="cleaning_duration">مدت زمان پاک‌سازی</string>
+    <string name="seconds_30">30 ثانیه</string>
+    <string name="seconds_45">45 ثانیه</string>
+    <string name="seconds_60">60 ثانیه</string>
+    <string name="info">اطلاعات</string>
+    
+    
+    
+    
+    <string name="icon_menu">آیکون منو</string>
+    
+    
+    
+    
+    <string name="icon_premium">آیکون پریمیوم</string>
+    
+    
+    
+    
+    <string name="icon_speaker_cleaning">آیکون پاک‌سازی اسپیکر</string>
+    <string name="navigation">ناوبری</string>
+    <string name="ad">تبلیغ</string>
+    <string name="boost_battery_life">افزایش عمر باتری</string>
+    <string name="ad_download_companion">برنامه همراه ما را دانلود کنید</string>
+    <string name="cleaning">در حال پاک‌سازی</string>
+    <string name="speaker">اسپیکر</string>
+    <string name="earphone">هدفون</string>
+    <string name="volume">صدا</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">شروع پاک‌سازی</string>
+    <string name="stop_cleaning">توقف پاک‌سازی</string>
+    <string name="start_vibration_test">شروع تست لرزش</string>
+    <string name="stop_vibration_test">توقف تست لرزش</string>
+    <string name="manual_test_hint_idle">فرکانس را تنظیم کرده و روی شروع ضربه بزنید.</string>
+    <string name="manual_test_hint_running">در حال پخش صدا... می‌توانید هر زمان متوقف کنید.</string>
+    <string name="remaining_seconds">%1$d ثانیه</string>
+    <string name="system_diagnostic_active">عیب‌یابی سیستم فعال است</string>
+    <string name="left_speaker">اسپیکر چپ</string>
+    <string name="right_speaker">اسپیکر راست</string>
+    <string name="stereo_balance">تعادل استریو</string>
+    <string name="high_freq">فرکانس بالا</string>
+    <string name="passed">تایید شد</string>
+    <string name="running">در حال اجرا</string>
+    <string name="ready">آماده</string>
+    <string name="run_full_diagnostic">اجرای کامل عیب‌یابی</string>
+    <string name="cleaning_in_progress">پاک‌سازی در حال انجام است</string>
+    <string name="wait_until_vibration_finishes">تا پایان لرزش منتظر بمانید</string>
+    <string name="vibration_test_ready">تست لرزش آماده است</string>
+    <string name="vibration_test_running">تست لرزش در حال اجراست</string>
+    <string name="vibration_test_hint">برای احساس الگوی لرزش روی شروع ضربه بزنید.</string>
+    <string name="normal">عادی</string>
+    <string name="medium">متوسط</string>
+    <string name="high">بالا</string>
+    <string name="sponsored">حمایت شده</string>
+    
+    
+    
+    
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+    
+    
+    
+    
+    <string name="premium_protection_subtitle">دستگاه خود را 24/7 تمیز و امن نگه دارید</string>
+    
+    
+    
+    
+    <string name="learn_more">بیشتر بدانید</string>
+    
+    
+    
+    
+    <string name="icon_volume">آیکون صدا</string>
+    
+    
+    
+    
+    <string name="icon_ad">آیکون تبلیغ</string>
+    
+    
+    
+    
+    <string name="ad_title">بهبود صدای دستگاه</string>
+    
+    
+    
+    
+    <string name="ad_subtitle">کیفیت پریمیوم برای صدای شما.</string>
+    
+    
+    
+    
+    <string name="install">نصب</string>
+    
+    
+    
+    
+    <string name="start_test">شروع تست</string>
+    <string name="stop_test">توقف تست</string>
+    <string name="testing">در حال تست</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">برای اجرای عیب‌یابی کامل اسپیکر روی شروع ضربه بزنید.</string>
+    <string name="auto_test_hint_running">در حال پخش صدا... با دقت گوش دهید و صدا را ثابت نگه دارید.</string>
+    <string name="auto_test_hint_complete">تست کامل شد. در حال باز کردن نتایج...</string>
+    <string name="unable_to_load_ad">قادر به بارگذاری تبلیغ نیست</string>
+    
+    
+    
+    
+    <string name="remove_ads">حذف تبلیغات</string>
+    
+    
+    
+    
+    <string name="home">صفحه اصلی</string>
+    
+    
+    
+    
+    <string name="settings">تنظیمات</string>
+    
+    
+    
+    
+    <string name="rate_app">امتیاز به برنامه</string>
+    
+    
+    
+    
+    <string name="share_this_app">اشتراک‌گذاری این برنامه</string>
+    
+    
+    
+    
+    <string name="send_feedback">ارسال بازخورد</string>
+    
+    
+    
+    
+    <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
+    
+    
+    
+    
+    <string name="change_language">تغییر زبان</string>
+    
+    
+    
+    
+    <string name="wow_thank_you_so_much">وای! خیلی ممنون</string>
+    
+    
+    
+    
+    <string name="help_us_reach_perfection">با بازخورد خود به ما برای رسیدن به کمال کمک کنید.</string>
+    
+    
+    
+    
+    <string name="rate_on_play_store">امتیاز در پلی استور</string>
+    
+    
+    
+    
+    <string name="error">خطا</string>
+    
+    
+    
+    
+    <string name="something_went_wrong">مشکلی پیش آمد</string>
+    
+    
+    
+    
+    <string name="retry">تلاش مجدد</string>
+    
+    
+    
+    
+    <string name="wait">صبر کنید</string>
+    
+    
+    
+    
+    <string name="unlock_premium_features">باز کردن ویژگی‌های پریمیوم</string>
+    
+    
+    
+    
+    <string name="daily_notification">اعلان روزانه</string>
+    
+    
+    
+    
+    <string name="free">رایگان</string>
+    
+    
+    
+    
+    <string name="features">ویژگی‌ها</string>
+    
+    
+    
+    
+    <string name="unlock_all_features">باز کردن تمام ویژگی‌ها</string>
+    
+    
+    
+    
+    <string name="premium">پریمیوم</string>
+    
+    
+    
+    
+    <string name="_3_days_free_trial">شروع دوره آزمایشی رایگان 3 روزه</string>
+    
+    
+    
+    
+    <string name="most_popular">محبوب‌ترین</string>
+    
+    
+    
+    
+    <string name="start_free_trial">شروع دوره آزمایشی رایگان 3 روزه</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly_with_price">اشتراک ماهانه – %1$s</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly_with_price">اشتراک هفتگی – %1$s</string>
+    
+    
+    
+    
+    <string name="purchase_successfully">خرید با موفقیت انجام شد</string>
+    
+    
+    
+    
+    <string name="subscribe_weekly">اشتراک هفتگی</string>
+    
+    
+    
+    
+    <string name="subscribe_monthly">اشتراک ماهانه</string>
+    
+    
+    
+    
+    <string name="premium_error_dialog_message">مشکلی در اشتراک شما وجود دارد. برای رفتن به تنظیمات اشتراک Google Play و اصلاح روش پرداخت خود روی CONTINUE کلیک کنید.</string>
+    
+    
+    
+    
+    <string name="success_title">موفقیت</string>
+    
+    
+    
+    
+    <string name="cleaning_complete">تمام شدن پاکسازی</string>
+    
+    
+    
+    
+    <string name="cleaning_complete_subtitle">اسپیکر شما اکنون تمیز و بهینه شده است</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete">پاکسازی دستی کامل شد</string>
+    
+    
+    
+    
+    <string name="manual_cleaning_complete_subtitle">پاکسازی دستی با موفقیت به پایان رسید</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete">پاکسازی لرزشی کامل شد</string>
+    
+    
+    
+    
+    <string name="vibration_cleaning_complete_subtitle">تست لرزش با موفقیت به پایان رسید</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete">تست اسپیکر کامل شد</string>
+    
+    
+    
+    
+    <string name="speaker_test_complete_subtitle">تمام تشخیص‌های اسپیکر موفقیت‌آمیز بود</string>
+    
+    
+    
+    
+    <string name="test_speaker">تست اسپیکر</string>
+    
+    
+    
+    
+    <string name="try_again">دوباره تلاش کنید</string>
+    
+    
+    
+    
+    <string name="try_other_features">سایر ویژگی‌ها را امتحان کنید</string>
+    
+    
+    
+    
+    <string name="smart_cleaning">پاکسازی هوشمند</string>
+    
+    
+    
+    
+    <string name="vibration_mode">لرزش</string>
+    
+    
+    
+    
+    <string name="shake_out_dust">تکان دادن گرد و غبار</string>
+    
+    
+    
+    
+    <string name="manual_cleaner_subtitle">تنظیم دقیق دستی</string>
+    
+    
+
+    
+    <string name="close">بستن</string>
+    
+    
+    
+    
+    <string name="weekly_subscription">اشتراک هفتگی</string>
+    
+    
+    
+    
+    <string name="monthly_subscription">اشتراک ماهانه</string>
+    
+    
+    
+    
+    <string name="free_trial_disclaimer">%1$s/هفتگی پس از دوره آزمایشی رایگان 3 روزه</string>
+    
+    
+    
+    
+
+    
+    
+    
+    <string name="loading">در حال بارگذاری</string>
+    
+    
+    
+    
+    <string name="allow">اجازه دادن</string>
+    
+    
+    
+    
+    <string name="not_now">اکنون نه</string>
+    
+    
+    
+    
+    <string name="stay_updated_with_notifications">با اعلان‌ها به‌روز بمانید</string>
+    
+    
+    
+    
+    <string name="notification_description">ما برای مطلع نگه داشتن شما از به‌روزرسانی‌های مهم به مجوز اعلان نیاز داریم. این امر تجربه کاربری بهتری با هشدارهای به موقع را تضمین می‌کند.</string>
+    
+    
+    
+    
+    <string name="allow_access">اجازه دسترسی</string>
+    
+    
+    
+    
+    <string name="maybe_later">شاید بعداً</string>
+    
+    
+
+
+    
+    
+    <string name="initializing_speaker_cleaner">در حال آماده‌سازی پاک‌کننده اسپیکر</string>
+    <string name="remove_water_amp_dust">حذف آب و گرد و غبار</string>
+    <string name="intensity_level">سطح شدت</string>
+    <string name="vibration_disabled_msg">لرزش سیستم غیرفعال است. لطفا برای عملکرد این ویژگی آن را فعال کنید.</string>
+    <string name="enable">فعال کردن</string>
+    <string name="start_like_a_pro">مثل یک حرفه‌ای شروع کنید</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">اشتراک به‌صورت خودکار تمدید می‌شود مگر اینکه حداقل ۲۴ ساعت قبل از تمدید لغو شود.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">در صورت لغو نشدن تا ۲۴+ ساعت قبل از تمدید، اشتراک خودکار تمدید می‌شود. هر زمان در Google Play مدیریت یا لغو کنید.</string>
+    <string name="unlimited_cleaning">پاکسازی نامحدود</string>
+    <string name="deep_water_and_dust_removal">حذف عمیق آب و گرد و غبار</string>
+    <string name="ad_free_experience">تجربه بدون تبلیغات</string>
+    <string name="boosted_sound_and_vibration">صدا و لرزش تقویت‌شده</string>
+    <string name="open_document">باز کردن سند</string>
+    <string name="browse_files_securely">فایل‌های خود را با امنیت مرور کنید</string>
+    <string name="browse_files">مرور فایل‌ها</string>
+    <string name="quick_access">دسترسی سریع</string>
+    <string name="view_all">مشاهده همه</string>
+    <string name="no_recent_files">هنوز فایل اخیر وجود ندارد</string>
+    <string name="starred_content_subtitle">مهم‌ترین اسناد شما در یک مکان.</string>
+    <string name="no_favorites_yet">هنوز مورد علاقه‌ای وجود ندارد</string>
+    <string name="favorites_hint">برای افزودن هر سند به علاقه‌مندی‌ها روی آیکن ستاره بزنید.</string>
+    <string name="settings_subtitle">ترجیحات برنامه و جزئیات حساب خود را مدیریت کنید.</string>
+    <string name="appearance">ظاهر</string>
+    <string name="about">درباره</string>
+    <string name="dark_mode">حالت تاریک</string>
+    <string name="language">زبان</string>
+    <string name="clear_history">پاک کردن سابقه</string>
+    <string name="more_options">گزینه‌های بیشتر</string>
+    <string name="document_viewer">نمایشگر سند</string>
+    <string name="zoom_out">کوچک‌نمایی</string>
+    <string name="zoom_in">بزرگ‌نمایی</string>
+    <string name="bookmark">نشانک</string>
+    <string name="document_page">صفحه سند</string>
+    <string name="document">سند</string>
+    <string name="search">جستجو</string>
+    <string name="open">باز کردن</string>
+    <string name="add_to_favorites">افزودن به علاقه‌مندی‌ها</string>
+    <string name="remove_from_favorites">حذف از علاقه‌مندی‌ها</string>
+    <string name="share_file">اشتراک‌گذاری فایل</string>
+    <string name="file_details">جزئیات فایل</string>
+    <string name="file_details_format">نام: %1$s\nنوع: %2$s\nاندازه: %3$d بایت</string>
+    <string name="file_name_value">نام: %1$s</string>
+    <string name="file_type_value">نوع: %1$s</string>
+    <string name="file_size_value">اندازه: %1$s</string>
+    <string name="file_last_opened_value">آخرین باز شدن: %1$s</string>
+    <string name="preview_not_available">پیش‌نمایش در دسترس نیست</string>
+    <string name="unable_to_load_text">بارگذاری متن ممکن نشد</string>
+    <string name="recent_files">فایل‌های اخیر</string>
+    <string name="favorites">علاقه‌مندی‌ها</string>
+    <string name="history_cleared">سابقه پاک شد</string>
+</resources>

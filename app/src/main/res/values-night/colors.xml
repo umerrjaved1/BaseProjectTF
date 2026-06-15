@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#1E1F24</color>
+    <color name="black">#FFFFFF</color>
+    <color name="bg_color">#121318</color>
+    <color name="text_color_primary">#F1F5F9</color>
+    <color name="text_color_secondary">#9CA3AF</color>
+    <color name="stroke_color">#2A2C33</color>
+
+    <color name="accent_color">#6AB3FF</color>
+    <color name="text_color_blue">#6AB3FF</color>
+    <color name="primary_color_light">#1A2A3A</color>
+    <color name="onboarding_circle">#1E293B</color>
+    <color name="onboarding_indicator_active">#6AB3FF</color>
+    <color name="onboarding_indicator_inactive">#334155</color>
+    <color name="accent_light">#1A2A3A</color>
+</resources>

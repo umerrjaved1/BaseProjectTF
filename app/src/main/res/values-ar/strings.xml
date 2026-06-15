@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admob_app_id" translatable="false">ca-app-pub-6412217023250030~5996179048</string>
+
+    <string name="splash_title">شاشة البداية</string>
+    <string name="splash_description">وصف شاشة البداية.</string>
+    <string name="onboarding_title_1">منظف تلقائي</string>
+    <string name="onboarding_title_2">تحكم يدوي</string>
+    <string name="onboarding_title_3">وضع الاهتزاز</string>
+    <string name="onboarding_desc_1">إخراج الماء تلقائيًا باستخدام ترددات صوتية محسنة.</string>
+    <string name="onboarding_desc_2">ضبط التردد ومستوى الصوت للحصول على تجربة تنظيف مخصصة وقوية.</string>
+    <string name="onboarding_desc_3">التخلص من جزيئات الغبار والماء المستعصية بنبضات اهتزاز عميقة.</string>
+    <string name="iap_feature_1">الميزة 1</string>
+
+
+    <string name="iap_feature_2">الميزة 2</string>
+
+
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">علامة الصورة</string>
+
+
+    <string name="icon_checked">أيقونة مؤشرة</string>
+
+
+    <string name="done">تم</string>
+
+
+    <string name="choose_language">اختر اللغة</string>
+
+
+    <string name="language_subtitle">اختر لغتك المفضلة للواجهة والتعليمات.</string>
+
+
+    <string name="icon_back">أيقونة الرجوع</string>
+
+
+    <string name="please_select_a_language">يرجى اختيار اللغة</string>
+
+
+    <string name="exit_application">خروج من التطبيق</string>
+
+
+    <string name="are_you_sure_you_want_to_exit_this_application">هل أنت متأكد أنك تريد الخروج من هذا التطبيق؟</string>
+
+
+    <string name="no">لا</string>
+
+
+    <string name="yes">نعم</string>
+
+
+    <string name="cancel">إلغاء</string>
+
+
+    <string name="exit">خروج</string>
+
+
+    <string name="do_you_want_to_open_network_settings">هل تريد فتح إعدادات الشبكة؟</string>
+
+
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت!</string>
+
+
+    <string name="skip">تخطي</string>
+
+
+    <string name="continuee">متابعة</string>
+
+
+    <string name="get_started">ابدأ الآن</string>
+
+
+    <string name="nav_home">الرئيسية</string>
+
+
+    <string name="home_hero_title">تنظيف السماعة</string>
+    <string name="home_hero_subtitle">إزالة الماء والغبار فوراً</string>
+    <string name="home_quick_actions">إجراءات سريعة</string>
+    <string name="auto_cleaner">منظف تلقائي</string>
+    <string name="manual_cleaner">يدوي</string>
+    <string name="vibration">اهتزاز</string>
+    <string name="speaker_test">اختبار السماعة</string>
+    <string name="auto_cleaner_hint">إصلاح بضغطة واحدة</string>
+    <string name="manual_cleaner_hint">تردد مخصص</string>
+    <string name="vibration_hint">هز عميق</string>
+    <string name="speaker_test_hint">تحقق من الجودة</string>
+    <string name="manual_cleaner_title">منظف يدوي</string>
+    <string name="vibration_cleaner_title">منظف الاهتزاز</string>
+    <string name="frequency_range">نطاق التردد</string>
+    <string name="frequency_range_value">100 هرتز – 1000 هرتز</string>
+    <string name="ejection_frequency">تردد الإخراج</string>
+    <string name="hz">هرتز</string>
+    <string name="cleaning_duration">مدة التنظيف</string>
+    <string name="seconds_30">30 ثانية</string>
+    <string name="seconds_45">45 ثانية</string>
+    <string name="seconds_60">60 ثانية</string>
+    <string name="info">معلومات</string>
+
+
+    <string name="icon_menu">أيقونة القائمة</string>
+
+
+    <string name="icon_premium">أيقونة المميز</string>
+
+
+    <string name="icon_speaker_cleaning">أيقونة تنظيف السماعة</string>
+    <string name="navigation">الملاحة</string>
+    <string name="ad">إعلان</string>
+    <string name="boost_battery_life">تحسين عمر البطارية</string>
+    <string name="ad_download_companion">قم بتنزيل تطبيقنا المصاحب</string>
+    <string name="cleaning">تنظيف</string>
+    <string name="speaker">سماعة</string>
+    <string name="earphone">سماعة أذن</string>
+    <string name="volume">مستوى الصوت</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">بدء التنظيف</string>
+    <string name="stop_cleaning">إيقاف التنظيف</string>
+    <string name="start_vibration_test">بدء اختبار الاهتزاز</string>
+    <string name="stop_vibration_test">إيقاف اختبار الاهتزاز</string>
+    <string name="manual_test_hint_idle">اضبط التردد واضغط على ابدأ.</string>
+    <string name="manual_test_hint_running">تشغيل النغمة... يمكنك التوقف في أي وقت.</string>
+    <string name="remaining_seconds">%1$d ثانية</string>
+    <string name="system_diagnostic_active">تشخيص النظام نشط</string>
+    <string name="left_speaker">السماعة اليسرى</string>
+    <string name="right_speaker">السماعة اليمنى</string>
+    <string name="stereo_balance">توازن الستيريو</string>
+    <string name="high_freq">تردد عالٍ</string>
+    <string name="passed">ناجح</string>
+    <string name="running">قيد التشغيل</string>
+    <string name="ready">جاهز</string>
+    <string name="run_full_diagnostic">تشغيل تشخيص كامل</string>
+    <string name="cleaning_in_progress">التنظيف قيد التقدم</string>
+    <string name="wait_until_vibration_finishes">انتظر حتى ينتهي الاهتزاز</string>
+    <string name="vibration_test_ready">اختبار الاهتزاز جاهز</string>
+    <string name="vibration_test_running">اختبار الاهتزاز قيد التشغيل</string>
+    <string name="vibration_test_hint">اضغط على ابدأ للشعور بنمط الاهتزاز.</string>
+    <string name="normal">عادي</string>
+    <string name="medium">متوسط</string>
+    <string name="high">عالٍ</string>
+    <string name="sponsored">ممول</string>
+
+
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+
+
+    <string name="premium_protection_subtitle">احتفظ بجهازك نظيفًا وآمنًا على مدار الساعة</string>
+
+
+    <string name="learn_more">اعرف المزيد</string>
+
+
+    <string name="icon_volume">أيقونة الصوت</string>
+
+
+    <string name="icon_ad">أيقونة الإعلان</string>
+
+
+    <string name="ad_title">تحسين صوت الجهاز</string>
+
+
+    <string name="ad_subtitle">جودة مميزة للصوت الخاص بك.</string>
+
+
+    <string name="install">تثبيت</string>
+
+
+    <string name="start_test">بدء الاختبار</string>
+    <string name="stop_test">إيقاف الاختبار</string>
+    <string name="testing">جاري الاختبار</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">اضغط على ابدأ لتشغيل تشخيص السماعة الكامل.</string>
+    <string name="auto_test_hint_running">تشغيل النغمات... استمع جيداً وحافظ على استقرار الصوت.</string>
+    <string name="auto_test_hint_complete">اكتمل الاختبار. يتم فتح النتائج...</string>
+    <string name="unable_to_load_ad">تعذر تحميل الإعلان</string>
+
+
+    <string name="remove_ads">إزالة الإعلانات</string>
+
+
+    <string name="home">الرئيسية</string>
+
+
+    <string name="settings">الإعدادات</string>
+
+
+    <string name="rate_app">قيم التطبيق</string>
+
+
+    <string name="share_this_app">شارك هذا التطبيق</string>
+
+
+    <string name="send_feedback">أرسل ملاحظاتك</string>
+
+
+    <string name="privacy_policy">سياسة الخصوصية</string>
+
+
+    <string name="change_language">تغيير اللغة</string>
+
+
+    <string name="wow_thank_you_so_much">واو! شكرًا جزيلاً لك</string>
+
+
+    <string name="help_us_reach_perfection">ساعدنا في الوصول إلى الكمال بملاحظاتك.</string>
+
+
+    <string name="rate_on_play_store">قيم على متجر Play</string>
+
+
+    <string name="error">خطأ</string>
+
+
+    <string name="something_went_wrong">حدث خطأ ما</string>
+
+
+    <string name="retry">إعادة المحاولة</string>
+
+
+    <string name="wait">انتظر</string>
+
+
+    <string name="unlock_premium_features">فتح الميزات المميزة</string>
+
+
+    <string name="daily_notification">إشعار يومي</string>
+
+
+    <string name="free">مجاني</string>
+
+
+    <string name="features">الميزات</string>
+
+
+    <string name="unlock_all_features">فتح جميع الميزات</string>
+
+
+    <string name="premium">مميز</string>
+
+
+    <string name="_3_days_free_trial">ابدأ تجربة مجانية لمدة 3 أيام</string>
+
+
+    <string name="most_popular">الأكثر شيوعًا</string>
+
+
+    <string name="start_free_trial">ابدأ تجربة مجانية لمدة 3 أيام</string>
+
+
+    <string name="subscribe_monthly_with_price">اشترك شهريًا – %1$s</string>
+
+
+    <string name="subscribe_weekly_with_price">اشترك أسبوعيًا – %1$s</string>
+
+
+    <string name="purchase_successfully">تم الشراء بنجاح</string>
+
+
+    <string name="subscribe_weekly">اشترك أسبوعيًا</string>
+
+
+    <string name="subscribe_monthly">اشترك شهريًا</string>
+
+
+    <string name="premium_error_dialog_message">هناك مشكلة في اشتراكك. انقر فوق متابعة للذهاب إلى إعدادات الاشتراك في Google Play لإصلاح طريقة الدفع الخاصة بك.</string>
+
+
+    <string name="success_title">نجح</string>
+
+
+    <string name="cleaning_complete">تم التنظيف</string>
+
+
+    <string name="cleaning_complete_subtitle">السماعة الآن نظيفة ومحسّنة</string>
+
+
+    <string name="manual_cleaning_complete">اكتمل التنظيف اليدوي</string>
+
+
+    <string name="manual_cleaning_complete_subtitle">اكتمل التنظيف اليدوي بنجاح</string>
+
+
+    <string name="vibration_cleaning_complete">اكتمل تنظيف الاهتزاز</string>
+
+
+    <string name="vibration_cleaning_complete_subtitle">اكتمل اختبار الاهتزاز بنجاح</string>
+
+
+    <string name="speaker_test_complete">اكتمل اختبار السماعة</string>
+
+
+    <string name="speaker_test_complete_subtitle">جميع تشخيصات السماعة نجحت</string>
+
+
+    <string name="test_speaker">اختبار السماعة</string>
+
+
+    <string name="try_again">حاول مرة أخرى</string>
+
+
+    <string name="try_other_features">جرب ميزات أخرى</string>
+
+
+    <string name="smart_cleaning">التنظيف الذكي</string>
+
+
+    <string name="vibration_mode">اهتزاز</string>
+
+
+    <string name="shake_out_dust">هز الغبار</string>
+
+
+    <string name="manual_cleaner_subtitle">ضبط يدوي دقيق</string>
+
+
+    <string name="close">إغلاق</string>
+
+
+    <string name="weekly_subscription">اشتراك أسبوعي</string>
+
+
+    <string name="monthly_subscription">اشتراك شهري</string>
+
+
+    <string name="free_trial_disclaimer">%1$s/أسبوعيًا بعد تجربة مجانية لمدة 3 أيام</string>
+
+
+
+
+    <string name="loading">جاري التحميل</string>
+
+
+    <string name="allow">السماح</string>
+
+
+    <string name="not_now">ليس الآن</string>
+
+
+    <string name="stay_updated_with_notifications">ابق على اطلاع بالإشعارات</string>
+
+
+    <string name="notification_description">نحتاج إلى إذن الإشعارات لإبقائك على اطلاع بالتحديثات المهمة. يضمن ذلك تجربة مستخدم أفضل مع تنبيهات في الوقت المناسب.</string>
+
+
+    <string name="allow_access">السماح بالوصول</string>
+
+
+    <string name="maybe_later">ربما لاحقًا</string>
+
+
+    <string name="initializing_speaker_cleaner">جاري تهيئة منظف السماعة</string>
+    <string name="remove_water_amp_dust">إزالة الماء والغبار</string>
+    <string name="intensity_level">مستوى الكثافة</string>
+    <string name="vibration_disabled_msg">تم تعطيل اهتزاز النظام. يرجى تمكينه لتعمل هذه الميزة.</string>
+    <string name="enable">تفعيل</string>
+    <string name="start_like_a_pro">ابدأ كالمحترف</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">يتم تجديد الاشتراك تلقائيًا ما لم يتم الإلغاء قبل 24 ساعة على الأقل من موعد التجديد.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">يتجدد تلقائيًا ما لم يتم الإلغاء قبل 24+ ساعة من موعد التجديد. يمكنك الإدارة أو الإلغاء في Google Play في أي وقت.</string>
+    <string name="unlimited_cleaning">تنظيف غير محدود</string>
+    <string name="deep_water_and_dust_removal">إزالة عميقة للماء والغبار</string>
+    <string name="ad_free_experience">تجربة بدون إعلانات</string>
+    <string name="boosted_sound_and_vibration">صوت واهتزاز معززان</string>
+    <string name="open_document">فتح المستند</string>
+    <string name="browse_files_securely">تصفح ملفاتك بأمان</string>
+    <string name="browse_files">تصفح الملفات</string>
+    <string name="quick_access">وصول سريع</string>
+    <string name="view_all">عرض الكل</string>
+    <string name="no_recent_files">لا توجد ملفات حديثة بعد</string>
+    <string name="starred_content_subtitle">أهم مستنداتك في مكان واحد.</string>
+    <string name="no_favorites_yet">لا توجد مفضلات بعد</string>
+    <string name="favorites_hint">اضغط على رمز النجمة على أي مستند لإضافته إلى المفضلة.</string>
+    <string name="settings_subtitle">إدارة تفضيلات التطبيق وتفاصيل الحساب.</string>
+    <string name="appearance">المظهر</string>
+    <string name="about">حول</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="language">اللغة</string>
+    <string name="clear_history">مسح السجل</string>
+    <string name="more_options">خيارات إضافية</string>
+    <string name="document_viewer">عارض المستندات</string>
+    <string name="zoom_out">تصغير</string>
+    <string name="zoom_in">تكبير</string>
+    <string name="bookmark">إشارة مرجعية</string>
+    <string name="document_page">صفحة المستند</string>
+    <string name="document">مستند</string>
+    <string name="search">بحث</string>
+    <string name="open">فتح</string>
+    <string name="add_to_favorites">إضافة إلى المفضلة</string>
+    <string name="remove_from_favorites">إزالة من المفضلة</string>
+    <string name="share_file">مشاركة الملف</string>
+    <string name="file_details">تفاصيل الملف</string>
+    <string name="file_details_format">الاسم: %1$s\nالنوع: %2$s\nالحجم: %3$d بايت</string>
+    <string name="file_name_value">الاسم: %1$s</string>
+    <string name="file_type_value">النوع: %1$s</string>
+    <string name="file_size_value">الحجم: %1$s</string>
+    <string name="file_last_opened_value">آخر فتح: %1$s</string>
+    <string name="preview_not_available">المعاينة غير متاحة</string>
+    <string name="unable_to_load_text">تعذر تحميل النص</string>
+    <string name="recent_files">الملفات الحديثة</string>
+    <string name="favorites">المفضلة</string>
+    <string name="history_cleared">تم مسح السجل</string>
+</resources>

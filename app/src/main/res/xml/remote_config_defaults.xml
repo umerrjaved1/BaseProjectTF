@@ -1,0 +1,11 @@
+<defaultsMap>
+    <!-- Example of setting default values for different types -->
+    <entry>
+        <key>firs_launch</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>show_ads</key>
+        <value>false</value>
+    </entry>
+</defaultsMap>
