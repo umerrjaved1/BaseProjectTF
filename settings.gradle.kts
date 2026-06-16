@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         google {
@@ -11,9 +13,11 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -25,13 +29,18 @@ dependencyResolutionManagement {
         maven { url = uri("https://maven.google.com") }
 
         maven {
-            url = uri("https://maven.pkg.github.com/RanaUmer1/MzalogicsAdManager")
+            url = uri("https://maven.pkg.github.com/umerrjaved1/AdsManager")
             credentials {
-                username = providers.gradleProperty("gpr.user").orNull
-                password = providers.gradleProperty("gpr.key").orNull
+                val localProps = Properties()
+                val localPropsFile = settingsDir.resolve("local.properties")
+                if (localPropsFile.exists()) {
+                    localProps.load(localPropsFile.inputStream())
+                }
+                username = localProps.getProperty("gpr.user") ?: providers.gradleProperty("gpr.user").orNull
+                password = localProps.getProperty("gpr.key") ?: providers.gradleProperty("gpr.key").orNull
             }
             content {
-                includeGroup("com.mzalogics.admob")
+                includeGroup("com.umer_tf.ads")
             }
         }
     }

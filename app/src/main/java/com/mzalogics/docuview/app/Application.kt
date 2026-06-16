@@ -1,6 +1,7 @@
 package com.mzalogics.docuview.app
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +10,11 @@ import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.multidex.MultiDexApplication
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.mzalogics.ads.domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.core.AdMobManager
 import com.mzalogics.docuview.constants.Constants
 import com.mzalogics.docuview.iab.AppBillingClient
 import com.mzalogics.docuview.iab.ConnectResponse
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class Application : MultiDexApplication(), DefaultLifecycleObserver {
+class Application : Application(), DefaultLifecycleObserver {
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -66,7 +66,7 @@ class Application : MultiDexApplication(), DefaultLifecycleObserver {
     }
 
     override fun onCreate() {
-        super<MultiDexApplication>.onCreate()
+        super<Application>.onCreate()
 
         AppCompatDelegate.setDefaultNightMode(
             appPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_NO)

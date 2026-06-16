@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.mzalogics.ads.domain.ads.native_ad.NativeAdBuilder
-import com.mzalogics.ads.domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.ads .domain.core.AdMobManager
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.model.OnboardingItem
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager

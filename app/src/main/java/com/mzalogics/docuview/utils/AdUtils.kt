@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.mzalogics.ads.domain.ads.native_ad.NativeAdBuilder
-import com.mzalogics.ads.domain.core.AdMobManager
-import com.mzalogics.ads.domain.utils.LoadingDialogUtil
+import com.umer_tf.ads.ads .domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.ads .domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.utils.LoadingDialogUtil
 import com.mzalogics.docuview.R
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager

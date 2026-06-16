@@ -1,17 +1,26 @@
+@file:Suppress("UnstableApiUsage")
+
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ksp)
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "com.google.firebase" && requested.name == "firebase-crashlytics-ktx") {
+            useVersion(libs.versions.firebaseCrashlyticsKtx.get())
+        }
+    }
 }
 
 android {
     namespace = "com.mzalogics.docuview"
-    compileSdk = 36
+    compileSdk = 37
 
     signingConfigs {
         create("release") {
@@ -24,12 +33,11 @@ android {
     defaultConfig {
         applicationId = "com.mzalogics.docuview"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "Document_Viewer_vCode_${versionCode}_vName${versionName}")
         val localProperties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
 
@@ -45,11 +53,10 @@ android {
             "\"${localProperties.getProperty("BASE_URL", "https://your-default-api.com/")}\""
         )
 
-        resourceConfigurations.addAll(
-            listOf(
-                "en", "ar", "es", "in", "fa", "hi", "ru", "pt", "bn", "tr"
-            )
-        )
+    }
+
+    androidResources {
+        localeFilters += listOf("en", "ar", "es", "in", "fa", "hi", "ru", "pt", "bn", "tr")
     }
 
     bundle {
@@ -60,6 +67,7 @@ android {
 
     buildTypes {
         release {
+
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -79,6 +87,10 @@ android {
     }
 }
 
+base {
+    archivesName.set("Document_Viewer_vCode_${android.defaultConfig.versionCode}_vName${android.defaultConfig.versionName}")
+}
+
 kotlin {
     jvmToolchain(17)
 }
@@ -96,7 +108,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.multidex)
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.gson)
@@ -110,16 +121,16 @@ dependencies {
     // Hilt DI
     implementation(libs.hilt.android)
 
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     // Shimmer
     implementation(libs.shimmer)
 
 
     // Firebase (BOM)
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
-    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.config)
     implementation(libs.billing.ktx)
     implementation(libs.ads)
 

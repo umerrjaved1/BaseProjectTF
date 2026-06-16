@@ -19,8 +19,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mzalogics.ads.domain.ads.native_ad.NativeAdBuilder
-import com.mzalogics.ads.domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.ads .domain.core.AdMobManager
 import com.mzalogics.docuview.adapter.LanguageAdapter
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.app.AnalyticsManager

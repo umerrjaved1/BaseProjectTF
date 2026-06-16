@@ -9,7 +9,7 @@ Email: umerr8019@gmail.com
  */
 import android.app.Application
 import com.google.gson.Gson
-import com.mzalogics.ads.domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.core.AdMobManager
 import com.mzalogics.docuview.data.DocumentRepository
 import com.mzalogics.docuview.data.DocumentRepositoryImpl
 import dagger.Module

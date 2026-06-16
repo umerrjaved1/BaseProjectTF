@@ -22,8 +22,8 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mzalogics.ads.domain.consent.AdsConsentManager
-import com.mzalogics.ads.domain.core.AdMobManager
+import com.umer_tf.ads.ads .domain.consent.AdsConsentManager
+import com.umer_tf.ads.ads .domain.core.AdMobManager
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.app.AnalyticsManager
 import com.mzalogics.docuview.utils.AdFrequencyControl

@@ -115,6 +115,7 @@ class AppBillingClient () {
                 // Match purchases with available subscriptions
                 val updatedSubscriptions =
                     matchPurchasesWithSubscriptions(subscriptionItems, purchases)
+                this.activeSubscriptions = updatedSubscriptions
                 connectResponse.onConnected(updatedSubscriptions)
             }
         }
@@ -347,9 +348,9 @@ class AppBillingClient () {
     }
 
     fun checkSubscriptionStatus(sku: String): Boolean {
-        // This would typically check shared preferences or local database
-        // where you store subscription status after verification with your backend
-        return false
+        // Verify if the activeSubscriptions contains the sku and it has a subscribed item
+        val subscription = activeSubscriptions.find { it.sku == sku }
+        return subscription?.subscribedItem != null
     }
 
     fun refreshSubscriptionStatus(callback: (List<SubscriptionItem>) -> Unit) {
@@ -361,15 +362,18 @@ class AppBillingClient () {
         queryAvailableSubscriptions { subscriptions ->
             queryExistingPurchases { purchases ->
                 val updatedSubscriptions = matchPurchasesWithSubscriptions(subscriptions, purchases)
+                this.activeSubscriptions = updatedSubscriptions
                 callback(updatedSubscriptions)
             }
         }
     }
 
     fun isSubscribed(sku: String): Boolean {
-        // Implement your subscription verification logic here
-        // This should check both local cache and verify with your backend
-        return false
+        return checkSubscriptionStatus(sku)
+    }
+
+    fun hasAnyActiveSubscription(): Boolean {
+        return activeSubscriptions.any { it.subscribedItem != null }
     }
 
     fun disconnect() {
