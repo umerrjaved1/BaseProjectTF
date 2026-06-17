@@ -44,7 +44,12 @@ class OnboardingAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: OnboardingItem) {
             binding.tvTitle.text = item.title
-            binding.tvSubtitle.text = item.description
+            if (item.description.isEmpty()) {
+                binding.tvSubtitle.visibility = View.GONE
+            } else {
+                binding.tvSubtitle.visibility = View.VISIBLE
+                binding.tvSubtitle.text = item.description
+            }
             Glide.with(binding.ivMainImage)
                 .load(item.imageRes)
                 .into(binding.ivMainImage)

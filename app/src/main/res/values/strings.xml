@@ -6,9 +6,10 @@
     <string name="splash_title">Splash Title</string>
     <string name="splash_description">Splash Description.</string>
 
-    <string name="onboarding_title_1">Open documents instantly</string>
-    <string name="onboarding_title_2">Supports all formats</string>
-    <string name="onboarding_title_3">No storage permission needed</string>
+    <string name="onboarding_title_1">Clean junk in one tap</string>
+    <string name="onboarding_title_2">Boost Phone Speed</string>
+    <string name="onboarding_title_3">Managing Large File</string>
+    <string name="onboarding_title_4">Remove Duplicate Files</string>
 
     <string name="onboarding_desc_1">Access files using system picker — no storage permission needed</string>
     <string name="onboarding_desc_2">PDF • Word • Excel • PowerPoint • TXT • and more</string>
@@ -276,5 +277,7 @@
     <string name="recent_files">Recent Files</string>
     <string name="favorites">Favorites</string>
     <string name="history_cleared">History cleared</string>
+    <string name="swift_cleaner">Swift Cleaner</string>
+    <string name="clean_your_phone">Clean your Phone</string>
 
 </resources>

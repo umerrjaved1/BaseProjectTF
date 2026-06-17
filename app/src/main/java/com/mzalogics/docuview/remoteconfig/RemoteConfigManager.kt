@@ -100,7 +100,6 @@ object RemoteConfigManager {
 
         showPremiumActivityOnResume=firebaseRemoteConfig.getBoolean(RemoteConfigKeys.SHOW_PREMIUM_ACTIVITY_ON_RESUME)
 
-        firebaseRemoteConfig.getBoolean(RemoteConfigKeys.REMOVE_ADS)
 
         notificationInitialDelay =
             firebaseRemoteConfig.getLong(RemoteConfigKeys.NOTIFICATION_DELAY_TIME)
@@ -123,7 +122,7 @@ object RemoteConfigManager {
 
     fun getShowPremiumActivityAfterThreeClick() = showPremiumActivityAfterThreeClick
 
-    fun shouldShowAds(): Boolean = showAds
+    fun shouldShowAds(): Boolean = true//showAds
 
     fun shouldShowPremiumActivityOnResume(): Boolean = showPremiumActivityOnResume
 

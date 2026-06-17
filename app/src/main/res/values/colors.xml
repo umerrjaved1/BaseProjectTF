@@ -5,19 +5,19 @@
 
 
     <!--    App colors-->
-    <color name="text_color_primary">#191C21</color>
-    <color name="text_color_blue">#005DA7</color>
-    <color name="text_color_secondary">#414751</color>
-    <color name="text_color_dark">#161717</color>
+    <color name="text_color_primary">#18222F</color>
+    <color name="text_color_blue">#3B82E0</color>
+    <color name="text_color_secondary">#6A7282</color>
+    <color name="text_color_dark">#030712</color>
 
-    <color name="accent_color">#005DA7</color>
+    <color name="accent_color">#3B82E0</color>
     <color name="tab_bg">#64748B</color>
     <color name="primary_color_10">#1A137FEC</color>
     <color name="primary_color_6">#0A137FEC</color>
     <color name="primary_color_light">#E6F4FF</color>
     <color name="stroke_color">#E2E8F0</color>
     <color name="dot_color">#737F8D4D</color>
-    <color name="bg_color">#F1F5F9</color>
+    <color name="bg_color">#F2F4F8</color>
     <color name="onboarding_circle">#EAF3FF</color>
     <color name="onboarding_indicator_active">#005DA7</color>
     <color name="onboarding_indicator_inactive">#D6E5F6</color>

@@ -264,8 +264,8 @@ class LanguageActivity : AppCompatActivity() {
 
     private fun onLanguageSelected(selectedLang: LanguageModel) {
         binding.btnDone.isEnabled = true
-        val popAnim = AnimationUtils.loadAnimation(this, R.anim.pop_button)
-        binding.btnDone.startAnimation(popAnim)
+        val pulseAnim = AnimationUtils.loadAnimation(this, R.anim.pulse_button)
+        binding.btnDone.startAnimation(pulseAnim)
         binding.btnDone.text = getString(
             when (selectedLang.id) {
                 1 -> R.string.done_in_arabic
@@ -306,7 +306,7 @@ class LanguageActivity : AppCompatActivity() {
         languageList.filterNot { it == defaultLanguage }
             .forEach { displayList.add(LanguageListItem.Language(it)) }
 
-        adapter = LanguageAdapter(defaultLanguage) {
+        adapter = LanguageAdapter(null) {
             viewModel.setSelectedLanguage(it.model)
             onLanguageSelected(it.model)
         }
@@ -314,9 +314,6 @@ class LanguageActivity : AppCompatActivity() {
         binding.rvLanguage.layoutManager = LinearLayoutManager(this)
         binding.rvLanguage.adapter = adapter
         adapter.submitList(displayList)
-
-        onLanguageSelected(defaultLanguage ?: languageList.first())
-        viewModel.setSelectedLanguage(defaultLanguage ?: languageList.first())
     }
 
 

@@ -67,19 +67,23 @@ class OnboardingActivity : AppCompatActivity() {
         val onboardingItems = listOf(
             OnboardingItem(
                 title = getString(R.string.onboarding_title_1),
-                description = getString(R.string.onboarding_desc_1),
+                description = "",
                 imageRes = R.drawable.ob_1
             ),
             OnboardingItem(
                 title = getString(R.string.onboarding_title_2),
-                description = getString(R.string.onboarding_desc_2),
+                description = "",
                 imageRes = R.drawable.ob_2
             ),
-
             OnboardingItem(
                 title = getString(R.string.onboarding_title_3),
-                description = getString(R.string.onboarding_desc_3),
+                description = "",
                 imageRes = R.drawable.ob_3
+            ),
+            OnboardingItem(
+                title = getString(R.string.onboarding_title_4),
+                description = "",
+                imageRes = R.drawable.ob_4
             )
         )
 
@@ -88,7 +92,6 @@ class OnboardingActivity : AppCompatActivity() {
 
         val hasAdPage = adapter.itemCount > onboardingItems.size
         setupDotsIndicator(onboardingItems.size, hasAdPage, binding.viewPager)
-
 
         binding.btnContinue.setClickWithTimeout {
             if (binding.viewPager.currentItem < adapter.itemCount - 1) {
@@ -101,7 +104,6 @@ class OnboardingActivity : AppCompatActivity() {
         binding.btnSkip.setClickWithTimeout {
             moveToMain()
         }
-
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -121,28 +123,35 @@ class OnboardingActivity : AppCompatActivity() {
         binding.btnContinue.text =
             if (isLastPage) getString(R.string.get_started) else getString(R.string.continuee)
 
-        binding.btnContinue.icon = if (isLastPage) null else ContextCompat.getDrawable(this, R.drawable.ic_small_arrow)
-
         binding.llIndicators.isVisible = true
-        binding.btnSkip.isVisible = !isAdPage && !isLastPage
+        binding.btnSkip.isVisible = false
         binding.btnContinue.isVisible = !isAdPage
         binding.includeAd.adRoot.isVisible = isLastPage
     }
 
     private fun setupDotsIndicator(contentPageCount: Int, hasAdPage: Boolean, viewPager: ViewPager2) {
         val dotContainer = binding.dotContainer
-        val dots = mutableListOf<TextView>()
+        dotContainer.removeAllViews()
+        val dots = mutableListOf<android.view.View>()
+
+        val density = resources.displayMetrics.density
+        fun dpToPx(dp: Int): Int = (dp * density).toInt()
+
         val totalPageCount = if (hasAdPage) contentPageCount + 1 else contentPageCount
 
         for (i in 0 until totalPageCount) {
-            val dot = TextView(this).apply {
-                text = "•"
-                textSize = 32f
-                setTextColor(
-                    if (i == 0) getColor(R.color.onboarding_indicator_active)
-                    else getColor(R.color.onboarding_indicator_inactive)
+            val dot = android.view.View(this).apply {
+                val params = android.widget.LinearLayout.LayoutParams(
+                    if (i == 0) dpToPx(16) else dpToPx(6),
+                    dpToPx(6)
+                ).apply {
+                    setMargins(dpToPx(4), 0, dpToPx(4), 0)
+                }
+                layoutParams = params
+                setBackgroundResource(
+                    if (i == 0) R.drawable.dot_active
+                    else R.drawable.dot_inactive
                 )
-                setPadding(2, 0, 2, 0)
             }
             dots.add(dot)
             dotContainer.addView(dot)
@@ -153,10 +162,15 @@ class OnboardingActivity : AppCompatActivity() {
                 val dotIndex = position.coerceIn(0, dots.lastIndex)
 
                 for (i in dots.indices) {
-                    dots[i].setTextColor(
-                        if (i == dotIndex) getColor(R.color.onboarding_indicator_active)
-                        else getColor(R.color.onboarding_indicator_inactive)
-                    )
+                    val params = dots[i].layoutParams as android.widget.LinearLayout.LayoutParams
+                    if (i == dotIndex) {
+                        params.width = dpToPx(16)
+                        dots[i].setBackgroundResource(R.drawable.dot_active)
+                    } else {
+                        params.width = dpToPx(6)
+                        dots[i].setBackgroundResource(R.drawable.dot_inactive)
+                    }
+                    dots[i].layoutParams = params
                 }
             }
         })

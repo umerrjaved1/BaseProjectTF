@@ -4,17 +4,18 @@
     android:id="@+id/shimmer_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/ad_bg_color"
+    android:clipToOutline="true"
     android:elevation="2dp"
     android:padding="8dp">
-
 
     <!-- Media View Placeholder -->
     <View
         android:id="@+id/shimmer_ad_media"
         android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="16:9"
         android:background="@color/shimmer_color"
         app:layout_constraintEnd_toStartOf="@+id/shimmer_ad_right"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         android:id="@+id/shimmer_ad_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +45,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
                 android:background="@color/shimmer_color" />
 
             <!-- Text placeholders -->
@@ -53,16 +55,31 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="100dp"
-                    android:layout_height="14dp"
-                    android:layout_marginBottom="6dp"
-                    android:background="@color/shimmer_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="18dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/bg_round_stroke_grey"
+                        android:backgroundTint="@color/shimmer_color" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="4dp"
+                        android:background="@color/shimmer_color" />
+                </LinearLayout>
 
                 <View
-                    android:layout_width="160dp"
-                    android:layout_height="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/shimmer_color" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -71,8 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginTop="8dp"
-            android:background="@color/shimmer_color"
+            android:background="@drawable/bg_round_accent"
             android:backgroundTint="@color/shimmer_color" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

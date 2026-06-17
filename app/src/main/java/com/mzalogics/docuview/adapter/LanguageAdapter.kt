@@ -1,7 +1,10 @@
 package com.mzalogics.docuview.adapter
 
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +62,9 @@ class LanguageAdapter(
 
     inner class LanguageViewHolder(private val binding: ItemLanguageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LanguageListItem.Language) {
+        private var animator: ObjectAnimator? = null
+
+        fun bind(item: LanguageListItem.Language, position: Int) {
             val languageModel = item.model
             binding.tvLanguage.text = languageModel.name
             binding.imgFlag.setImageResource(languageModel.flag)
@@ -70,7 +75,28 @@ class LanguageAdapter(
                 removeSelection()
             }
 
+            // Hand pointer animation logic for default language
+            if (selectedLanguageModel == null && position == 1) {
+                binding.ivHandPointer.visibility = View.VISIBLE
+                binding.ivHandPointer.rotation = 0f
+                
+                animator?.cancel()
+                val density = binding.root.context.resources.displayMetrics.density
+                val translationAmount = -10f * density
+                animator = ObjectAnimator.ofFloat(binding.ivHandPointer, "translationY", 0f, translationAmount).apply {
+                    duration = 800
+                    repeatCount = ObjectAnimator.INFINITE
+                    repeatMode = ObjectAnimator.REVERSE
+                    interpolator = AccelerateDecelerateInterpolator()
+                    start()
+                }
+            } else {
+                animator?.cancel()
+                binding.ivHandPointer.visibility = View.GONE
+            }
+
             binding.root.setClickWithTimeout {
+                val wasNullSelection = selectedLanguageModel == null
                 val oldPosition = currentList.indexOfFirst {
                     it is LanguageListItem.Language && it.model.id == selectedLanguageModel?.id
                 }
@@ -78,6 +104,10 @@ class LanguageAdapter(
                 selectedLanguageModel = languageModel
                 val newPosition = currentList.indexOfFirst {
                     it is LanguageListItem.Language && it.model.id == selectedLanguageModel?.id
+                }
+
+                if (wasNullSelection) {
+                    notifyItemChanged(1, "hideHandPointer")
                 }
 
                 if (oldPosition != newPosition) {
@@ -90,12 +120,17 @@ class LanguageAdapter(
 
         fun updateSelection() {
             binding.ivChecked.setImageResource(R.drawable.ic_check)
-            binding.root.setBackgroundResource(R.drawable.bg_lang_item_selected)
+            binding.llLanguageItem.setBackgroundResource(R.drawable.bg_lang_item_selected)
         }
 
         fun removeSelection() {
             binding.ivChecked.setImageResource(R.drawable.ic_lang_un_selected)
-            binding.root.setBackgroundResource(R.drawable.bg_lang_item_unselected)
+            binding.llLanguageItem.setBackgroundResource(R.drawable.bg_lang_item_unselected)
+        }
+
+        fun hideHandPointer() {
+            animator?.cancel()
+            binding.ivHandPointer.visibility = View.GONE
         }
     }
 
@@ -130,7 +165,7 @@ class LanguageAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is LanguageListItem.Header -> (holder as HeaderViewHolder).bind(item)
-            is LanguageListItem.Language -> (holder as LanguageViewHolder).bind(item)
+            is LanguageListItem.Language -> (holder as LanguageViewHolder).bind(item, position)
         }
     }
 
@@ -140,9 +175,12 @@ class LanguageAdapter(
         payloads: MutableList<Any>
     ) {
         if (payloads.isNotEmpty() && holder is LanguageViewHolder) {
-            when (payloads[0]) {
-                "updateSelection" -> holder.updateSelection()
-                "removeSelection" -> holder.removeSelection()
+            for (payload in payloads) {
+                when (payload) {
+                    "updateSelection" -> holder.updateSelection()
+                    "removeSelection" -> holder.removeSelection()
+                    "hideHandPointer" -> holder.hideHandPointer()
+                }
             }
         } else {
             super.onBindViewHolder(holder, position, payloads)

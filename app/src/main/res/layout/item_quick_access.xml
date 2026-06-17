@@ -11,6 +11,6 @@
     android:paddingVertical="8dp"
     android:textColor="@color/text_color_primary"
     android:textSize="14sp"
-    app:fontFamily="@font/inter_medium"
+    app:fontFamily="@font/plus_jakarta_sans_medium"
     android:drawablePadding="4dp"
     app:drawableTopCompat="@drawable/ic_pdf" />

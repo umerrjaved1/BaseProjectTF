@@ -10,37 +10,37 @@ Email: umerr8019@gmail.com
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.umer_tf.ads.domain.consent.AdsConsentManager
-import com.umer_tf.ads.domain.core.AdMobManager
+import com.mzalogics.docuview.R
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.app.AnalyticsManager
-import com.mzalogics.docuview.utils.AdFrequencyControl
-import com.mzalogics.docuview.utils.AdUnitFrequencyController
 import com.mzalogics.docuview.app.AppPreferences
 import com.mzalogics.docuview.constants.Constants
+import com.mzalogics.docuview.databinding.ActivityStartBinding
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
 import com.mzalogics.docuview.ui.viewmodel.StartViewModel
+import com.mzalogics.docuview.utils.AdFrequencyControl
+import com.mzalogics.docuview.utils.AdUnitFrequencyController
 import com.mzalogics.docuview.utils.UIState
-import com.mzalogics.docuview.databinding.ActivityStartBinding
-
+import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.domain.consent.AdsConsentManager
+import com.umer_tf.ads.domain.core.AdMobManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
+private var nativeAdTimeoutPosted = false
 
 @AndroidEntryPoint
 class StartActivity : AppCompatActivity() {
@@ -161,30 +161,13 @@ class StartActivity : AppCompatActivity() {
 
     }
 
-    private fun hideSystemUI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.setDecorFitsSystemWindows(false)
-            window.insetsController?.let {
-                it.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
-                it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                        View.SYSTEM_UI_FLAG_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        }
-    }
+
 
     private fun startOfflineFlow() {
         if (hasMovedToNext) return
         splashJob?.cancel()
         splashJob = lifecycleScope.launch {
-            delay(1200L)
+            delay(1200L.milliseconds)
             moveToNextScreen()
         }
     }
@@ -240,8 +223,89 @@ class StartActivity : AppCompatActivity() {
         if (adStrategy == 1) {
             showInterstitialAndNavigate()
         } else {
-            showOpenAdAndNavigate()
+//            showOpenAdAndNavigate()
+            showInterstitialAndNavigate()
         }
+        loadNativeAd()
+    }
+
+
+    private fun loadNativeAd() {
+        val shouldShowAds = !isPremium && RemoteConfigManager.shouldShowAds()
+        if (!shouldShowAds) {
+            binding.includeAd.adFrame.visibility = View.GONE
+            binding.includeAd.shimmerFbAd.visibility = View.GONE
+            binding.includeAd.shimmerFbAd.stopShimmer()
+//            showGetStartedButton()
+            return
+        }
+
+        if (adMobManager.nativeAdLoader.isAdLoaded()) {
+            binding.includeAd.shimmerFbAd.stopShimmer()
+            binding.includeAd.shimmerFbAd.visibility = View.GONE
+            binding.includeAd.adFrame.visibility = View.VISIBLE
+
+            adMobManager.nativeAdLoader.showLoadedAd(
+                NativeAdBuilder.Builder(
+                    R.layout.native_ad_onboarding,
+                    binding.includeAd.adFrame,
+                    binding.includeAd.shimmerFbAd
+                ).setShowBody(true)
+                    .setShowMedia(true)
+                    .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
+                    .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
+                    .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
+                    .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
+                    .build(), AdIds.getNativeAdId()
+            )
+//            showGetStartedButton()
+            return
+        }
+
+        binding.includeAd.adFrame.visibility = View.GONE
+        binding.includeAd.shimmerFbAd.visibility = View.VISIBLE
+        binding.includeAd.shimmerFbAd.startShimmer()
+        scheduleNativeAdTimeout()
+
+        adMobManager.nativeAdLoader.loadAndShow(
+            AdIds.getNativeAdId(),
+            NativeAdBuilder.Builder(
+                R.layout.native_ad_onboarding,
+                binding.includeAd.adFrame,
+                binding.includeAd.shimmerFbAd
+            ).setShowBody(true)
+                .setShowMedia(true)
+                .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
+                .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
+                .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
+                .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
+                .build()
+        ) { success ->
+            lifecycleScope.launch {
+//                nativeAdTimeoutPosted = false
+                binding.includeAd.shimmerFbAd.stopShimmer()
+                binding.includeAd.shimmerFbAd.visibility = View.GONE
+                if (success) {
+                    binding.includeAd.adFrame.visibility = View.VISIBLE
+                } else {
+                    binding.includeAd.adFrame.visibility = View.GONE
+                }
+//                showGetStartedButton()
+            }
+        }
+    }
+
+    private fun scheduleNativeAdTimeout() {
+        if (nativeAdTimeoutPosted) return
+        nativeAdTimeoutPosted = true
+        binding.root.postDelayed({
+            if (nativeAdTimeoutPosted) {
+                nativeAdTimeoutPosted = false
+                binding.includeAd.shimmerFbAd.stopShimmer()
+                binding.includeAd.shimmerFbAd.visibility = View.GONE
+//                showGetStartedButton()
+            }
+        }, 10000)
     }
 
     private fun showInterstitialAndNavigate() {

@@ -25,24 +25,37 @@
         android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:letterSpacing="-0.02"
-        android:text="DocuView"
-        android:textColor="@color/accent_color"
-        android:textSize="36sp"
-        app:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="20dp"
+        android:text="@string/swift_cleaner"
+        android:textColor="@color/text_color_dark"
+        android:textSize="26sp"
+        app:fontFamily="@font/plus_jakarta_sans_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
+    <TextView
+        android:id="@+id/tv_app_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:letterSpacing="-0.02"
+        android:text="@string/clean_your_phone"
+        android:textColor="@color/text_color_secondary"
+        android:textSize="16sp"
+        app:fontFamily="@font/plus_jakarta_sans_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="48dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/includeAd">
 
         <TextView
             android:id="@+id/tvLoadingStatus"
@@ -75,5 +88,14 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/includeAd"
+        layout="@layout/shimmer_layout_onboarding_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

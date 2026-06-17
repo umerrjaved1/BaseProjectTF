@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class Application : Application(), DefaultLifecycleObserver {
+class MyApp : Application() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -66,7 +66,7 @@ class Application : Application(), DefaultLifecycleObserver {
     }
 
     override fun onCreate() {
-        super<Application>.onCreate()
+        super.onCreate()
 
         AppCompatDelegate.setDefaultNightMode(
             appPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_NO)
@@ -91,7 +91,14 @@ class Application : Application(), DefaultLifecycleObserver {
         //setupNotifications()
 
         // Observe app-level lifecycle (foreground / background transitions)
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                this@MyApp.onAppStart()
+            }
+            override fun onStop(owner: LifecycleOwner) {
+                this@MyApp.onAppStop()
+            }
+        })
 
         // Track which activity is currently on top
         registerActivityLifecycleCallbacks(createActivityLifecycleCallbacks())
@@ -106,8 +113,7 @@ class Application : Application(), DefaultLifecycleObserver {
      * This is the replacement for the old App Open Resume Ad:
      * we show PremiumActivity instead, on eligible screens only.
      */
-    override fun onStart(owner: LifecycleOwner) {
-        super.onStart(owner)
+    fun onAppStart() {
         Log.e(TAG, "onStart: ")
         if (!hasBeenInBackground) {
             // First resume after cold-start — don't show Premium yet
@@ -140,8 +146,7 @@ class Application : Application(), DefaultLifecycleObserver {
      * Called when the entire app goes to the background.
      * Mark the flag so the next [onStart] knows it is a real resume.
      */
-    override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
+    fun onAppStop() {
         hasBeenInBackground = true
         Log.d(TAG, "App went to background")
     }

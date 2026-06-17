@@ -32,19 +32,19 @@
     </style>
 
     <style name="TextAppearance.App.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
-        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/plus_jakarta_sans_semi_bold</item>
     </style>
 
     <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/plus_jakarta_sans_semi_bold</item>
     </style>
 
     <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
-        <item name="fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/plus_jakarta_sans_medium</item>
     </style>
 
     <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
-        <item name="fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/plus_jakarta_sans_regular</item>
     </style>
 
     <style name="TextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
