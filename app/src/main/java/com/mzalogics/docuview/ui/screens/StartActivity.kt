@@ -22,8 +22,8 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.umer_tf.ads.ads .domain.consent.AdsConsentManager
-import com.umer_tf.ads.ads .domain.core.AdMobManager
+import com.umer_tf.ads.domain.consent.AdsConsentManager
+import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.app.AnalyticsManager
 import com.mzalogics.docuview.utils.AdFrequencyControl
@@ -316,9 +316,9 @@ class StartActivity : AppCompatActivity() {
                 }
             }
 
-//            !isOnboarding -> {
-//                Intent(this, OnboardingActivity::class.java)
-//            }
+            !isOnboarding -> {
+                Intent(this, OnboardingActivity::class.java)
+            }
 
             isPremium -> {
                 // User is already premium — go straight to main, never loop through PremiumActivity

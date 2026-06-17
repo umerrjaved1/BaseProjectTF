@@ -17,7 +17,7 @@ import kotlin.math.log10
 import kotlin.math.pow
 import android.content.Intent
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.umer_tf.ads.ads .domain.core.AdMobManager
+import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.app.AppPreferences
 import com.mzalogics.docuview.constants.Constants
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager

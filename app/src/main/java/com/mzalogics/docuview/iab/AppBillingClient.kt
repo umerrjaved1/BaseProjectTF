@@ -43,6 +43,7 @@ class AppBillingClient () {
     private lateinit var billingClient: BillingClient
     private var isConnected = false
     private var lastPurchaseRequest: ProductItem? = null
+    private var activeSubscriptions: List<SubscriptionItem> = emptyList()
 
     // Available subscription SKUs — add new plans here when they go live in Play Console
     private val subscriptionSkus = listOf(

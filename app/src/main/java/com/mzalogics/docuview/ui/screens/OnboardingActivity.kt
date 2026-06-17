@@ -11,8 +11,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
-import com.umer_tf.ads.ads .domain.ads.native_ad.NativeAdBuilder
-import com.umer_tf.ads.ads .domain.core.AdMobManager
+import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.adapter.OnboardingAdapter
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.app.AnalyticsManager

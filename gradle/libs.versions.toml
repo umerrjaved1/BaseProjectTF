@@ -38,7 +38,7 @@ workTesting = "2.11.2"
 
 [libraries]
 
-ads = { module = "com.umer_tf.ads.ads:ads", version.ref = "ads" }
+ads = { module = "com.umer_tf.ads:ads", version.ref = "ads" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }

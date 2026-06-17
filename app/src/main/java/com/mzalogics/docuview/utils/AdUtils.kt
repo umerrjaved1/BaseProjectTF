@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.umer_tf.ads.ads .domain.ads.native_ad.NativeAdBuilder
-import com.umer_tf.ads.ads .domain.core.AdMobManager
-import com.umer_tf.ads.ads .domain.utils.LoadingDialogUtil
+import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
+import com.umer_tf.ads.domain.core.AdMobManager
+import com.umer_tf.ads.domain.utils.LoadingDialogUtil
 import com.mzalogics.docuview.R
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
@@ -57,10 +57,11 @@ object AdUtils {
             activity.finish()
             return
         }
-        LoadingDialogUtil.showLoadingDialog(activity)
+        val loadingDialog = LoadingDialogUtil.create(activity)
+        loadingDialog.showLoadingDialog()
         adMobManager.interstitialAdLoader.loadAd(adUnit) { isLoaded ->
             lifecycleScope.launch {
-                LoadingDialogUtil.hideLoadingDialog()
+                loadingDialog.hideLoadingDialog()
                 if (isLoaded && !activity.isFinishing && !activity.isDestroyed) {
                     // FIX: Show ad FIRST, finish inside callback.
                     // Previously finish() was called BEFORE showAd(), so the ad

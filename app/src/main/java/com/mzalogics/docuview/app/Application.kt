@@ -14,7 +14,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.umer_tf.ads.ads .domain.core.AdMobManager
+import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.constants.Constants
 import com.mzalogics.docuview.iab.AppBillingClient
 import com.mzalogics.docuview.iab.ConnectResponse
