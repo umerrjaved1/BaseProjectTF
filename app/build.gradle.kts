@@ -29,7 +29,7 @@ android {
             keyAlias = "key0"
             keyPassword = "123456"
         }
-}
+    }
     defaultConfig {
         applicationId = "com.mzalogics.docuview"
         minSdk = 26
@@ -99,6 +99,7 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
@@ -120,10 +121,20 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     // Hilt DI
     implementation(libs.hilt.android)
-
     ksp(libs.hilt.compiler)
+
     // Shimmer
     implementation(libs.shimmer)
+
+
+    // Networking
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+// For URL manipulation
+    implementation(libs.okhttp.urlconnection)
 
 
     // Firebase (BOM)
