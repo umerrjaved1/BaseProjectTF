@@ -12,5 +12,6 @@ object RemoteConfigKeys {
     const val NOTIFICATION_REPEAT_INTERVAL = "notification_time"
     const val ENABLE_REPEATING_NOTIFICATIONS = "enable_repeating_notifications"
     const val NOTIFICATION_TIME = "notification_time"
+    const val SHOW_GET_STARTED_BUTTON = "show_get_started_button"
 
 }

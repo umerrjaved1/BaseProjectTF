@@ -119,7 +119,11 @@ class StartActivity : AppCompatActivity() {
                             AdMobManager.isPremium = isPremium
 
                             if (isPremium) {
-                                moveToNextScreen()
+                                if (RemoteConfigManager.shouldShowGetStartedButton()) {
+                                    loadNativeAd()
+                                } else {
+                                    moveToNextScreen()
+                                }
                             } else {
                                 if (!data.hasInternet) {
                                     Log.w(TAG, "No internet at start. Proceeding without ads.")
@@ -139,6 +143,42 @@ class StartActivity : AppCompatActivity() {
         startLoadingAnimation()
     }
 
+    private var isAdLoadingFinished = false
+    private var isAnimationFinished = false
+
+    private fun showGetStartedButton() {
+        isAdLoadingFinished = true
+        checkAndShowUI()
+    }
+
+    private fun checkAndShowUI() {
+        if (isAdLoadingFinished && isAnimationFinished) {
+            binding.llLoading.visibility = View.GONE
+            if (RemoteConfigManager.shouldShowGetStartedButton()) {
+                binding.btnGetStarted.visibility = View.VISIBLE
+                binding.btnGetStarted.setOnClickListener {
+                    triggerNextNavigationStep()
+                }
+            } else {
+                binding.btnGetStarted.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun triggerNextNavigationStep() {
+        val shouldShowAds = !isPremium && RemoteConfigManager.shouldShowAds()
+        if (shouldShowAds) {
+            val adStrategy = RemoteConfigManager.getAdsConfig().firstOpenAdStrategy
+            if (adStrategy == 1) {
+                showInterstitialAndNavigate()
+            } else {
+                showInterstitialAndNavigate()
+            }
+        } else {
+            moveToNextScreen()
+        }
+    }
+
     private fun startLoadingAnimation() {
         loadingAnimator = ValueAnimator.ofInt(0, 100).apply {
             duration = splashDelayLength
@@ -147,6 +187,10 @@ class StartActivity : AppCompatActivity() {
                 binding.loadingBar.progress = progress
                 @SuppressLint("SetTextI18n")
                 binding.tvPercent.text = "$progress%"
+                if (progress == 100) {
+                    isAnimationFinished = true
+                    checkAndShowUI()
+                }
             }
             start()
         }
@@ -162,13 +206,19 @@ class StartActivity : AppCompatActivity() {
     }
 
 
-
     private fun startOfflineFlow() {
         if (hasMovedToNext) return
+        
+        loadingAnimator?.duration = 2000L
+        
         splashJob?.cancel()
         splashJob = lifecycleScope.launch {
-            delay(1200L.milliseconds)
-            moveToNextScreen()
+            if (RemoteConfigManager.shouldShowGetStartedButton()) {
+                showGetStartedButton()
+            } else {
+                delay(2000L.milliseconds)
+                moveToNextScreen()
+            }
         }
     }
 
@@ -197,7 +247,11 @@ class StartActivity : AppCompatActivity() {
 
     private fun proceedWithAds() {
         if (!RemoteConfigManager.shouldShowAds()) {
-            moveToNextScreen()
+            if (RemoteConfigManager.shouldShowGetStartedButton()) {
+                loadNativeAd()
+            } else {
+                moveToNextScreen()
+            }
             return
         }
 
@@ -218,15 +272,18 @@ class StartActivity : AppCompatActivity() {
             adMobManager.nativeAdLoader.loadAd(AdIds.getNativeLanguageAdId())
         }
 
-        val adStrategy = RemoteConfigManager.getAdsConfig().firstOpenAdStrategy
-        Log.d(TAG, "Ad strategy from remote config: $adStrategy (1=Inter, 0=OpenApp)")
-        if (adStrategy == 1) {
-            showInterstitialAndNavigate()
+        if (RemoteConfigManager.shouldShowGetStartedButton()) {
+            loadNativeAd()
         } else {
-//            showOpenAdAndNavigate()
-            showInterstitialAndNavigate()
+            val adStrategy = RemoteConfigManager.getAdsConfig().firstOpenAdStrategy
+            Log.d(TAG, "Ad strategy from remote config: $adStrategy (1=Inter, 0=OpenApp)")
+            if (adStrategy == 1) {
+                showInterstitialAndNavigate()
+            } else {
+                showInterstitialAndNavigate()
+            }
+            loadNativeAd()
         }
-        loadNativeAd()
     }
 
 
@@ -236,7 +293,7 @@ class StartActivity : AppCompatActivity() {
             binding.includeAd.adFrame.visibility = View.GONE
             binding.includeAd.shimmerFbAd.visibility = View.GONE
             binding.includeAd.shimmerFbAd.stopShimmer()
-//            showGetStartedButton()
+            showGetStartedButton()
             return
         }
 
@@ -258,7 +315,7 @@ class StartActivity : AppCompatActivity() {
                     .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
                     .build(), AdIds.getNativeAdId()
             )
-//            showGetStartedButton()
+            showGetStartedButton()
             return
         }
 
@@ -290,7 +347,7 @@ class StartActivity : AppCompatActivity() {
                 } else {
                     binding.includeAd.adFrame.visibility = View.GONE
                 }
-//                showGetStartedButton()
+                showGetStartedButton()
             }
         }
     }
@@ -303,7 +360,7 @@ class StartActivity : AppCompatActivity() {
                 nativeAdTimeoutPosted = false
                 binding.includeAd.shimmerFbAd.stopShimmer()
                 binding.includeAd.shimmerFbAd.visibility = View.GONE
-//                showGetStartedButton()
+                showGetStartedButton()
             }
         }, 10000)
     }
@@ -328,7 +385,10 @@ class StartActivity : AppCompatActivity() {
             AdIds.getInterstitialSplashAdId(),
             false
         ) {
-            AdFrequencyControl.recordAdShown(this@StartActivity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+            AdFrequencyControl.recordAdShown(
+                this@StartActivity,
+                AdUnitFrequencyController.UNIT_INTERSTITIAL
+            )
             hasShownPremiumAfterInterstitial = true
             isAdShow = true
             startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
@@ -353,7 +413,10 @@ class StartActivity : AppCompatActivity() {
         adMobManager.appOpenAdLoader.loadAppOpenAd(this) { isLoaded ->
             if (isLoaded) {
                 adMobManager.appOpenAdLoader.showAppOpenAdIfAvailable { _ ->
-                    AdFrequencyControl.recordAdShown(this@StartActivity, AdUnitFrequencyController.UNIT_OPEN_AD)
+                    AdFrequencyControl.recordAdShown(
+                        this@StartActivity,
+                        AdUnitFrequencyController.UNIT_OPEN_AD
+                    )
                     hasShownPremiumAfterInterstitial = true
                     isAdShow = true
                     startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
@@ -395,7 +458,7 @@ class StartActivity : AppCompatActivity() {
                         this,
                         PremiumActivity::class.java
                     ).putExtra(Constants.EXTRA_PREMIUM_FROM_SPLASH, true)
-                }else{
+                } else {
                     Intent(this, MainActivity::class.java)
                 }
             }

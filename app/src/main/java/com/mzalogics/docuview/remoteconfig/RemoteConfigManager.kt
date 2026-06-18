@@ -34,6 +34,7 @@ object RemoteConfigManager {
     private var notificationInitialDelay = 24L
     private var notificationRepeatInterval = 24L
     private var enableRepeatingNotifications = false
+    private var showGetStartedButton = true
 
     private val firebaseRemoteConfig: FirebaseRemoteConfig by lazy {
         FirebaseRemoteConfig.getInstance().apply {
@@ -110,6 +111,8 @@ object RemoteConfigManager {
         enableRepeatingNotifications =
             firebaseRemoteConfig.getBoolean(RemoteConfigKeys.ENABLE_REPEATING_NOTIFICATIONS)
 
+//        showGetStartedButton =
+//            firebaseRemoteConfig.getBoolean(RemoteConfigKeys.SHOW_GET_STARTED_BUTTON)
 
     }
 
@@ -128,6 +131,8 @@ object RemoteConfigManager {
 
 
     fun getSplashAd(): Int = splashAd
+
+    fun shouldShowGetStartedButton(): Boolean = showGetStartedButton
 
 
     fun getNotificationInitialDelay(): Long = notificationInitialDelay // Default 24 hours

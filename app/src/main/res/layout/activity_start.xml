@@ -51,18 +51,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:id="@+id/ll_loading"
         android:paddingHorizontal="48dp"
-        app:layout_constraintBottom_toTopOf="@id/includeAd">
+        app:layout_constraintBottom_toTopOf="@id/btnGetStarted">
 
         <TextView
             android:id="@+id/tvLoadingStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Initializing..."
+            android:text="@string/initializing"
             android:textColor="@color/text_color_secondary"
             android:textSize="14sp" />
 
@@ -88,6 +89,31 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGetStarted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_ob_btn_gradient"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minHeight="48dp"
+        android:text="@string/get_started"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:cornerRadius="100dp"
+        app:elevation="6dp"
+        app:layout_constraintBottom_toTopOf="@id/includeAd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+
 
     <include
         android:id="@+id/includeAd"

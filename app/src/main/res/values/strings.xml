@@ -279,5 +279,6 @@
     <string name="history_cleared">History cleared</string>
     <string name="swift_cleaner">Swift Cleaner</string>
     <string name="clean_your_phone">Clean your Phone</string>
+    <string name="initializing">Initializing...</string>
 
 </resources>
