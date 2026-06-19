@@ -19,6 +19,7 @@ import com.mzalogics.docuview.utils.setClickWithTimeout
 import com.mzalogics.docuview.R
 import com.mzalogics.docuview.databinding.FullNativeAdItemViewPagerBinding
 import com.mzalogics.docuview.databinding.ItemOnboardingBinding
+import com.umer_tf.ads.domain.ads.native_ad.NativeAd
 
 class OnboardingAdapter(
     private var items: List<OnboardingItem>,
@@ -35,14 +36,15 @@ class OnboardingAdapter(
     private var isAdLoaded = false
     private var adLoadAttempted = false
     private var adShown = false
-    
+
     // Check if ads are disabled from remote config
     private val shouldShowAd: Boolean
         get() = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
 
     inner class OnboardingViewHolder(val binding: ItemOnboardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: OnboardingItem) {
+        
+        fun bind(item: OnboardingItem, position: Int) {
             binding.tvTitle.text = item.title
             if (item.description.isEmpty()) {
                 binding.tvSubtitle.visibility = View.GONE
@@ -50,16 +52,18 @@ class OnboardingAdapter(
                 binding.tvSubtitle.visibility = View.VISIBLE
                 binding.tvSubtitle.text = item.description
             }
-            Glide.with(binding.ivMainImage)
-                .load(item.imageRes)
-                .into(binding.ivMainImage)
+            Glide.with(binding.ivMainImage).load(item.imageRes).into(binding.ivMainImage)
+
         }
     }
 
     inner class AdViewHolder(val binding: FullNativeAdItemViewPagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            Log.d(TAG, "Binding full native ad, isAdLoaded: $isAdLoaded, adShown: $adShown, shouldShowAd: $shouldShowAd")
+            Log.d(
+                TAG,
+                "Binding full native ad, isAdLoaded: $isAdLoaded, adShown: $adShown, shouldShowAd: $shouldShowAd"
+            )
 
             if (!adShown) {
                 // Prepare loading UI
@@ -87,23 +91,19 @@ class OnboardingAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        // Show full-screen native ad as the second page (index 1) only if ads are enabled
-        return if (shouldShowAd && position == 1) VIEW_TYPE_AD else VIEW_TYPE_ONBOARDING
+        val fullAdPos = RemoteConfigManager.getAdsConfig().fullNativeAdPosition
+        return if (shouldShowAd && position == fullAdPos) VIEW_TYPE_AD else VIEW_TYPE_ONBOARDING
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_ONBOARDING) {
             val binding = ItemOnboardingBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
             OnboardingViewHolder(binding)
         } else {
             val binding = FullNativeAdItemViewPagerBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
             AdViewHolder(binding)
         }
@@ -117,14 +117,15 @@ class OnboardingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is OnboardingViewHolder -> {
-                // Adjust index because position 1 is reserved for the full-screen ad (when ads are enabled)
+                val fullAdPos = RemoteConfigManager.getAdsConfig().fullNativeAdPosition
                 val itemIndex = if (shouldShowAd) {
-                    if (position <= 0) position else if (position > 1) position - 1 else 0
+                    if (position < fullAdPos) position else if (position > fullAdPos) position - 1 else 0
                 } else {
                     position
                 }
-                holder.bind(items[itemIndex])
+                holder.bind(items[itemIndex], position)
             }
+
             is AdViewHolder -> {
                 holder.bind()
             }
@@ -137,8 +138,7 @@ class OnboardingAdapter(
     }
 
     private fun loadFullNativeAd(
-        adMobManager: AdMobManager,
-        binding: FullNativeAdItemViewPagerBinding
+        adMobManager: AdMobManager, binding: FullNativeAdItemViewPagerBinding
     ) {
         if (adLoadAttempted && !isAdLoaded) {
             Log.w(TAG, "Ad load already attempted and failed, skipping")
@@ -146,7 +146,10 @@ class OnboardingAdapter(
             return
         }
 
-        if (!AdFrequencyControl.canShowAd(binding.root.context, AdUnitFrequencyController.UNIT_NATIVE)) {
+        if (!AdFrequencyControl.canShowAd(
+                binding.root.context, AdUnitFrequencyController.UNIT_NATIVE
+            )
+        ) {
             Log.d(TAG, "Native ad blocked by frequency control")
             showAdLoadingFailedUI(binding)
             return
@@ -166,11 +169,8 @@ class OnboardingAdapter(
 
     private fun createNativeAdBuilder(binding: FullNativeAdItemViewPagerBinding): NativeAdBuilder {
         return NativeAdBuilder.Builder(
-            R.layout.full_native_ad_design,
-            binding.includeAd.adFrame,
-            binding.includeAd.shimmerFbAd
-        ).setShowBody(true)
-            .setShowMedia(true)
+            R.layout.full_native_ad_design, binding.includeAd.adFrame, binding.includeAd.shimmerFbAd
+        ).setShowBody(true).setShowMedia(true)
             .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
             .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
             .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
@@ -186,12 +186,13 @@ class OnboardingAdapter(
         try {
             // showLoadedAd doesn't return boolean, so we assume it works if no exception
             adMobManager.nativeAdLoader.showLoadedAd(
-                nativeAdBuilder,
-                AdIds.getFullNativeOnboardingAdId()
+                nativeAdBuilder, AdIds.getFullNativeOnboardingAdId()
             )
 
             Log.d(TAG, "Preloaded full native ad shown successfully")
-            AdFrequencyControl.recordAdShown(binding.root.context, AdUnitFrequencyController.UNIT_NATIVE)
+            AdFrequencyControl.recordAdShown(
+                binding.root.context, AdUnitFrequencyController.UNIT_NATIVE
+            )
             isAdLoaded = true
             adShown = true
             onAdLoaded?.invoke(true)
@@ -212,12 +213,13 @@ class OnboardingAdapter(
         adLoadAttempted = true
 
         adMobManager.nativeAdLoader.loadAndShow(
-            AdIds.getFullNativeOnboardingAdId(),
-            nativeAdBuilder
+            AdIds.getFullNativeOnboardingAdId(), nativeAdBuilder
         ) { success ->
             Log.d(TAG, "Full native ad loadAndShow result: $success")
             if (success) {
-                AdFrequencyControl.recordAdShown(binding.root.context, AdUnitFrequencyController.UNIT_NATIVE)
+                AdFrequencyControl.recordAdShown(
+                    binding.root.context, AdUnitFrequencyController.UNIT_NATIVE
+                )
             }
             isAdLoaded = success
             adShown = success
@@ -242,7 +244,8 @@ class OnboardingAdapter(
                     val activity = binding.root.context as? Activity
                     val pager = activity?.findViewById<ViewPager2>(R.id.viewPager)
                     pager?.let {
-                        it.currentItem = (it.currentItem + 1).coerceAtMost((it.adapter?.itemCount ?: 1) - 1)
+                        it.currentItem =
+                            (it.currentItem + 1).coerceAtMost((it.adapter?.itemCount ?: 1) - 1)
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Failed to advance ViewPager from fallback: ${e.message}")

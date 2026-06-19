@@ -3,10 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:background="@drawable/bg_ad_border"
-    android:padding="4dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clAd"
@@ -30,31 +27,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+            <com.google.android.gms.ads.nativead.MediaView
+                android:id="@+id/ad_media"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-
-                android:visibility="gone">
-
-                <com.google.android.gms.ads.nativead.MediaView
-                    android:id="@+id/ad_media"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible" />
-
-
-                <ImageView
-                    android:id="@+id/ad_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="4dp"
-                    android:src="@drawable/ic_down_ad"
-                    android:visibility="gone" />
-
-            </FrameLayout>
+                android:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutAdDetails"
@@ -103,11 +80,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
-                            app:fontFamily="@font/urbanist_medium"
                             android:maxLines="1"
                             android:text="@string/app_name"
                             android:textColor="@color/ad_title_color"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:fontFamily="@font/urbanist_medium" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <LinearLayout
@@ -151,11 +128,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                app:fontFamily="@font/urbanist_medium"
                 android:maxLines="2"
-                android:text="@string/app_name"
+                tools:text="Ad body text goes here"
                 android:textColor="@color/ad_body_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:fontFamily="@font/urbanist_medium" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ad_call_to_action"
@@ -168,13 +145,13 @@
                 android:clickable="true"
                 android:elevation="2dp"
                 android:focusable="true"
-                app:fontFamily="@font/poppins_semi_bold"
                 android:text="Install"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:backgroundTint="@color/ad_btn_color"
-                app:cornerRadius="4dp" />
+                app:cornerRadius="4dp"
+                app:fontFamily="@font/poppins_semi_bold" />
 
             <!-- Hidden Views for Ad SDK -->
             <TextView

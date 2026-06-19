@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="bottom"
-        android:textSize="9dp"
+        android:textSize="9sp"
         android:textStyle="normal"
         android:visibility="gone" />
 

@@ -67,18 +67,15 @@
         app:backgroundTint="@null"
         app:cornerRadius="28dp"
         app:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@id/includeAd"
+        app:layout_constraintBottom_toTopOf="@id/adContainerWrapper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <include
-        android:id="@+id/includeAd"
-        layout="@layout/shimmer_layout_onboarding_ad"
+    <FrameLayout
+        android:id="@+id/adContainerWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

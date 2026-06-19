@@ -9,6 +9,7 @@ Email: umerr8019@gmail.com
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -29,8 +30,8 @@ import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
 import com.mzalogics.docuview.ui.viewmodel.StartViewModel
 import com.mzalogics.docuview.utils.AdFrequencyControl
 import com.mzalogics.docuview.utils.AdUnitFrequencyController
+import com.mzalogics.docuview.utils.AdUtils
 import com.mzalogics.docuview.utils.UIState
-import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
 import com.umer_tf.ads.domain.consent.AdsConsentManager
 import com.umer_tf.ads.domain.core.AdMobManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +81,7 @@ class StartActivity : AppCompatActivity() {
     private var isAdShow = false
     private var hasTriggeredInterstitialNavigation = false
     private var hasShownPremiumAfterInterstitial = false
+    private var hasHandledState = false
 
     private val splashDelayLength = 8000L
 
@@ -97,9 +99,7 @@ class StartActivity : AppCompatActivity() {
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = true // Dark icons for light background
 
-
         // Preload somewhere sensible (e.g., onResume)
-
 
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, TAG)
 
@@ -114,13 +114,15 @@ class StartActivity : AppCompatActivity() {
                         }
 
                         is UIState.Success -> {
+                            if (hasHandledState) return@collect
+                            hasHandledState = true
                             val data = state.data
                             isPremium = data.isPremium
                             AdMobManager.isPremium = isPremium
 
                             if (isPremium) {
                                 if (RemoteConfigManager.shouldShowGetStartedButton()) {
-                                    loadNativeAd()
+                                    showGetStartedButton()
                                 } else {
                                     moveToNextScreen()
                                 }
@@ -169,10 +171,11 @@ class StartActivity : AppCompatActivity() {
         val shouldShowAds = !isPremium && RemoteConfigManager.shouldShowAds()
         if (shouldShowAds) {
             val adStrategy = RemoteConfigManager.getAdsConfig().firstOpenAdStrategy
-            if (adStrategy == 1) {
-                showInterstitialAndNavigate()
-            } else {
-                showInterstitialAndNavigate()
+            when (adStrategy) {
+                1 -> showInterstitialAndNavigate()
+                2 -> showFullScreenNativeAdAndNavigate()
+                3 -> moveToNextScreen() // No Ad
+                else -> showOpenAdAndNavigate()
             }
         } else {
             moveToNextScreen()
@@ -248,7 +251,7 @@ class StartActivity : AppCompatActivity() {
     private fun proceedWithAds() {
         if (!RemoteConfigManager.shouldShowAds()) {
             if (RemoteConfigManager.shouldShowGetStartedButton()) {
-                loadNativeAd()
+                showGetStartedButton()
             } else {
                 moveToNextScreen()
             }
@@ -273,80 +276,35 @@ class StartActivity : AppCompatActivity() {
         }
 
         if (RemoteConfigManager.shouldShowGetStartedButton()) {
-            loadNativeAd()
+            loadAndShowSplashNativeAd()
         } else {
             val adStrategy = RemoteConfigManager.getAdsConfig().firstOpenAdStrategy
             Log.d(TAG, "Ad strategy from remote config: $adStrategy (1=Inter, 0=OpenApp)")
             if (adStrategy == 1) {
                 showInterstitialAndNavigate()
             } else {
-                showInterstitialAndNavigate()
+                showOpenAdAndNavigate()
             }
-            loadNativeAd()
         }
     }
 
 
-    private fun loadNativeAd() {
-        val shouldShowAds = !isPremium && RemoteConfigManager.shouldShowAds()
-        if (!shouldShowAds) {
-            binding.includeAd.adFrame.visibility = View.GONE
-            binding.includeAd.shimmerFbAd.visibility = View.GONE
-            binding.includeAd.shimmerFbAd.stopShimmer()
-            showGetStartedButton()
-            return
-        }
-
-        if (adMobManager.nativeAdLoader.isAdLoaded()) {
-            binding.includeAd.shimmerFbAd.stopShimmer()
-            binding.includeAd.shimmerFbAd.visibility = View.GONE
-            binding.includeAd.adFrame.visibility = View.VISIBLE
-
-            adMobManager.nativeAdLoader.showLoadedAd(
-                NativeAdBuilder.Builder(
-                    R.layout.native_ad_onboarding,
-                    binding.includeAd.adFrame,
-                    binding.includeAd.shimmerFbAd
-                ).setShowBody(true)
-                    .setShowMedia(true)
-                    .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
-                    .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
-                    .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
-                    .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
-                    .build(), AdIds.getNativeAdId()
-            )
-            showGetStartedButton()
-            return
-        }
-
-        binding.includeAd.adFrame.visibility = View.GONE
-        binding.includeAd.shimmerFbAd.visibility = View.VISIBLE
-        binding.includeAd.shimmerFbAd.startShimmer()
+    private fun loadAndShowSplashNativeAd() {
+        Log.e(TAG, "loadNativeAd: ")
+        
         scheduleNativeAdTimeout()
 
-        adMobManager.nativeAdLoader.loadAndShow(
-            AdIds.getNativeAdId(),
-            NativeAdBuilder.Builder(
-                R.layout.native_ad_onboarding,
-                binding.includeAd.adFrame,
-                binding.includeAd.shimmerFbAd
-            ).setShowBody(true)
-                .setShowMedia(true)
-                .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
-                .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
-                .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
-                .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
-                .build()
-        ) { success ->
+        AdUtils.loadAndShowNativeAd(
+            adMobManager = adMobManager,
+            adUnitId = AdIds.getNativeAdId(),
+            layoutResId = R.layout.native_ad_onboarding,
+            frameLayout = binding.includeAd.adFrame,
+            shimmerFrameLayout = binding.includeAd.shimmerFbAd,
+            showMedia = true,
+            nativeAdConfigIndex = 2
+        ) {
             lifecycleScope.launch {
-//                nativeAdTimeoutPosted = false
-                binding.includeAd.shimmerFbAd.stopShimmer()
-                binding.includeAd.shimmerFbAd.visibility = View.GONE
-                if (success) {
-                    binding.includeAd.adFrame.visibility = View.VISIBLE
-                } else {
-                    binding.includeAd.adFrame.visibility = View.GONE
-                }
+                nativeAdTimeoutPosted = false
                 showGetStartedButton()
             }
         }
@@ -375,23 +333,35 @@ class StartActivity : AppCompatActivity() {
             return
         }
         if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
-            hasShownPremiumAfterInterstitial = true
-            isAdShow = true
-            startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
+            proceedAfterInterstitial(false)
             return
         }
-        adMobManager.interstitialAdLoader.loadAndShowAd(
+        val hfAdId = "ca-app-pub-3940256099942544/1033173515"//AdIds.getInterstitialSplashHfAdId()
+        val normalAdId = AdIds.getInterstitialSplashAdId()
+
+        AdUtils.loadAndShowWaterfallInterAdWithDialog(
             this,
-            AdIds.getInterstitialSplashAdId(),
-            false
-        ) {
-            AdFrequencyControl.recordAdShown(
-                this@StartActivity,
-                AdUnitFrequencyController.UNIT_INTERSTITIAL
-            )
+            adMobManager,
+            hfAdId,
+            normalAdId,
+            lifecycleScope
+        ) { adShown ->
+            proceedAfterInterstitial(adShown)
+        }
+    }
+
+    private fun proceedAfterInterstitial(adShown: Boolean) {
+        navigateAfterAd()
+    }
+
+    private fun navigateAfterAd() {
+        val strategy = RemoteConfigManager.getAdsConfig().splashAdPostNavigationStrategy
+        if (strategy == 1) {
             hasShownPremiumAfterInterstitial = true
             isAdShow = true
             startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
+        } else {
+            moveToNextScreen()
         }
     }
 
@@ -405,9 +375,7 @@ class StartActivity : AppCompatActivity() {
             return
         }
         if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_OPEN_AD)) {
-            hasShownPremiumAfterInterstitial = true
-            isAdShow = true
-            startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
+            navigateAfterAd()
             return
         }
         adMobManager.appOpenAdLoader.loadAppOpenAd(this) { isLoaded ->
@@ -417,15 +385,24 @@ class StartActivity : AppCompatActivity() {
                         this@StartActivity,
                         AdUnitFrequencyController.UNIT_OPEN_AD
                     )
-                    hasShownPremiumAfterInterstitial = true
-                    isAdShow = true
-                    startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
+                    navigateAfterAd()
                 }
             } else {
-                hasShownPremiumAfterInterstitial = true
-                isAdShow = true
-                startActivity(Intent(this@StartActivity, PremiumActivity::class.java))
+                navigateAfterAd()
             }
+        }
+    }
+
+    private fun showFullScreenNativeAdAndNavigate() {
+        Log.e(TAG, "showFullScreenNativeAdAndNavigate")
+        if (hasTriggeredInterstitialNavigation) return
+        hasTriggeredInterstitialNavigation = true
+
+        AdUtils.loadAndShowFullScreenNativeAdWithDialog(
+            activity = this,
+            adUnitId = AdIds.getNativeAdId()
+        ) { adShown ->
+            navigateAfterAd()
         }
     }
 

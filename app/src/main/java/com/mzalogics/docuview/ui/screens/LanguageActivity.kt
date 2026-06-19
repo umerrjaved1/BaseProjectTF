@@ -47,6 +47,7 @@ import javax.inject.Inject
 class LanguageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLanguageBinding
     private lateinit var adapter: LanguageAdapter
+    private var hasShownSecondAd = false
 
     private val viewModel: LanguageViewModel by viewModels()
 
@@ -102,6 +103,7 @@ class LanguageActivity : AppCompatActivity() {
 
         isFromStart = intent.getBooleanExtra(Constants.EXTRA_LANGUAGE_FROM_START, false)
         loadNativeAd()
+        preloadSecondNativeAd()
         initAdapter()
         initClickListeners()
 
@@ -176,63 +178,22 @@ class LanguageActivity : AppCompatActivity() {
         AdFrequencyControl.recordAdShown(this, AdUnitFrequencyController.UNIT_BANNER)
     }
 
-    private fun loadNativeAd() {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
-            binding.includeAd.root.visibility = View.GONE
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
-            binding.includeAd.root.visibility = View.GONE
-            return
-        }
+    private fun loadNativeAd(forceLoadNew: Boolean = !isFromStart) {
+        AdUtils.loadAndShowNativeAd(
+            adMobManager = adMobManager,
+            adUnitId = AdIds.getNativeLanguageAdId(),
+            layoutResId = R.layout.native_ad_lang,
+            frameLayout = binding.includeAd.adFrame,
+            shimmerFrameLayout = binding.includeAd.shimmerFbAd,
+            showMedia = true,
+            nativeAdConfigIndex = 0,
+            forceLoadNew = forceLoadNew
+        )
+    }
 
-        val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0) ?: return
-
-
-        if (adMobManager.nativeAdLoader.isAdLoaded() && isFromStart) {
-            Log.e("Monetization", "onCreate: show native ad")
-            adMobManager.nativeAdLoader.showLoadedAd(
-                NativeAdBuilder.Builder(
-                    R.layout.native_ad_lang,
-                    binding.includeAd.adFrame,
-                    binding.includeAd.shimmerFbAd
-                ).setShowMedia(RemoteConfigManager.getLangNativeMedia()).setShowBody(true)
-                    .setIconEnabled(true).setShowRating(false).setAdTitleColor(nativeConfig.heading)
-                    .setAdBodyColor(nativeConfig.description).setCtaTextColor(nativeConfig.ctaText)
-                    .setCtaBgColor(nativeConfig.callActionButtonColor)
-                    //.setAdBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].backgroundColor)
-                    .build(), AdIds.getNativeLanguageAdId()
-            )
-            AdUtils.applyCtaBgFallback(
-                adContainer = binding.includeAd.adFrame,
-                colorValue = nativeConfig.callActionButtonColor
-            )
-            AdFrequencyControl.recordAdShown(this, AdUnitFrequencyController.UNIT_NATIVE)
-
-        } else {
-            Log.e("Monetization", "load native ad Language screen: ")
-            adMobManager.nativeAdLoader.loadAndShow(
-                AdIds.getNativeLanguageAdId(), NativeAdBuilder.Builder(
-                    R.layout.native_ad_lang,
-                    binding.includeAd.adFrame,
-                    binding.includeAd.shimmerFbAd
-                ).setShowMedia(RemoteConfigManager.getLangNativeMedia()).setShowBody(true)
-                    .setIconEnabled(true).setShowRating(false).setAdTitleColor(nativeConfig.heading)
-                    .setAdBodyColor(nativeConfig.description).setCtaTextColor(nativeConfig.ctaText)
-                    .setCtaBgColor(nativeConfig.callActionButtonColor)
-                    //.setAdBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].backgroundColor)
-                    .build()
-            ) {
-                AdUtils.applyCtaBgFallback(
-                    adContainer = binding.includeAd.adFrame,
-                    colorValue = nativeConfig.callActionButtonColor
-                )
-                AdFrequencyControl.recordAdShown(
-                    this@LanguageActivity, AdUnitFrequencyController.UNIT_NATIVE
-                )
-            }
-
-
+    private fun preloadSecondNativeAd() {
+        if (!AdMobManager.isPremium && RemoteConfigManager.shouldShowAds()) {
+            adMobManager.nativeAdLoader.loadAd(AdIds.getNativeLanguageAdId())
         }
     }
 
@@ -282,6 +243,12 @@ class LanguageActivity : AppCompatActivity() {
                 else -> R.string.done_in_english
             }
         )
+
+        // Show the pre-loaded second native ad when a language is selected (only once)
+        if (!hasShownSecondAd) {
+            hasShownSecondAd = true
+            loadNativeAd(forceLoadNew = false)
+        }
     }
 
 
@@ -306,9 +273,14 @@ class LanguageActivity : AppCompatActivity() {
         languageList.filterNot { it == defaultLanguage }
             .forEach { displayList.add(LanguageListItem.Language(it)) }
 
-        adapter = LanguageAdapter(null) {
+        adapter = LanguageAdapter(savedLanguage) {
             viewModel.setSelectedLanguage(it.model)
             onLanguageSelected(it.model)
+        }
+
+        if (savedLanguage != null) {
+            viewModel.setSelectedLanguage(savedLanguage)
+            onLanguageSelected(savedLanguage)
         }
 
         binding.rvLanguage.layoutManager = LinearLayoutManager(this)

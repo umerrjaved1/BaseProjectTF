@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_color"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -29,24 +29,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:fontFamily="@font/plus_jakarta_sans_bold"
         android:gravity="center"
         android:text="@string/onboarding_title_1"
         android:textColor="@color/text_color_primary"
-        android:textSize="26sp" />
+        android:textSize="26sp"
+        app:fontFamily="@font/plus_jakarta_sans_bold" />
 
     <TextView
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:fontFamily="@font/plus_jakarta_sans_regular"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:text="@string/onboarding_desc_1"
         android:textColor="@color/text_color_secondary"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:fontFamily="@font/plus_jakarta_sans_regular" />
+
 
 
 </LinearLayout>

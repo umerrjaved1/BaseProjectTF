@@ -40,7 +40,8 @@ object AdIds {
 
         const val EXIT_BANNER_AD_ID = "ca-app-pub-1066830332084126/8044725754"
         const val INTERSTITIAL_AD_ID = "ca-app-pub-1066830332084126/1641630204"
-        const val INTERSTITIAL_SPLASH_AD_ID = "ca-app-pub-1066830332084126/1092732223"
+        const val INTERSTITIAL_SPLASH_HF_AD_ID = "ca-app-pub-5972202469838280/5689554336"
+        const val INTERSTITIAL_SPLASH_AD_ID = "ca-app-pub-5972202469838280/2630975291"
 
 
     }
@@ -60,6 +61,12 @@ object AdIds {
     fun getInterstitialAdID() = getAdId(
         remoteConfigs.getAdsConfig().interstitialAdID,
         RELEASE.INTERSTITIAL_AD_ID,
+        DEBUG.INTERSTITIAL_AD_ID
+    )
+
+    fun getInterstitialSplashHfAdId() = getAdId(
+        remoteConfigs.getAdsConfig().interstitialSplashHfAdID,
+        RELEASE.INTERSTITIAL_SPLASH_HF_AD_ID,
         DEBUG.INTERSTITIAL_AD_ID
     )
 

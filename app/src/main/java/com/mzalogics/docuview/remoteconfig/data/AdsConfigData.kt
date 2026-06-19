@@ -6,9 +6,12 @@ data class AdsConfigData(
     val interstitialMinTimer: Int? = null,
     val interstitialCounter: Int? = null,
     val openAdResumeTimer: Int? = null,
-    val firstOpenAdStrategy: Int = 0, // 0 = OpenApp, 1 = Interstitial
+    val firstOpenAdStrategy: Int = 2, // 0 = OpenApp, 1 = Interstitial
+    val splashAdPostNavigationStrategy: Int = 1, // 0 = moveToNextScreen, 1 = PremiumActivity
     val onBoardingCrossButtonVisible: Boolean = true,
     val onBoardingMonetizationStrategy: Int = 0, // 0 = Main, 1 = PremiumScreen, 2 = Interstitial->MainActivity
+    val fullNativeAdPosition: Int = 1,
+    val disableSmallAdSlides: List<Int> = listOf(),
     val startupTime: Int = 8,
     val premiumCloseBtnDelay: Int = 3000,
     val clickCountPremiumActivity : Int = 3,
@@ -20,6 +23,7 @@ data class AdsConfigData(
     val nativeOnBoardingAdID: String? = null,
     val fullNativeOnBoardingAdID: String? = null,
     val interstitialWelcomeAdID: String? = null,//change into Welcome
+    val interstitialSplashHfAdID: String? = null,
     val interstitialSplashAdID: String? = null,
     val bannerAdID: String? = null,
     val bannerHomeAdID: String? = null,

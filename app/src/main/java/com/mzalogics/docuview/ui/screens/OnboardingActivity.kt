@@ -11,6 +11,9 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
+import android.widget.FrameLayout
+import com.facebook.shimmer.ShimmerFrameLayout
+import com.umer_tf.ads.domain.ads.native_ad.NativeAd
 import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
 import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.adapter.OnboardingAdapter
@@ -25,6 +28,7 @@ import com.mzalogics.docuview.utils.AdUnitFrequencyController
 import com.mzalogics.docuview.utils.setClickWithTimeout
 import com.mzalogics.docuview.R
 import com.mzalogics.docuview.databinding.ActivityOnboardingBinding
+import com.mzalogics.docuview.utils.AdUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,6 +43,9 @@ class OnboardingActivity : AppCompatActivity() {
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
+
+    private val cachedNativeAds = arrayOfNulls<NativeAd>(10)
+    private val cachedAdViews = arrayOfNulls<android.view.View>(10)
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -89,6 +96,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         adapter = OnboardingAdapter(onboardingItems, adMobManager)
         binding.viewPager.adapter = adapter
+        binding.viewPager.offscreenPageLimit = onboardingItems.size
 
         val hasAdPage = adapter.itemCount > onboardingItems.size
         setupDotsIndicator(onboardingItems.size, hasAdPage, binding.viewPager)
@@ -112,7 +120,6 @@ class OnboardingActivity : AppCompatActivity() {
         })
 
         updateButtonText(binding.viewPager.currentItem, hasAdPage)
-        loadNativeAd()
     }
 
 
@@ -126,7 +133,103 @@ class OnboardingActivity : AppCompatActivity() {
         binding.llIndicators.isVisible = true
         binding.btnSkip.isVisible = false
         binding.btnContinue.isVisible = !isAdPage
-        binding.includeAd.adRoot.isVisible = isLastPage
+        
+        handleSmallNativeAd(position, hasAdPage)
+    }
+
+    private fun handleSmallNativeAd(position: Int, hasAdPage: Boolean) {
+        val isFullAdPage = hasAdPage && position == 1
+        val shouldShowAd = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
+        val disableSlides = RemoteConfigManager.getAdsConfig().disableSmallAdSlides
+        
+        if (isFullAdPage || !shouldShowAd || disableSlides.contains(position) || 
+            !AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
+            binding.adContainerWrapper.visibility = android.view.View.GONE
+            return
+        }
+
+        binding.adContainerWrapper.visibility = android.view.View.VISIBLE
+        binding.adContainerWrapper.removeAllViews() // Detach previous slide's ad view
+        
+        var adView = cachedAdViews[position]
+        if (adView == null) {
+            // Inflate new container for this slide
+            adView = layoutInflater.inflate(R.layout.shimmer_layout_large_native, binding.adContainerWrapper, false)
+            cachedAdViews[position] = adView
+            
+            val adFrame = adView.findViewById<FrameLayout>(R.id.adFrame)
+            val shimmerFbAd = adView.findViewById<ShimmerFrameLayout>(R.id.shimmerFbAd)
+            
+            val loader = NativeAd(this)
+            cachedNativeAds[position] = loader
+            
+            val builder = NativeAdBuilder.Builder(
+                R.layout.native_ad_large,
+                adFrame,
+                shimmerFbAd
+            ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
+            
+            // Apply colors
+            val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0)
+            nativeConfig?.let {
+                builder.setAdTitleColor(it.heading)
+                builder.setAdBodyColor(it.description)
+                builder.setCtaTextColor(it.ctaText)
+                builder.setCtaBgColor(it.callActionButtonColor)
+            }
+                
+            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build(), null)
+        }
+        
+        // Attach the cached view for this slide
+        binding.adContainerWrapper.addView(adView)
+        
+        // PRELOAD the next ad so it's ready instantly when user swipes!
+        preloadSmallNativeAd(position + 1, hasAdPage)
+    }
+
+    private fun preloadSmallNativeAd(position: Int, hasAdPage: Boolean) {
+        val maxItems = binding.viewPager.adapter?.itemCount ?: 0
+        if (position >= maxItems) return
+
+        val isFullAdPage = hasAdPage && position == 1
+        val shouldShowAd = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
+        val disableSlides = RemoteConfigManager.getAdsConfig().disableSmallAdSlides
+        
+        if (isFullAdPage || !shouldShowAd || disableSlides.contains(position) || 
+            !AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
+            return
+        }
+
+        var adView = cachedAdViews[position]
+        if (adView == null) {
+            // Inflate new container for this slide in the background
+            adView = layoutInflater.inflate(R.layout.shimmer_layout_large_native, binding.adContainerWrapper, false)
+            cachedAdViews[position] = adView
+            
+            val adFrame = adView.findViewById<FrameLayout>(R.id.adFrame)
+            val shimmerFbAd = adView.findViewById<ShimmerFrameLayout>(R.id.shimmerFbAd)
+            
+            val loader = NativeAd(this)
+            cachedNativeAds[position] = loader
+            
+            val builder = NativeAdBuilder.Builder(
+                R.layout.native_ad_large,
+                adFrame,
+                shimmerFbAd
+            ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
+            
+            // Apply colors
+            val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0)
+            nativeConfig?.let {
+                builder.setAdTitleColor(it.heading)
+                builder.setAdBodyColor(it.description)
+                builder.setCtaTextColor(it.ctaText)
+                builder.setCtaBgColor(it.callActionButtonColor)
+            }
+                
+            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build(), null)
+        }
     }
 
     private fun setupDotsIndicator(contentPageCount: Int, hasAdPage: Boolean, viewPager: ViewPager2) {
@@ -177,39 +280,7 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
 
-    private fun loadNativeAd() {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
-            binding.includeAd.adRoot.isVisible = false
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
-            binding.includeAd.adRoot.isVisible = false
-            return
-        }
-        // Safe null check — prevents IndexOutOfBoundsException if remote config returns empty list
-        val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0) ?: return
 
-        val builder = NativeAdBuilder.Builder(
-            R.layout.native_ad_onboarding,
-            binding.includeAd.adFrame,
-            binding.includeAd.shimmerFbAd
-        ).setShowBody(true)
-            .setShowMedia(RemoteConfigManager.getOnBoardingNativeMedia())
-            .setAdTitleColor(nativeConfig.heading)
-            .setAdBodyColor(nativeConfig.description)
-            .setCtaTextColor(nativeConfig.ctaText)
-            .setCtaBgColor(nativeConfig.callActionButtonColor)
-            .build()
-
-        if (adMobManager.nativeAdLoader.isAdLoaded()) {
-            adMobManager.nativeAdLoader.showLoadedAd(builder, AdIds.getNativeOnboardingAdId())
-            AdFrequencyControl.recordAdShown(this, AdUnitFrequencyController.UNIT_NATIVE)
-        } else {
-            adMobManager.nativeAdLoader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder) {
-                AdFrequencyControl.recordAdShown(this@OnboardingActivity, AdUnitFrequencyController.UNIT_NATIVE)
-            }
-        }
-    }
 
 
     private fun moveToMain() {
