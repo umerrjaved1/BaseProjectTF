@@ -17,12 +17,9 @@ object Constants {
     const val OFFER_ID_TRIAL = "sku3daytrail"   // 3-day free trial offer
     // Monthly plan — TODO: uncomment when added in Play Console
 
-    // Yearly plan — TODO: uncomment when added in Play Console
-
-
-    // const val OFFER_ID_YEARLY_TRIAL     = ""   // fill in if yearly has a trial offer
-    // const val BASE_PLAN_YEARLY          = "yearlysub"
-    // const val SKU_SUBSCRIPTION_YEARLY   = "sku_yearly"
+    // Yearly plan
+    const val BASE_PLAN_YEARLY          = "yearlysub"
+    const val SKU_SUBSCRIPTION_YEARLY   = "sku_yearly"
     // const val OFFER_ID_MONTHLY_TRIAL    = ""   // fill in if monthly has a trial offer
     // const val BASE_PLAN_MONTHLY         = "monthlysub"
     // const val SKU_SUBSCRIPTION_MONTHLY  = "sku_monthly"

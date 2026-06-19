@@ -279,6 +279,15 @@
     <string name="history_cleared">History cleared</string>
     <string name="swift_cleaner">Swift Cleaner</string>
     <string name="clean_your_phone">Clean your Phone</string>
+    <string name="free_up_space">Free Up Space</string>
+    <string name="scan_and_clean">Scan &amp; Clean</string>
+    <string name="uninstall_apps">Uninstall Apps</string>
+    <string name="remove_all_ads_premium">Remove all ads</string>
+    <string name="unlock_premium">Unlock Premium</string>
+    <string name="yearly">Yearly</string>
+    <string name="weekly">Weekly</string>
+    <string name="restore">Restore</string>
+    <string name="terms">Terms</string>
+    <string name="privacy">Privacy</string>
     <string name="initializing">Initializing...</string>
-
 </resources>

@@ -47,11 +47,8 @@ class AppBillingClient () {
 
     // Available subscription SKUs — add new plans here when they go live in Play Console
     private val subscriptionSkus = listOf(
-        Constants.SKU_SUBSCRIPTION_WEEKLY
-        // TODO: Uncomment when monthly plan is activated in Play Console
-        // Constants.SKU_SUBSCRIPTION_MONTHLY,
-        // TODO: Uncomment when yearly plan is activated in Play Console
-        // Constants.SKU_SUBSCRIPTION_YEARLY
+        Constants.SKU_SUBSCRIPTION_WEEKLY,
+        Constants.SKU_SUBSCRIPTION_YEARLY
     )
 
     fun initialize(context: Context, connectResponse: ConnectResponse) {

@@ -66,33 +66,29 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
      *   2. Uncomment their click listeners in [setupClickListeners].
      *   3. Uncomment their SKU constants in Constants.kt & AppBillingClient.kt.
      */
-    private var selectedPlan: PlanType = PlanType.WEEKLY
-
-    /** Supported subscription plan types. Add YEARLY here when ready. */
+    private var selectedPlan: PlanType = PlanType.YEARLY
+ 
+    /** Supported subscription plan types. */
     private enum class PlanType {
         WEEKLY,
-        MONTHLY,
         YEARLY;
-
+ 
         /** Whether this plan has a free-trial offer attached. */
         fun hasTrial(): Boolean = when (this) {
             WEEKLY -> true          // 3-day trial via OFFER_ID_TRIAL
-            MONTHLY -> false        // TODO: set true if monthly gets a trial offer
-            YEARLY -> false         // TODO: set true if yearly  gets a trial offer
+            YEARLY -> false
         }
-
+ 
         /** The offer ID to use when purchasing. Null = use base plan. */
         fun offerId(): String? = when (this) {
             WEEKLY -> Constants.OFFER_ID_TRIAL
-            MONTHLY -> null         // TODO: replace with Constants.OFFER_ID_MONTHLY_TRIAL if added
-            YEARLY -> null          // TODO: replace with Constants.OFFER_ID_YEARLY_TRIAL  if added
+            YEARLY -> null
         }
-
+ 
         /** The product SKU for this plan. */
         fun sku(): String = when (this) {
             WEEKLY -> Constants.SKU_SUBSCRIPTION_WEEKLY
-            MONTHLY -> ""           // TODO: replace with Constants.SKU_SUBSCRIPTION_MONTHLY
-            YEARLY -> ""            // TODO: replace with Constants.SKU_SUBSCRIPTION_YEARLY
+            YEARLY -> Constants.SKU_SUBSCRIPTION_YEARLY
         }
     }
 
@@ -142,13 +138,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     private fun setupClickListeners() {
         // Weekly plan — always active
         binding.llWeekly.setOnClickListener(this)
-
-        // Monthly plan — TODO: un-hide llMonthly in XML and uncomment when plan is live
-        // binding.llMonthly.setOnClickListener(this)
-
-        // Yearly plan  — TODO: un-hide llYearly  in XML and uncomment when plan is live
-        // binding.llYearly.setOnClickListener(this)
-
+        binding.llYearly.setOnClickListener(this)
         binding.ivClose.setOnClickListener(this)
         binding.btnUpgradeNow.setOnClickListener(this)
     }
@@ -219,6 +209,26 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun getFormattedWeeklyPriceFromYearly(yearlyItem: SubscriptionItem): String {
+        try {
+            val phase = yearlyItem.pricingPhases?.lastOrNull() ?: return ""
+            val priceMicros = phase.priceAmountMicros
+            val currencyCode = phase.priceCurrencyCode
+            if (priceMicros <= 0L || currencyCode.isNullOrEmpty()) return ""
+
+            val weeklyAmount = (priceMicros.toDouble() / 1_000_000.0) / 52.0
+            val format = java.text.NumberFormat.getCurrencyInstance().apply {
+                currency = java.util.Currency.getInstance(currencyCode)
+                minimumFractionDigits = 2
+                maximumFractionDigits = 2
+            }
+            return format.format(weeklyAmount)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error formatting weekly price: ${e.message}")
+            return ""
+        }
+    }
+
     private fun updateUIWithSubscriptions(subscriptions: List<SubscriptionItem>) {
         if (subscriptions.isEmpty()) {
             showError("No subscription plans available")
@@ -232,16 +242,14 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
                     binding.tvWeeklyPrice.text = sub.formattedPrice ?: ""
                     analyticsManager.sendAnalytics("load", "${TAG}weekly_trial")
                 }
-                // TODO: uncomment when monthly plan is live
-                // Constants.SKU_SUBSCRIPTION_MONTHLY -> {
-                //     binding.tvMonthlyPrice.text = sub.formattedPrice ?: ""
-                //     analyticsManager.sendAnalytics("load", "${TAG}monthly")
-                // }
-                // TODO: uncomment when yearly plan is live
-                // Constants.SKU_SUBSCRIPTION_YEARLY -> {
-                //     binding.tvYearlyPrice.text = sub.formattedPrice ?: ""
-                //     analyticsManager.sendAnalytics("load", "${TAG}yearly")
-                // }
+                Constants.SKU_SUBSCRIPTION_YEARLY -> {
+                    binding.tvYearlyPrice.text = sub.formattedPrice ?: ""
+                    val weeklyFormatted = getFormattedWeeklyPriceFromYearly(sub)
+                    if (weeklyFormatted.isNotEmpty()) {
+                        binding.tvYearlySub.text = "Just $weeklyFormatted/week"
+                    }
+                    analyticsManager.sendAnalytics("load", "${TAG}yearly")
+                }
             }
         }
 
@@ -265,21 +273,15 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
         // --- Card highlight ---
         setSelectedPlan(binding.llWeekly, isSelected = plan == PlanType.WEEKLY)
-        // setSelectedPlan(binding.llMonthly, isSelected = plan == PlanType.MONTHLY)  // TODO: monthly
-        // setSelectedPlan(binding.llYearly,  isSelected = plan == PlanType.YEARLY)   // TODO: yearly
+        setSelectedPlan(binding.llYearly, isSelected = plan == PlanType.YEARLY)
 
         // --- Check icons ---
         binding.ivCheckWeekly.setImageResource(
-            if (plan == PlanType.WEEKLY) R.drawable.ic_check else R.drawable.ic_non_check
+            if (plan == PlanType.WEEKLY) R.drawable.ic_check else R.drawable.ic_circle_ring
         )
-        // TODO: uncomment when monthly card is visible
-        // binding.ivCheckMonthly.setImageResource(
-        //     if (plan == PlanType.MONTHLY) R.drawable.ic_check else R.drawable.ic_non_check
-        // )
-        // TODO: uncomment when yearly card is visible
-        // binding.ivCheckYearly.setImageResource(
-        //     if (plan == PlanType.YEARLY) R.drawable.ic_check else R.drawable.ic_non_check
-        // )
+        binding.ivCheckYearly.setImageResource(
+            if (plan == PlanType.YEARLY) R.drawable.ic_check else R.drawable.ic_circle_ring
+        )
 
         // --- Trial banner & privacy text ---
         if (plan.hasTrial()) {
@@ -303,10 +305,16 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun setSelectedPlan(planLayout: LinearLayout, isSelected: Boolean) {
-        planLayout.setBackgroundResource(
-            if (isSelected) R.drawable.sku_selected else R.drawable.sku_non_selected
+    private fun setSelectedPlan(card: com.google.android.material.card.MaterialCardView, isSelected: Boolean) {
+        card.strokeColor = ContextCompat.getColor(
+            this,
+            if (isSelected) R.color.accent_color else R.color.stroke_color
         )
+        card.strokeWidth = if (isSelected) dpToPx(2) else dpToPx(1)
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     private fun handlePlanSelection(plan: PlanType) {
@@ -353,7 +361,13 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     private fun purchaseSubscription(plan: PlanType) {
         showLoading(true)
 
-        val subscription = availableSubscriptions.find { it.sku == plan.sku() }
+        var subscription = availableSubscriptions.find { it.sku == plan.sku() }
+        if (subscription == null) {
+            if (plan == PlanType.YEARLY) {
+                subscription = availableSubscriptions.find { it.sku == Constants.SKU_SUBSCRIPTION_WEEKLY }
+            }
+        }
+
         if (subscription == null) {
             showError("Subscription not available. Please try again.")
             showLoading(false)
@@ -505,8 +519,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.ll_weekly -> handlePlanSelection(PlanType.WEEKLY)
-            // R.id.ll_monthly -> handlePlanSelection(PlanType.MONTHLY)  // TODO: monthly
-            // R.id.ll_yearly  -> handlePlanSelection(PlanType.YEARLY)   // TODO: yearly
+            R.id.ll_yearly -> handlePlanSelection(PlanType.YEARLY)
             R.id.iv_close -> handleClose()
             R.id.btn_upgrade_now -> handleUpgradeNow()
         }
