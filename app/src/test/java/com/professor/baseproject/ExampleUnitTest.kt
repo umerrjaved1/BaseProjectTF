@@ -1,4 +1,4 @@
-package com.mzalogics.docuview
+package com.tf.phonecleaner.booster
 
 import org.junit.Test
 

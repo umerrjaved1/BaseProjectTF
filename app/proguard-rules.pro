@@ -31,7 +31,7 @@
 # ----------------------------------------------------------------------------
 # Hilt / Dagger
 # ----------------------------------------------------------------------------
--keep class com.mzalogics.docuview.di.** { *; }
+-keep class com.tf.phonecleaner.booster.di.** { *; }
 -keep class dagger.hilt.** { *; }
 -keep class javax.inject.** { *; }
 -keep class javax.annotation.** { *; }
@@ -57,15 +57,15 @@
 # ----------------------------------------------------------------------------
 # Models (Keep all data classes to prevent serialization issues)
 # ----------------------------------------------------------------------------
--keep class com.mzalogics.docuview.model.** { *; }
--keep class com.mzalogics.docuview.data.source.api.** { *; }
--keep class com.mzalogics.docuview.data.model.** { *; }
+-keep class com.tf.phonecleaner.booster.model.** { *; }
+-keep class com.tf.phonecleaner.booster.data.source.api.** { *; }
+-keep class com.tf.phonecleaner.booster.data.model.** { *; }
 
 # ----------------------------------------------------------------------------
 # ViewBinding / DataBinding
 # ----------------------------------------------------------------------------
 
--keep class com.mzalogics.docuview.databinding.** { *; }
+-keep class com.tf.phonecleaner.booster.databinding.** { *; }
 
 # ----------------------------------------------------------------------------
 # AdMob / Google Play Services

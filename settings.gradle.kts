@@ -53,3 +53,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Docuview"
 include(":app")
+include(":core:designsystem")
+include(":core:network")

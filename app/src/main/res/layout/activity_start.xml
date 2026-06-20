@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    tools:context="com.mzalogics.docuview.ui.screens.StartActivity">
+    tools:context="com.tf.phonecleaner.booster.ui.screens.StartActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"

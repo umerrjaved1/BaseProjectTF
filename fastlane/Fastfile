@@ -1,0 +1,14 @@
+default_platform(:android)
+
+platform :android do
+  desc "Deploy a new version to the Google Play Store"
+  lane :deploy do
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(
+      track: 'internal', # Change to 'production' or 'beta' as needed
+      aab: 'app/build/outputs/bundle/release/app-release.aab',
+      json_key: 'play-store-key.json', # Your service account JSON key
+      package_name: 'com.tf.phonecleaner.booster' # Adjust per app
+    )
+  end
+end

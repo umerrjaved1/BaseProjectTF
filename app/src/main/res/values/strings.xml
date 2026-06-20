@@ -4,7 +4,7 @@
     <!-- Meta SDK -->
     <string name="facebook_app_id" translatable="false">949403944351618</string>
     <string name="facebook_client_token" translatable="false">0d687a47a5b66ef4538ae4e26e30ecd7</string>
-    <string name="app_name">Docu Viewer</string>
+    <string name="app_name">Phone Cleaner Booster</string>
     <string name="splash_title">Splash Title</string>
     <string name="splash_description">Splash Description.</string>
 
