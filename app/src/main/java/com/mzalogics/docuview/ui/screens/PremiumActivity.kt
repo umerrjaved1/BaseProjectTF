@@ -66,7 +66,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
      *   2. Uncomment their click listeners in [setupClickListeners].
      *   3. Uncomment their SKU constants in Constants.kt & AppBillingClient.kt.
      */
-    private var selectedPlan: PlanType = PlanType.YEARLY
+    private var selectedPlan: PlanType = PlanType.WEEKLY
  
     /** Supported subscription plan types. */
     private enum class PlanType {
@@ -97,13 +97,19 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Setup window insets
+        // Edge-to-edge display
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.navigationBarColor = android.graphics.Color.TRANSPARENT
+
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = true
-        window.statusBarColor = ContextCompat.getColor(this, R.color.bg_color)
 
         binding = ActivityPremiumBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Start shimmer on CTA button
+        binding.shimmerBtn.startShimmer()
 
         initializeActivity()
         setupClickListeners()
@@ -133,6 +139,9 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
         // Setup close button delay
         setupCloseButtonDelay()
+
+        // Start periodic shake animation on the CTA button
+        startButtonShakeAnimation()
     }
 
     private fun setupClickListeners() {
@@ -147,8 +156,6 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         // Apply default selection (weekly)
         applyPlanSelection(selectedPlan)
 
-        // Hide trial text until subscription details are loaded from billing
-        binding.tvFreeTry.visibility = View.GONE
         binding.btnUpgradeNow.isEnabled = false
     }
 
@@ -159,6 +166,19 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
             Log.d(TAG, "Close button delay: $delay ms")
             delay(delay.toLong())
             binding.ivClose.visibility = View.VISIBLE
+        }
+    }
+
+    private fun startButtonShakeAnimation() {
+        lifecycleScope.launch {
+            val shakeAnim = android.view.animation.AnimationUtils.loadAnimation(
+                this@PremiumActivity,
+                R.anim.shake
+            )
+            while (true) {
+                delay(3000)
+                binding.shimmerBtn.startAnimation(shakeAnim)
+            }
         }
     }
 
@@ -285,14 +305,15 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
         // --- Trial banner & privacy text ---
         if (plan.hasTrial()) {
-            val price = availableSubscriptions
-                .find { it.sku == plan.sku() }?.formattedPrice ?: ""
+            val loadedPrice = availableSubscriptions
+                .find { it.sku == plan.sku() }?.formattedPrice
+            val price = if (loadedPrice.isNullOrEmpty()) "$2.99" else loadedPrice
             binding.tvFreeTry.text = getString(R.string.free_trial_disclaimer, price)
             binding.tvFreeTry.visibility = View.VISIBLE
             binding.tvPrivacy.text =
                 getString(R.string.cancel_anytime_at_least_24_hours_before_renewal_trial)
         } else {
-            binding.tvFreeTry.visibility = View.GONE
+            binding.tvFreeTry.visibility = View.INVISIBLE
             binding.tvPrivacy.text =
                 getString(R.string.cancel_anytime_at_least_24_hours_before_renewal_without_trial)
         }
@@ -310,7 +331,14 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
             this,
             if (isSelected) R.color.accent_color else R.color.stroke_color
         )
-        card.strokeWidth = if (isSelected) dpToPx(2) else dpToPx(1)
+        card.strokeWidth = if (isSelected) dpToPx(3) else dpToPx(1)
+        card.setCardBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                if (isSelected) R.color.primary_color_light else R.color.white
+            )
+        )
+        card.cardElevation = if (isSelected) dpToPx(4).toFloat() else 0f
     }
 
     private fun dpToPx(dp: Int): Int {
@@ -527,6 +555,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        binding.shimmerBtn.stopShimmer()
         billingClient.disconnect()
         Log.d(TAG, "PremiumActivity destroyed")
     }

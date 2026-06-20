@@ -86,7 +86,7 @@ object StatusBarUtils {
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.isAppearanceLightStatusBars = themeBuilder
         controller.isAppearanceLightNavigationBars = themeBuilder
-        if (activity.javaClass.simpleName == "AdActivity" || activity.javaClass.simpleName == "StartActivity") {
+        if (activity.javaClass.simpleName == "AdActivity" || activity.javaClass.simpleName == "StartActivity" || activity.javaClass.simpleName == "PremiumActivity") {
             controller.hide(WindowInsetsCompat.Type.navigationBars())
             controller.hide(WindowInsetsCompat.Type.statusBars())
             controller.systemBarsBehavior =
@@ -107,7 +107,7 @@ object StatusBarUtils {
 
             Log.d(STATUS_BAR_TAG, "applyEdgeToEdge: activityName: ${activity.javaClass.simpleName}")
             val statusBarHeight =
-                if (activity.javaClass.simpleName == "AdActivity" || activity.javaClass.simpleName == "StartActivity") {
+                if (activity.javaClass.simpleName == "AdActivity" || activity.javaClass.simpleName == "StartActivity" || activity.javaClass.simpleName == "PremiumActivity") {
                     0
                 } else {
                     windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top

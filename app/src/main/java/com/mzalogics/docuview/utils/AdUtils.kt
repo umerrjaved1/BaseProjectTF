@@ -67,7 +67,10 @@ object AdUtils {
                     // Previously finish() was called BEFORE showAd(), so the ad
                     // was displayed on an already-destroyed window → crash.
                     adMobManager.interstitialAdLoader.showAd(activity, adUnit) {
-                        AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+                        AdFrequencyControl.recordAdShown(
+                            activity,
+                            AdUnitFrequencyController.UNIT_INTERSTITIAL
+                        )
                         activity.finish()
                     }
                 } else {
@@ -106,7 +109,10 @@ object AdUtils {
                 true
             ) {
                 lastInterAdTime = SystemClock.elapsedRealtime()
-                AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+                AdFrequencyControl.recordAdShown(
+                    activity,
+                    AdUnitFrequencyController.UNIT_INTERSTITIAL
+                )
                 onNavigate()
             }
         } else {
@@ -145,7 +151,10 @@ object AdUtils {
                     loadingDialog.hideLoadingDialog()
                     if (!activity.isFinishing && !activity.isDestroyed) {
                         adMobManager.interstitialAdLoader.showAd(activity, hfAdUnit) {
-                            AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+                            AdFrequencyControl.recordAdShown(
+                                activity,
+                                AdUnitFrequencyController.UNIT_INTERSTITIAL
+                            )
                             onComplete(true)
                         }
                     } else {
@@ -161,11 +170,17 @@ object AdUtils {
                         if (isNormalLoaded && !activity.isFinishing && !activity.isDestroyed) {
                             android.util.Log.d("Waterfall", "Simple Ad loaded successfully.")
                             adMobManager.interstitialAdLoader.showAd(activity, normalAdUnit) {
-                                AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
+                                AdFrequencyControl.recordAdShown(
+                                    activity,
+                                    AdUnitFrequencyController.UNIT_INTERSTITIAL
+                                )
                                 onComplete(true)
                             }
                         } else {
-                            android.util.Log.d("Waterfall", "Simple Ad failed. Proceeding without ad.")
+                            android.util.Log.d(
+                                "Waterfall",
+                                "Simple Ad failed. Proceeding without ad."
+                            )
                             onComplete(false)
                         }
                     }
@@ -192,15 +207,20 @@ object AdUtils {
             onAdLoaded?.invoke(false)
             return
         }
-        if (!AdFrequencyControl.canShowAd(frameLayout.context, AdUnitFrequencyController.UNIT_NATIVE)) {
+        if (!AdFrequencyControl.canShowAd(
+                frameLayout.context,
+                AdUnitFrequencyController.UNIT_NATIVE
+            )
+        ) {
             shimmerFrameLayout.stopShimmer()
             shimmerFrameLayout.visibility = android.view.View.GONE
             frameLayout.visibility = android.view.View.GONE
             onAdLoaded?.invoke(false)
             return
         }
-        
-        val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(nativeAdConfigIndex)
+
+        val nativeConfig =
+            RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(nativeAdConfigIndex)
         val builder = NativeAdBuilder.Builder(
             layoutResId,
             frameLayout,
@@ -227,7 +247,10 @@ object AdUtils {
             nativeConfig?.callActionButtonColor?.let { color ->
                 applyCtaBgFallback(frameLayout, color)
             }
-            AdFrequencyControl.recordAdShown(frameLayout.context, AdUnitFrequencyController.UNIT_NATIVE)
+            AdFrequencyControl.recordAdShown(
+                frameLayout.context,
+                AdUnitFrequencyController.UNIT_NATIVE
+            )
             onAdLoaded?.invoke(true)
             return
         }
@@ -247,7 +270,10 @@ object AdUtils {
                 nativeConfig?.callActionButtonColor?.let { color ->
                     applyCtaBgFallback(frameLayout, color)
                 }
-                AdFrequencyControl.recordAdShown(frameLayout.context, AdUnitFrequencyController.UNIT_NATIVE)
+                AdFrequencyControl.recordAdShown(
+                    frameLayout.context,
+                    AdUnitFrequencyController.UNIT_NATIVE
+                )
             } else {
                 frameLayout.visibility = android.view.View.GONE
             }
@@ -272,7 +298,7 @@ object AdUtils {
         val dialog = android.app.Dialog(activity, R.style.Theme_App)
         dialog.setContentView(R.layout.layout_full_native_ad)
         dialog.setCancelable(false)
-        
+
         dialog.window?.let {
             androidx.core.view.WindowCompat.setDecorFitsSystemWindows(it, false)
             it.statusBarColor = android.graphics.Color.TRANSPARENT
@@ -281,7 +307,8 @@ object AdUtils {
 
         val adFrame = dialog.findViewById<FrameLayout>(R.id.adFrame)
         val shimmerFbAd = dialog.findViewById<ShimmerFrameLayout>(R.id.shimmerFbAd)
-        val fallbackContainer = dialog.findViewById<android.widget.LinearLayout>(R.id.fallbackContainer)
+        val fallbackContainer =
+            dialog.findViewById<android.widget.LinearLayout>(R.id.fallbackContainer)
         val btnContinue = dialog.findViewById<android.widget.TextView>(R.id.btnContinue)
         val btnCloseAd = dialog.findViewById<android.widget.ImageView>(R.id.btnCloseAd)
 
@@ -323,7 +350,7 @@ object AdUtils {
                 fallbackContainer.visibility = android.view.View.VISIBLE
                 btnContinue.visibility = android.view.View.VISIBLE
                 btnCloseAd.visibility = android.view.View.VISIBLE
-                
+
                 dialog.dismiss()
                 onComplete(false)
             }

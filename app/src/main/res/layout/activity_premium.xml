@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fillViewport="true"
-    android:background="@color/white">
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp">
+        android:paddingBottom="24dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <!-- Header Image -->
         <ImageView
@@ -18,56 +22,56 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:src="@drawable/premium_header"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Close Button overlaid on header -->
         <ImageView
             android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
             android:padding="16dp"
             android:src="@drawable/ic_premium_close"
-            android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Title -->
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="-32dp"
             android:text="@string/unlock_premium"
             android:textColor="@color/text_color_dark"
             android:textSize="26sp"
-            app:fontFamily="@font/poppins_semi_bold"
-            app:layout_constraintTop_toBottomOf="@id/iv_header"
+            app:fontFamily="@font/plus_jakarta_sans_semi_bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/iv_header" />
 
         <!-- Features Table Container -->
         <LinearLayout
             android:id="@+id/ll_features"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="24dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
             <!-- Column Headers -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"
@@ -77,168 +81,155 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:gravity="center"
                     android:text="@string/free"
-                    android:textColor="#8A94A6"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    android:textColor="@color/text_color_secondary"
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:gravity="center"
                     android:text="@string/premium"
-                    android:textColor="#8A94A6"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    android:textColor="@color/text_color_secondary"
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
             </LinearLayout>
 
             <!-- Row 1: Free Up Space -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginVertical="6dp"
+                android:paddingVertical="4dp"
                 android:gravity="center_vertical"
-                android:layout_marginVertical="6dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/free_up_space"
-                    android:textColor="#18222F"
+                    android:textColor="@color/text_color_primary"
                     android:textSize="14sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_check" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_check" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/stroke_color"
-                android:layout_marginVertical="4dp" />
 
             <!-- Row 2: Scan & Clean -->
             <LinearLayout
+                android:paddingVertical="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginVertical="6dp"
                 android:gravity="center_vertical"
-                android:layout_marginVertical="6dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/scan_and_clean"
-                    android:textColor="#18222F"
+                    android:textColor="@color/text_color_primary"
                     android:textSize="14sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_circle_ring"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_circle_ring" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_check" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/stroke_color"
-                android:layout_marginVertical="4dp" />
 
             <!-- Row 3: Uninstall Apps -->
             <LinearLayout
+                android:paddingVertical="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginVertical="6dp"
                 android:gravity="center_vertical"
-                android:layout_marginVertical="6dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/uninstall_apps"
-                    android:textColor="#18222F"
+                    android:textColor="@color/text_color_primary"
                     android:textSize="14sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_circle_ring"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_circle_ring" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_check" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/stroke_color"
-                android:layout_marginVertical="4dp" />
 
             <!-- Row 4: Remove all ads -->
             <LinearLayout
+                android:paddingVertical="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginVertical="6dp"
                 android:gravity="center_vertical"
-                android:layout_marginVertical="6dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/remove_all_ads_premium"
-                    android:textColor="#18222F"
+                    android:textColor="@color/text_color_primary"
                     android:textSize="14sp"
-                    app:fontFamily="@font/poppins_medium" />
+                    app:fontFamily="@font/plus_jakarta_sans_medium" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_circle_ring"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_circle_ring" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="0.25"
-                    android:src="@drawable/ic_check"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.35"
+                    android:src="@drawable/ic_check" />
             </LinearLayout>
         </LinearLayout>
 
@@ -247,132 +238,50 @@
             android:id="@+id/cl_plans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="24dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_features"
+            android:layout_marginTop="12dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <!-- Yearly Plan Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/ll_yearly"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="2dp"
-                app:strokeColor="@color/accent_color"
-                app:cardBackgroundColor="@color/white"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/iv_check_yearly"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/ic_check"
-                        android:layout_marginEnd="12dp" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/yearly"
-                            android:textColor="@color/text_color_dark"
-                            android:textSize="16sp"
-                            app:fontFamily="@font/poppins_semi_bold" />
-
-                        <TextView
-                            android:id="@+id/tv_yearly_sub"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Just $0.38/week"
-                            android:textColor="@color/text_color_secondary"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/poppins_regular" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_yearly_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$19.99/year"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="16sp"
-                        app:fontFamily="@font/poppins_semi_bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Save Badge Overlapping Top-Right of Yearly Card -->
-            <TextView
-                android:id="@+id/tv_save_badge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_badge_save"
-                android:text="SAVE 80%"
-                android:textColor="@color/white"
-                android:textSize="10sp"
-                app:fontFamily="@font/poppins_semi_bold"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
-                android:layout_marginEnd="16dp"
-                android:elevation="4dp"
-                app:layout_constraintEnd_toEndOf="@id/ll_yearly"
-                app:layout_constraintTop_toTopOf="@id/ll_yearly"
-                app:layout_constraintBottom_toTopOf="@id/ll_yearly" />
+            app:layout_constraintTop_toBottomOf="@id/ll_features">
 
             <!-- Weekly Plan Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ll_weekly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/stroke_color"
-                app:cardBackgroundColor="@color/white"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/ll_yearly"
+                app:cardBackgroundColor="@color/primary_color_light"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/accent_color"
+                app:strokeWidth="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
                     <ImageView
                         android:id="@+id/iv_check_weekly"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@drawable/ic_circle_ring"
-                        android:layout_marginEnd="12dp" />
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_check" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -380,7 +289,7 @@
                             android:text="@string/weekly"
                             android:textColor="@color/text_color_dark"
                             android:textSize="16sp"
-                            app:fontFamily="@font/poppins_semi_bold" />
+                            app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
 
                         <TextView
                             android:id="@+id/tv_weekly_sub"
@@ -389,7 +298,7 @@
                             android:text="3-day free trial"
                             android:textColor="@color/text_color_secondary"
                             android:textSize="12sp"
-                            app:fontFamily="@font/poppins_regular" />
+                            app:fontFamily="@font/plus_jakarta_sans_regular" />
                     </LinearLayout>
 
                     <TextView
@@ -399,78 +308,174 @@
                         android:text="$2.99/week"
                         android:textColor="@color/text_color_dark"
                         android:textSize="16sp"
-                        app:fontFamily="@font/poppins_semi_bold" />
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Yearly Plan Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ll_yearly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_weekly"
+                app:strokeColor="@color/stroke_color"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_check_yearly"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_circle_ring" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/yearly"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="16sp"
+                            app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                        <TextView
+                            android:id="@+id/tv_yearly_sub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Just $0.38/week"
+                            android:textColor="@color/text_color_secondary"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/plus_jakarta_sans_regular" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_yearly_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$19.99/year"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Save Badge Overlapping Top-Right of Yearly Card -->
+            <TextView
+                android:id="@+id/tv_save_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_badge_save"
+                android:elevation="4dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="SAVE 80%"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:fontFamily="@font/plus_jakarta_sans_semi_bold"
+                app:layout_constraintBottom_toTopOf="@id/ll_yearly"
+                app:layout_constraintEnd_toEndOf="@id/ll_yearly"
+                app:layout_constraintTop_toTopOf="@id/ll_yearly" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Upgrade/Continue Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_upgrade_now"
+        <!-- Shimmer Container for Upgrade/Continue Button -->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_btn"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/bg_premium_btn_gradient"
-            app:backgroundTint="@null"
-            android:text="Continue"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:fontFamily="@font/poppins_semi_bold"
-            app:icon="@drawable/ic_crown"
-            app:iconTint="@color/white"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:cornerRadius="16dp"
-            app:elevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/cl_plans"
+            app:shimmer_auto_start="true"
+            app:shimmer_duration="1500"
+            app:shimmer_base_alpha="1.0"
+            app:shimmer_highlight_alpha="0.7"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cl_plans">
+
+            <!-- Upgrade/Continue Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_upgrade_now"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_premium_btn_gradient"
+                android:text="Continue"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="@null"
+                app:cornerRadius="16dp"
+                app:elevation="4dp"
+                app:fontFamily="@font/plus_jakarta_sans_semi_bold"
+                app:icon="@drawable/ic_crown"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <!-- Disclaimer / Status text (managed in Kotlin) -->
         <TextView
             android:id="@+id/tvFreeTry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
             android:gravity="center"
             android:textColor="@color/text_color_secondary"
             android:textSize="12sp"
-            android:visibility="gone"
-            app:fontFamily="@font/poppins_regular"
-            app:layout_constraintTop_toBottomOf="@id/btn_upgrade_now"
+            android:visibility="invisible"
+            app:fontFamily="@font/plus_jakarta_sans_regular"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/shimmer_btn" />
 
         <!-- Auto-renew disclaimer / privacy text -->
         <TextView
             android:id="@+id/tv_privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:textColor="@color/text_color_secondary"
             android:textSize="11sp"
-            app:fontFamily="@font/poppins_regular"
-            app:layout_constraintTop_toBottomOf="@id/tvFreeTry"
+            app:fontFamily="@font/plus_jakarta_sans_regular"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvFreeTry" />
 
         <!-- Bulleted Footer links -->
         <LinearLayout
             android:id="@+id/ll_footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_privacy"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/tv_privacy">
 
             <TextView
                 android:id="@+id/tv_restore"
@@ -480,15 +485,15 @@
                 android:text="@string/restore"
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
-                app:fontFamily="@font/poppins_medium" />
+                app:fontFamily="@font/plus_jakarta_sans_medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="4dp"
                 android:text="·"
                 android:textColor="@color/text_color_secondary"
-                android:textSize="14sp"
-                android:paddingHorizontal="4dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_terms"
@@ -498,15 +503,15 @@
                 android:text="@string/terms"
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
-                app:fontFamily="@font/poppins_medium" />
+                app:fontFamily="@font/plus_jakarta_sans_medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="4dp"
                 android:text="·"
                 android:textColor="@color/text_color_secondary"
-                android:textSize="14sp"
-                android:paddingHorizontal="4dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_privacy_link"
@@ -516,7 +521,7 @@
                 android:text="@string/privacy"
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
-                app:fontFamily="@font/poppins_medium" />
+                app:fontFamily="@font/plus_jakarta_sans_medium" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
