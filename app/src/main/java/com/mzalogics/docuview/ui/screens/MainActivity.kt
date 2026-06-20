@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         applySystemBars()
 
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, "MainActivity")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.HOME_VIEW)
 
         if (savedInstanceState != null) {
             activeTag = savedInstanceState.getString("active_tag", "home")

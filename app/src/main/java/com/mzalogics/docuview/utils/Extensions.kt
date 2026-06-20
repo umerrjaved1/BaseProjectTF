@@ -113,8 +113,8 @@ fun View.setClickWithTimeout(
 
                 SessionClickManager.globalClickCount++
 
-                if (SessionClickManager.globalClickCount >= RemoteConfigManager.getAdsConfig().clickCountPremiumActivity &&
-                    RemoteConfigManager.getShowPremiumActivityAfterThreeClick()
+                if (SessionClickManager.globalClickCount >= RemoteConfigManager.getPremiumScreenConfig().clickCountPremiumActivity &&
+                    RemoteConfigManager.getPremiumScreenConfig().showPremiumActivityAfterThreeClick
                 ) {
                     SessionClickManager.hasShownPremiumThisSession = true
                     view.context.startActivity(

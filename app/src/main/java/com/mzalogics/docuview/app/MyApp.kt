@@ -25,6 +25,8 @@ import com.mzalogics.docuview.ui.screens.OnboardingActivity
 import com.mzalogics.docuview.ui.screens.StartActivity
 import com.mzalogics.docuview.utils.StatusBarUtils
 import com.mzalogics.docuview.ui.screens.PremiumActivity
+import com.mzalogics.docuview.utils.AdFrequencyControl
+import com.mzalogics.docuview.utils.AdUnitFrequencyController
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -34,6 +36,12 @@ class MyApp : Application() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
+
+    @Inject
+    lateinit var adMobManager: AdMobManager
 
     private lateinit var billingClient: AppBillingClient
     private var activeSubscriptions: List<SubscriptionItem> = emptyList()
@@ -115,6 +123,10 @@ class MyApp : Application() {
      */
     fun onAppStart() {
         Log.e(TAG, "onStart: ")
+        
+        // Track app resume
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APP_RESUME)
+
         if (!hasBeenInBackground) {
             // First resume after cold-start — don't show Premium yet
             return
@@ -132,14 +144,33 @@ class MyApp : Application() {
         val isExcluded = simpleName in excludedSimpleNames
         Log.d(TAG, "App resumed to: $simpleName | isPremium=$isPremium | isExcluded=$isExcluded")
 
-        if (!isPremium && !isExcluded && RemoteConfigManager.shouldShowPremiumActivityOnResume()) {
+        if (!isPremium && !isExcluded && RemoteConfigManager.getPremiumScreenConfig().showPremiumActivityOnResume) {
             activity.startActivity(
                 Intent(activity, PremiumActivity::class.java)
                     .putExtra(Constants.EXTRA_PREMIUM_FROM_RESUME, true)
             )
             Log.d(TAG, "Showing PremiumActivity on app resume")
-        } else
-            Log.d(TAG, "Not showing PremiumActivity on app resume")
+        } else if (!isPremium && !isExcluded && RemoteConfigManager.getGlobalAdRulesConfig().showAppOpenAdOnResume) {
+            if (!AdFrequencyControl.canShowAd(activity, AdUnitFrequencyController.UNIT_OPEN_AD)) {
+                Log.d(TAG, "App Open Ad blocked by frequency control on resume")
+                return
+            }
+            Log.d(TAG, "Showing App Open Ad on app resume")
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST)
+            adMobManager.appOpenAdLoader.loadAppOpenAd(activity) { isLoaded ->
+                if (isLoaded) {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST_PASS)
+                    adMobManager.appOpenAdLoader.showAppOpenAdIfAvailable {
+                        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_VIEW)
+                        AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_OPEN_AD)
+                    }
+                } else {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST_FAIL)
+                }
+            }
+        } else {
+            Log.d(TAG, "Not showing PremiumActivity or App Open Ad on app resume")
+        }
     }
 
     /**

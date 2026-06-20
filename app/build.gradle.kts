@@ -31,7 +31,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId = "com.mzalogics.docuview"
+        applicationId = "com.tf.phonecleaner.booster"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
@@ -144,6 +144,20 @@ dependencies {
     implementation(libs.firebase.config)
     implementation(libs.billing.ktx)
     implementation(libs.ads)
+
+    // Mediation Adapters
+    implementation(libs.mediation.applovin)
+    implementation(libs.mediation.facebook)
+    implementation(libs.mediation.mintegral)
+    implementation(libs.mediation.pangle)
+    implementation(libs.mediation.fyber)
+    implementation(libs.mediation.ironsource)
+    implementation(libs.mediation.unity)
+    implementation(libs.mediation.inmobi)
+    implementation(libs.mediation.vungle)
+
+    // Facebook SDK for AppEvents
+    implementation(libs.facebook.android.sdk)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

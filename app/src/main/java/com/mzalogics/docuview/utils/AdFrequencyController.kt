@@ -23,7 +23,7 @@ object AdFrequencyManager {
     private const val KEY_LAST_RESET = "last_reset_time"
 
     fun canShowAd(context: Context): Boolean {
-        val config = RemoteConfigManager.getAdsConfig()
+        val config = RemoteConfigManager.getGlobalAdRulesConfig()
         val resetIntervalMs = config.dailyResetHours * 60 * 60 * 1000L
         val maxAds = config.maxAdsPerDay
 
@@ -63,7 +63,7 @@ object SessionAdTracker {
     private var lastAdShownTime = 0L
 
     fun canShowAd(): Boolean {
-        val config = RemoteConfigManager.getAdsConfig()
+        val config = RemoteConfigManager.getGlobalAdRulesConfig()
         val maxAds = config.maxAdsPerSession
         val cooldownMs = config.sessionCooldownSeconds * 1000L
 
@@ -110,7 +110,7 @@ object AdUnitFrequencyController {
     private val lastShownMap = mutableMapOf<String, Long>()
 
     private fun getConfig(adUnitKey: String): AdUnitConfig {
-        val config = RemoteConfigManager.getAdsConfig()
+        val config = RemoteConfigManager.getGlobalAdRulesConfig()
         return when (adUnitKey) {
             UNIT_INTERSTITIAL -> AdUnitConfig(
                 maxPerSession = config.interstitialMaxPerSession,
@@ -204,6 +204,11 @@ object AdFrequencyControl {
             SessionAdTracker.recordAdShown()
         }
         AdUnitFrequencyController.recordShown(adUnitKey)
+        
+        // Log Meta (Facebook) Ad Impression automatically
+        com.facebook.appevents.AppEventsLogger.newLogger(context)
+            .logEvent(com.facebook.appevents.AppEventsConstants.EVENT_NAME_AD_IMPRESSION)
+            
         Log.d(TAG, "Ad shown recorded ($adUnitKey, fullScreen=$isFullScreenAd)")
     }
 

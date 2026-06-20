@@ -93,6 +93,7 @@ class LanguageActivity : AppCompatActivity() {
 
         Log.e("TAG", "onCreate: language")
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, TAG)
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.LNG_SCR_VIEW)
 
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
@@ -161,7 +162,7 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun loadExitBannerAd(binding: DialogExitBinding) {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium || !RemoteConfigManager.getHomeScreenConfig().showExitBanner) {
             binding.includeAd.root.visibility = View.GONE
             return
         }
@@ -179,6 +180,16 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun loadNativeAd(forceLoadNew: Boolean = !isFromStart) {
+        val config = RemoteConfigManager.getLanguageScreenConfig()
+        val showNative1 = !hasShownSecondAd && config.showLanguageNative1
+        val showNative2 = hasShownSecondAd && config.showLanguageNative2
+        
+        if (!showNative1 && !showNative2) {
+            binding.includeAd.root.visibility = View.GONE
+            return
+        }
+        
+        val prefix = if (hasShownSecondAd) "lng_scr_native2" else "lng_scr_native1"
         AdUtils.loadAndShowNativeAd(
             adMobManager = adMobManager,
             adUnitId = AdIds.getNativeLanguageAdId(),
@@ -186,13 +197,16 @@ class LanguageActivity : AppCompatActivity() {
             frameLayout = binding.includeAd.adFrame,
             shimmerFrameLayout = binding.includeAd.shimmerFbAd,
             showMedia = true,
-            nativeAdConfigIndex = 0,
-            forceLoadNew = forceLoadNew
+            nativeConfig = config.nativeConfig,
+            forceLoadNew = forceLoadNew,
+            analyticsManager = analyticsManager,
+            eventNamePrefix = prefix
         )
     }
 
     private fun preloadSecondNativeAd() {
-        if (!AdMobManager.isPremium && RemoteConfigManager.shouldShowAds()) {
+        if (!AdMobManager.isPremium && RemoteConfigManager.getLanguageScreenConfig().showLanguageNative2) {
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "lng_scr_native2_request")
             adMobManager.nativeAdLoader.loadAd(AdIds.getNativeLanguageAdId())
         }
     }
@@ -208,6 +222,7 @@ class LanguageActivity : AppCompatActivity() {
             analyticsManager.sendAnalytics(
                 AnalyticsManager.Action.CLICKED, "btn_select_language_done"
             )
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.LNG_SCR_NEXT)
 
             val selectedLanguage = adapter.selectedLanguageModel
             if (selectedLanguage == null) {
@@ -219,7 +234,35 @@ class LanguageActivity : AppCompatActivity() {
             }
 
             viewModel.setSelectedLanguage(selectedLanguage)
-            viewModel.onDoneClicked()
+
+            if (RemoteConfigManager.getLanguageScreenConfig().languageScreenInterstitialStrategy == 1 && RemoteConfigManager.getLanguageScreenConfig().showLanguageInterstitial) {
+                showInterstitialAndNavigate {
+                    viewModel.onDoneClicked()
+                }
+            } else {
+                viewModel.onDoneClicked()
+            }
+        }
+    }
+
+    private fun showInterstitialAndNavigate(onComplete: () -> Unit) {
+        if (AdMobManager.isPremium) {
+            onComplete()
+            return
+        }
+        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
+            onComplete()
+            return
+        }
+
+        AdUtils.loadAndShowAdWithTimer(
+            activity = this,
+            adMobManager = adMobManager,
+            adUnit = AdIds.getInterstitialLanguageID(),
+            analyticsManager = analyticsManager,
+            eventNamePrefix = "lng_int"
+        ) {
+            onComplete()
         }
     }
 
@@ -244,7 +287,9 @@ class LanguageActivity : AppCompatActivity() {
             }
         )
 
-        // Show the pre-loaded second native ad when a language is selected (only once)
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.LNG_SELECTED)
+
+        // Show the preloaded second native ad when a language is selected (only once)
         if (!hasShownSecondAd) {
             hasShownSecondAd = true
             loadNativeAd(forceLoadNew = false)

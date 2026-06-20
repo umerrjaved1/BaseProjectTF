@@ -62,7 +62,7 @@ class ExitDialogFragment : DialogFragment() {
 
 
     private fun loadAd() {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium || !RemoteConfigManager.getHomeScreenConfig().showExitBanner) {
             binding.includeAd.root.visibility = View.GONE
             return
         }

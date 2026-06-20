@@ -142,6 +142,12 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
         // Start periodic shake animation on the CTA button
         startButtonShakeAnimation()
+
+        if (fromSplashActivity) {
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_VIEW_SPLASH)
+        } else {
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_VIEW)
+        }
     }
 
     private fun setupClickListeners() {
@@ -162,7 +168,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     private fun setupCloseButtonDelay() {
         lifecycleScope.launch {
             binding.ivClose.visibility = View.INVISIBLE
-            val delay = RemoteConfigManager.getAdsConfig().premiumCloseBtnDelay
+            val delay = RemoteConfigManager.getPremiumScreenConfig().premiumCloseBtnDelay
             Log.d(TAG, "Close button delay: $delay ms")
             delay(delay.toLong())
             binding.ivClose.visibility = View.VISIBLE
@@ -348,6 +354,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     private fun handlePlanSelection(plan: PlanType) {
         applyPlanSelection(plan)
         analyticsManager.sendAnalytics("clicked", "${TAG}select_${plan.name.lowercase()}")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CLCK)
     }
 
     private var isClosing = false
@@ -357,6 +364,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         isClosing = true
 
         analyticsManager.sendAnalytics("clicked", "${TAG}close_button")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CROSS)
 
         if (fromProIcon) {
             finish()
@@ -383,6 +391,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
             "clicked",
             "${TAG}subscribe_${selectedPlan.name.lowercase()}"
         )
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CLCK)
         purchaseSubscription(selectedPlan)
     }
 
@@ -490,6 +499,8 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         ).show()
 
         analyticsManager.sendAnalytics("purchase_success", "${TAG}$productId")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PURCHASE)
+        analyticsManager.logMetaStartTrial()
 
         // Navigate to appropriate screen
         navigateAfterPurchase()
@@ -510,7 +521,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showInterstitialAndNavigate() {
         val isPremium = appPreferences.getBoolean(AppPreferences.IS_PREMIUM, false)
-        if (isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (isPremium || !RemoteConfigManager.getPremiumScreenConfig().showPremiumInterstitial) {
             navigateToMain()
             return
         }

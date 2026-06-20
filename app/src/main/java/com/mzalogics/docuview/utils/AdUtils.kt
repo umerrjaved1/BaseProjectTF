@@ -14,6 +14,8 @@ import com.umer_tf.ads.domain.utils.LoadingDialogUtil
 import com.mzalogics.docuview.R
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
+import com.mzalogics.docuview.remoteconfig.data.NativeAdConfigData
+import com.mzalogics.docuview.app.AnalyticsManager
 
 import kotlinx.coroutines.launch
 
@@ -41,14 +43,83 @@ object AdUtils {
         }
     }
 
+    fun applyAdBackgroundColorFallback(
+        adContainer: FrameLayout,
+        colorValue: String
+    ) {
+        val parsedColor = runCatching { Color.parseColor(colorValue) }.getOrNull() ?: return
+        adContainer.post {
+            val clAd = adContainer.findViewById<android.view.View>(R.id.clAd)
+            clAd?.setBackgroundColor(parsedColor)
+            val llBottomPanel = adContainer.findViewById<android.view.View>(R.id.llBottomPanel)
+            llBottomPanel?.setBackgroundColor(parsedColor)
+        }
+    }
+
+    /**
+     * Solid, guaranteed fallback specifically for ViewPager2 Native Ads (Onboarding) and Splash
+     * It bypasses the SDK builder completely and forcibly applies all colors immediately when the NativeAdView inflates.
+     */
+    fun solidApplyNativeAdColors(
+        adContainer: FrameLayout,
+        nativeConfig: NativeAdConfigData?
+    ) {
+        if (nativeConfig == null) return
+
+        val applyColors = {
+            val view = adContainer
+            // Background
+            val parsedBgColor = runCatching { Color.parseColor(nativeConfig.backgroundColor) }.getOrNull()
+            if (parsedBgColor != null) {
+                view.findViewById<android.view.View>(R.id.clAd)?.setBackgroundColor(parsedBgColor)
+                view.findViewById<android.view.View>(R.id.llBottomPanel)?.setBackgroundColor(parsedBgColor)
+            }
+            // CTA Background & Text Color
+            val parsedCtaBg = runCatching { Color.parseColor(nativeConfig.callActionButtonColor) }.getOrNull()
+            val parsedCtaText = runCatching { Color.parseColor(nativeConfig.ctaText) }.getOrNull()
+            val cta = view.findViewById<AppCompatButton>(R.id.ad_call_to_action)
+            if (cta != null) {
+                if (parsedCtaBg != null) {
+                    val tint = ColorStateList.valueOf(parsedCtaBg)
+                    cta.backgroundTintList = tint
+                    cta.supportBackgroundTintList = tint
+                }
+                if (parsedCtaText != null) {
+                    cta.setTextColor(parsedCtaText)
+                }
+            }
+            // Title Text Color
+            val parsedTitle = runCatching { Color.parseColor(nativeConfig.heading) }.getOrNull()
+            if (parsedTitle != null) {
+                view.findViewById<android.widget.TextView>(R.id.ad_headline)?.setTextColor(parsedTitle)
+            }
+            // Body Text Color
+            val parsedBody = runCatching { Color.parseColor(nativeConfig.description) }.getOrNull()
+            if (parsedBody != null) {
+                view.findViewById<android.widget.TextView>(R.id.ad_body)?.setTextColor(parsedBody)
+            }
+        }
+
+        applyColors()
+
+        adContainer.setOnHierarchyChangeListener(object : android.view.ViewGroup.OnHierarchyChangeListener {
+            override fun onChildViewAdded(parent: android.view.View?, child: android.view.View?) {
+                applyColors()
+            }
+            override fun onChildViewRemoved(parent: android.view.View?, child: android.view.View?) {}
+        })
+    }
+
     fun loadAndShowInterAdWithDialog(
         adMobManager: AdMobManager,
         activity: AppCompatActivity,
         adUnit: String,
         lifecycleScope: LifecycleCoroutineScope,
-    ) {
-        // Never show ads to premium users
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        analyticsManager: AnalyticsManager? = null,
+        eventNamePrefix: String? = null,
+        onComplete: (Boolean) -> Unit = {}
+    ) {   // Never show ads to premium users
+        if (AdMobManager.isPremium) {
             activity.finish()
             return
         }
@@ -59,10 +130,19 @@ object AdUtils {
         }
         val loadingDialog = LoadingDialogUtil.create(activity)
         loadingDialog.showLoadingDialog()
+        
+        eventNamePrefix?.let { prefix ->
+            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
+        }
+        
         adMobManager.interstitialAdLoader.loadAd(adUnit) { isLoaded ->
             lifecycleScope.launch {
                 loadingDialog.hideLoadingDialog()
                 if (isLoaded && !activity.isFinishing && !activity.isDestroyed) {
+                    eventNamePrefix?.let { prefix ->
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                    }
                     // FIX: Show ad FIRST, finish inside callback.
                     // Previously finish() was called BEFORE showAd(), so the ad
                     // was displayed on an already-destroyed window → crash.
@@ -74,6 +154,9 @@ object AdUtils {
                         activity.finish()
                     }
                 } else {
+                    eventNamePrefix?.let { prefix ->
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                    }
                     activity.finish()
                 }
             }
@@ -87,10 +170,12 @@ object AdUtils {
         adMobManager: AdMobManager,
         adUnit: String = AdIds.getInterstitialAdID(),
         timeOut: Long = 30000,
+        analyticsManager: AnalyticsManager? = null,
+        eventNamePrefix: String? = null,
         onNavigate: () -> Unit
     ) {
         // Never show ads to premium users
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium) {
             onNavigate()
             return
         }
@@ -103,16 +188,29 @@ object AdUtils {
 
         val currentTime = SystemClock.elapsedRealtime()
         if (currentTime - lastInterAdTime > timeOut) {
+            eventNamePrefix?.let { prefix ->
+                analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
+            }
             adMobManager.interstitialAdLoader.loadAndShowAd(
                 activity,
                 adUnit,
                 true
-            ) {
-                lastInterAdTime = SystemClock.elapsedRealtime()
-                AdFrequencyControl.recordAdShown(
-                    activity,
-                    AdUnitFrequencyController.UNIT_INTERSTITIAL
-                )
+            ) { isShown ->
+                if (isShown) {
+                    eventNamePrefix?.let { prefix ->
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                    }
+                    lastInterAdTime = SystemClock.elapsedRealtime()
+                    AdFrequencyControl.recordAdShown(
+                        activity,
+                        AdUnitFrequencyController.UNIT_INTERSTITIAL
+                    )
+                } else {
+                    eventNamePrefix?.let { prefix ->
+                        analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                    }
+                }
                 onNavigate()
             }
         } else {
@@ -127,10 +225,12 @@ object AdUtils {
         hfAdUnit: String,
         normalAdUnit: String,
         lifecycleScope: LifecycleCoroutineScope,
+        analyticsManager: AnalyticsManager? = null,
+        eventNamePrefix: String? = null,
         onComplete: (Boolean) -> Unit
     ) {
         // Never show ads to premium users
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium) {
             onComplete(false)
             return
         }
@@ -143,6 +243,10 @@ object AdUtils {
         val loadingDialog = LoadingDialogUtil.create(activity)
         loadingDialog.showLoadingDialog()
 
+        eventNamePrefix?.let { prefix ->
+            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
+        }
+
         android.util.Log.d("Waterfall", "Attempting High Floor Ad (ID: $hfAdUnit)")
         adMobManager.interstitialAdLoader.loadAd(hfAdUnit) { isHfLoaded ->
             if (isHfLoaded) {
@@ -150,6 +254,10 @@ object AdUtils {
                 lifecycleScope.launch {
                     loadingDialog.hideLoadingDialog()
                     if (!activity.isFinishing && !activity.isDestroyed) {
+                        eventNamePrefix?.let { prefix ->
+                            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                        }
                         adMobManager.interstitialAdLoader.showAd(activity, hfAdUnit) {
                             AdFrequencyControl.recordAdShown(
                                 activity,
@@ -158,6 +266,9 @@ object AdUtils {
                             onComplete(true)
                         }
                     } else {
+                        eventNamePrefix?.let { prefix ->
+                            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                        }
                         onComplete(false)
                     }
                 }
@@ -168,6 +279,10 @@ object AdUtils {
                     lifecycleScope.launch {
                         loadingDialog.hideLoadingDialog()
                         if (isNormalLoaded && !activity.isFinishing && !activity.isDestroyed) {
+                            eventNamePrefix?.let { prefix ->
+                                analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                                analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                            }
                             android.util.Log.d("Waterfall", "Simple Ad loaded successfully.")
                             adMobManager.interstitialAdLoader.showAd(activity, normalAdUnit) {
                                 AdFrequencyControl.recordAdShown(
@@ -177,6 +292,9 @@ object AdUtils {
                                 onComplete(true)
                             }
                         } else {
+                            eventNamePrefix?.let { prefix ->
+                                analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                            }
                             android.util.Log.d(
                                 "Waterfall",
                                 "Simple Ad failed. Proceeding without ad."
@@ -196,11 +314,13 @@ object AdUtils {
         frameLayout: FrameLayout,
         shimmerFrameLayout: ShimmerFrameLayout,
         showMedia: Boolean = true,
-        nativeAdConfigIndex: Int = 0,
+        nativeConfig: NativeAdConfigData? = null,
         forceLoadNew: Boolean = false,
+        analyticsManager: AnalyticsManager? = null,
+        eventNamePrefix: String? = null,
         onAdLoaded: ((Boolean) -> Unit)? = null
     ) {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium) {
             shimmerFrameLayout.stopShimmer()
             shimmerFrameLayout.visibility = android.view.View.GONE
             frameLayout.visibility = android.view.View.GONE
@@ -219,8 +339,6 @@ object AdUtils {
             return
         }
 
-        val nativeConfig =
-            RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(nativeAdConfigIndex)
         val builder = NativeAdBuilder.Builder(
             layoutResId,
             frameLayout,
@@ -235,7 +353,6 @@ object AdUtils {
             builder.setAdBodyColor(it.description)
             builder.setCtaTextColor(it.ctaText)
             builder.setCtaBgColor(it.callActionButtonColor)
-            // it.backgroundColor can be applied if needed
         }
 
         if (!forceLoadNew && adMobManager.nativeAdLoader.isAdLoaded()) {
@@ -246,6 +363,9 @@ object AdUtils {
             adMobManager.nativeAdLoader.showLoadedAd(builder.build(), adUnitId)
             nativeConfig?.callActionButtonColor?.let { color ->
                 applyCtaBgFallback(frameLayout, color)
+            }
+            nativeConfig?.backgroundColor?.let { color ->
+                applyAdBackgroundColorFallback(frameLayout, color)
             }
             AdFrequencyControl.recordAdShown(
                 frameLayout.context,
@@ -258,6 +378,10 @@ object AdUtils {
         frameLayout.visibility = android.view.View.GONE
         shimmerFrameLayout.visibility = android.view.View.VISIBLE
         shimmerFrameLayout.startShimmer()
+        
+        eventNamePrefix?.let { prefix ->
+            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
+        }
 
         adMobManager.nativeAdLoader.loadAndShow(
             adUnitId,
@@ -266,15 +390,25 @@ object AdUtils {
             shimmerFrameLayout.stopShimmer()
             shimmerFrameLayout.visibility = android.view.View.GONE
             if (success) {
+                eventNamePrefix?.let { prefix ->
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                }
                 frameLayout.visibility = android.view.View.VISIBLE
                 nativeConfig?.callActionButtonColor?.let { color ->
                     applyCtaBgFallback(frameLayout, color)
+                }
+                nativeConfig?.backgroundColor?.let { color ->
+                    applyAdBackgroundColorFallback(frameLayout, color)
                 }
                 AdFrequencyControl.recordAdShown(
                     frameLayout.context,
                     AdUnitFrequencyController.UNIT_NATIVE
                 )
             } else {
+                eventNamePrefix?.let { prefix ->
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                }
                 frameLayout.visibility = android.view.View.GONE
             }
             onAdLoaded?.invoke(success)
@@ -284,9 +418,12 @@ object AdUtils {
     fun loadAndShowFullScreenNativeAdWithDialog(
         activity: AppCompatActivity,
         adUnitId: String,
+        analyticsManager: AnalyticsManager? = null,
+        eventNamePrefix: String? = null,
+        nativeConfig: NativeAdConfigData? = null,
         onComplete: (Boolean) -> Unit
     ) {
-        if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+        if (AdMobManager.isPremium) {
             onComplete(false)
             return
         }
@@ -330,7 +467,6 @@ object AdUtils {
             shimmerFbAd
         ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
 
-        val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0)
         nativeConfig?.let {
             builder.setAdTitleColor(it.heading)
             builder.setAdBodyColor(it.description)
@@ -339,11 +475,23 @@ object AdUtils {
         }
 
         val loader = com.umer_tf.ads.domain.ads.native_ad.NativeAd(activity)
+        eventNamePrefix?.let { prefix ->
+            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
+        }
         loader.loadAndShow(adUnitId, builder.build()) { success ->
             if (success) {
+                eventNamePrefix?.let { prefix ->
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
+                }
                 btnCloseAd.visibility = android.view.View.VISIBLE
                 AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_NATIVE)
+                
+                AdUtils.solidApplyNativeAdColors(adFrame, nativeConfig)
             } else {
+                eventNamePrefix?.let { prefix ->
+                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
+                }
                 shimmerFbAd.stopShimmer()
                 shimmerFbAd.visibility = android.view.View.GONE
                 adFrame.visibility = android.view.View.GONE

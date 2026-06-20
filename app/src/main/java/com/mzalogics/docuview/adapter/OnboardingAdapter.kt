@@ -13,6 +13,7 @@ import com.umer_tf.ads.domain.core.AdMobManager
 import com.mzalogics.docuview.app.AdIds
 import com.mzalogics.docuview.model.OnboardingItem
 import com.mzalogics.docuview.remoteconfig.RemoteConfigManager
+import com.mzalogics.docuview.utils.AdUtils
 import com.mzalogics.docuview.utils.AdFrequencyControl
 import com.mzalogics.docuview.utils.AdUnitFrequencyController
 import com.mzalogics.docuview.utils.setClickWithTimeout
@@ -39,7 +40,7 @@ class OnboardingAdapter(
 
     // Check if ads are disabled from remote config
     private val shouldShowAd: Boolean
-        get() = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
+        get() = RemoteConfigManager.getOnboardingScreenConfig().showFullNativeOnBoarding && !AdMobManager.isPremium
 
     inner class OnboardingViewHolder(val binding: ItemOnboardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -91,7 +92,7 @@ class OnboardingAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val fullAdPos = RemoteConfigManager.getAdsConfig().fullNativeAdPosition
+        val fullAdPos = RemoteConfigManager.getOnboardingScreenConfig().fullNativeAdPosition
         return if (shouldShowAd && position == fullAdPos) VIEW_TYPE_AD else VIEW_TYPE_ONBOARDING
     }
 
@@ -117,7 +118,7 @@ class OnboardingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is OnboardingViewHolder -> {
-                val fullAdPos = RemoteConfigManager.getAdsConfig().fullNativeAdPosition
+                val fullAdPos = RemoteConfigManager.getOnboardingScreenConfig().fullNativeAdPosition
                 val itemIndex = if (shouldShowAd) {
                     if (position < fullAdPos) position else if (position > fullAdPos) position - 1 else 0
                 } else {
@@ -171,10 +172,10 @@ class OnboardingAdapter(
         return NativeAdBuilder.Builder(
             R.layout.full_native_ad_design, binding.includeAd.adFrame, binding.includeAd.shimmerFbAd
         ).setShowBody(true).setShowMedia(true)
-            .setAdTitleColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].heading)
-            .setAdBodyColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].description)
-            .setCtaTextColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].ctaText)
-            .setCtaBgColor(RemoteConfigManager.getAdsConfig().nativeConfig[0].callActionButtonColor)
+            .setAdTitleColor(RemoteConfigManager.getOnboardingScreenConfig().nativeConfig.heading)
+            .setAdBodyColor(RemoteConfigManager.getOnboardingScreenConfig().nativeConfig.description)
+            .setCtaTextColor(RemoteConfigManager.getOnboardingScreenConfig().nativeConfig.ctaText)
+            .setCtaBgColor(RemoteConfigManager.getOnboardingScreenConfig().nativeConfig.callActionButtonColor)
             .build()
     }
 
@@ -193,6 +194,10 @@ class OnboardingAdapter(
             AdFrequencyControl.recordAdShown(
                 binding.root.context, AdUnitFrequencyController.UNIT_NATIVE
             )
+            
+            val nativeConfig = RemoteConfigManager.getOnboardingScreenConfig().nativeConfig
+            AdUtils.solidApplyNativeAdColors(binding.includeAd.adFrame, nativeConfig)
+
             isAdLoaded = true
             adShown = true
             onAdLoaded?.invoke(true)
@@ -220,6 +225,9 @@ class OnboardingAdapter(
                 AdFrequencyControl.recordAdShown(
                     binding.root.context, AdUnitFrequencyController.UNIT_NATIVE
                 )
+                
+                val nativeConfig = RemoteConfigManager.getOnboardingScreenConfig().nativeConfig
+                AdUtils.solidApplyNativeAdColors(binding.includeAd.adFrame, nativeConfig)
             }
             isAdLoaded = success
             adShown = success

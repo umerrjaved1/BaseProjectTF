@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import android.widget.FrameLayout
+import androidx.lifecycle.lifecycleScope
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.umer_tf.ads.domain.ads.native_ad.NativeAd
 import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
@@ -105,6 +106,7 @@ class OnboardingActivity : AppCompatActivity() {
             if (binding.viewPager.currentItem < adapter.itemCount - 1) {
                 binding.viewPager.currentItem += 1
             } else {
+                analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.OB4_GET_STARTED)
                 moveToMain()
             }
         }
@@ -127,6 +129,9 @@ class OnboardingActivity : AppCompatActivity() {
         val isLastPage = position == (adapter.itemCount - 1)
         val isAdPage = hasAdPage && position == 1
 
+        val viewEventName = "ob${position + 1}_view"
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, viewEventName)
+
         binding.btnContinue.text =
             if (isLastPage) getString(R.string.get_started) else getString(R.string.continuee)
 
@@ -139,10 +144,17 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun handleSmallNativeAd(position: Int, hasAdPage: Boolean) {
         val isFullAdPage = hasAdPage && position == 1
-        val shouldShowAd = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
-        val disableSlides = RemoteConfigManager.getAdsConfig().disableSmallAdSlides
+        val config = RemoteConfigManager.getOnboardingScreenConfig()
+        val shouldShowAdThisSlide = when (position) {
+            0 -> config.showOb1Native
+            1 -> if (hasAdPage) false else config.showOb2Native
+            2 -> if (hasAdPage) config.showOb2Native else config.showOb3Native
+            3 -> if (hasAdPage) config.showOb3Native else config.showOb4Native
+            4 -> if (hasAdPage) config.showOb4Native else config.showOb5Native
+            else -> false
+        }
         
-        if (isFullAdPage || !shouldShowAd || disableSlides.contains(position) || 
+        if (isFullAdPage || !shouldShowAdThisSlide || AdMobManager.isPremium || 
             !AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
             binding.adContainerWrapper.visibility = android.view.View.GONE
             return
@@ -170,15 +182,24 @@ class OnboardingActivity : AppCompatActivity() {
             ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
             
             // Apply colors
-            val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0)
-            nativeConfig?.let {
+            val nativeConfig = RemoteConfigManager.getOnboardingScreenConfig().nativeConfig
+            nativeConfig.let {
                 builder.setAdTitleColor(it.heading)
                 builder.setAdBodyColor(it.description)
                 builder.setCtaTextColor(it.ctaText)
                 builder.setCtaBgColor(it.callActionButtonColor)
             }
                 
-            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build(), null)
+            val eventPrefix = "ob${position + 1}_native"
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_request")
+            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build()) { success ->
+                if (success) {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_pass")
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_view")
+                } else {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_fail")
+                }
+            }
         }
         
         // Attach the cached view for this slide
@@ -193,10 +214,17 @@ class OnboardingActivity : AppCompatActivity() {
         if (position >= maxItems) return
 
         val isFullAdPage = hasAdPage && position == 1
-        val shouldShowAd = RemoteConfigManager.shouldShowAds() && !AdMobManager.isPremium
-        val disableSlides = RemoteConfigManager.getAdsConfig().disableSmallAdSlides
+        val config = RemoteConfigManager.getOnboardingScreenConfig()
+        val shouldShowAdThisSlide = when (position) {
+            0 -> config.showOb1Native
+            1 -> if (hasAdPage) false else config.showOb2Native
+            2 -> if (hasAdPage) config.showOb2Native else config.showOb3Native
+            3 -> if (hasAdPage) config.showOb3Native else config.showOb4Native
+            4 -> if (hasAdPage) config.showOb4Native else config.showOb5Native
+            else -> false
+        }
         
-        if (isFullAdPage || !shouldShowAd || disableSlides.contains(position) || 
+        if (isFullAdPage || !shouldShowAdThisSlide || AdMobManager.isPremium || 
             !AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_NATIVE)) {
             return
         }
@@ -220,15 +248,24 @@ class OnboardingActivity : AppCompatActivity() {
             ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
             
             // Apply colors
-            val nativeConfig = RemoteConfigManager.getAdsConfig().nativeConfig.getOrNull(0)
-            nativeConfig?.let {
+            val nativeConfig = RemoteConfigManager.getOnboardingScreenConfig().nativeConfig
+            nativeConfig.let {
                 builder.setAdTitleColor(it.heading)
                 builder.setAdBodyColor(it.description)
                 builder.setCtaTextColor(it.ctaText)
                 builder.setCtaBgColor(it.callActionButtonColor)
             }
                 
-            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build(), null)
+            val eventPrefix = "ob${position + 1}_native"
+            analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_request")
+            loader.loadAndShow(AdIds.getNativeOnboardingAdId(), builder.build()) { success ->
+                if (success) {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_pass")
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_view")
+                } else {
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${eventPrefix}_fail")
+                }
+            }
         }
     }
 
@@ -290,7 +327,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         appPreferences.setBoolean(AppPreferences.Companion.IS_ONBOARDING, true)
 
-        when (RemoteConfigManager.getAdsConfig().onBoardingMonetizationStrategy) {
+        when (RemoteConfigManager.getOnboardingScreenConfig().onBoardingMonetizationStrategy) {
             0 -> {
                 startActivity(Intent(this@OnboardingActivity, MainActivity::class.java))
                 finish()
@@ -305,22 +342,20 @@ class OnboardingActivity : AppCompatActivity() {
             }
 
             2 -> {
-                if (AdMobManager.isPremium || !RemoteConfigManager.shouldShowAds()) {
+                if (AdMobManager.isPremium || !RemoteConfigManager.getOnboardingScreenConfig().showOnboardingInterstitial) {
                     startActivity(Intent(this@OnboardingActivity, MainActivity::class.java))
                     finish()
                     return
                 }
-                // FIX: do NOT call finish() here; let the ad callback handle it.
-                // Calling finish() before showAd() destroys the window → crash.
-              /*  adMobManager.interstitialAdLoader.showAd(
-                    this,
-                    AdIds.getInterstitialAdID()
-                ) {
-                    if (!isFinishing && !isDestroyed) {
-                        startActivity(Intent(this@OnboardingActivity, MainActivity::class.java))
-                        finish()
-                    }
-                }*/
+                
+                AdUtils.loadAndShowInterAdWithDialog(
+                    adMobManager = adMobManager,
+                    activity = this,
+                    adUnit = AdIds.getInterstitialOnboardingID(),
+                    lifecycleScope = this@OnboardingActivity.lifecycleScope,
+                    analyticsManager = analyticsManager,
+                    eventNamePrefix = "getstarted_int"
+                )
             }
 
             else -> {

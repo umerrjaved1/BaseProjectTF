@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "81635910545",
-    "project_id": "document-viewer-14764",
-    "storage_bucket": "document-viewer-14764.firebasestorage.app"
+    "project_number": "137568890386",
+    "project_id": "phone-cleaner-sweepio-incapps",
+    "storage_bucket": "phone-cleaner-sweepio-incapps.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:81635910545:android:775fe6a530e57ccf31b030",
+        "mobilesdk_app_id": "1:137568890386:android:71acc63bc2229c424572cb",
         "android_client_info": {
-          "package_name": "com.mzalogics.docuview"
+          "package_name": "com.tf.phonecleaner.booster"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCwjY5ZyOD3icJAepbiVNIc0AFqy-fdNTY"
+          "current_key": "AIzaSyBkV3lTkX9ZYn_RFgJj49HLcd2nSNNQgMg"
         }
       ],
       "services": {

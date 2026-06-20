@@ -1,46 +1,89 @@
 package com.mzalogics.docuview.remoteconfig.data
 
-
-data class AdsConfigData(
-    val interstitialMaxTimer: Int? = null,
-    val interstitialMinTimer: Int? = null,
-    val interstitialCounter: Int? = null,
-    val openAdResumeTimer: Int? = null,
-    val firstOpenAdStrategy: Int = 2, // 0 = OpenApp, 1 = Interstitial
-    val splashAdPostNavigationStrategy: Int = 1, // 0 = moveToNextScreen, 1 = PremiumActivity
-    val onBoardingCrossButtonVisible: Boolean = true,
-    val onBoardingMonetizationStrategy: Int = 0, // 0 = Main, 1 = PremiumScreen, 2 = Interstitial->MainActivity
-    val fullNativeAdPosition: Int = 1,
-    val disableSmallAdSlides: List<Int> = listOf(),
+data class StartScreenConfig(
+    val showAppOpenResumeAd: Boolean = true,
+    val showAppOpenSplashAd: Boolean = true,
+    val showSplashNativeAd: Boolean = true,
+    val showWelcomeInterstitialAd: Boolean = true,
     val startupTime: Int = 8,
-    val premiumCloseBtnDelay: Int = 3000,
-    val clickCountPremiumActivity : Int = 3,
-    val nativeConfig: List<NativeAdConfigData> = listOf(NativeAdConfigData()),
-    val interstitialDelay: Int = 20,
+    val firstOpenAdStrategy: Int = 2,
+    val splashAdPostNavigationStrategy: Int = 1,
+    val showGetStartedButton: Boolean = true,
     val appOpenAdID: String? = null,
-    val appOpenResumeAdID: String? = null,
-    val interstitialAdID: String? = null,
-    val nativeOnBoardingAdID: String? = null,
-    val fullNativeOnBoardingAdID: String? = null,
-    val interstitialWelcomeAdID: String? = null,//change into Welcome
     val interstitialSplashHfAdID: String? = null,
     val interstitialSplashAdID: String? = null,
-    val bannerAdID: String? = null,
+    val splashNativeAdID: String? = null,
+    val interstitialWelcomeAdID: String? = null,
+    val nativeConfig: NativeAdConfigData = NativeAdConfigData()
+)
+
+data class LanguageScreenConfig(
+    val showLanguageNative1: Boolean = true,
+    val showLanguageNative2: Boolean = true,
+    val showLanguageInterstitial: Boolean = false,
+    val showLangNativeMedia: Boolean = false,
+    val languageScreenInterstitialStrategy: Int = 0,
+    val nativeLanguageID: String? = null,
+    val interstitialLanguageID: String? = null,
+    val nativeConfig: NativeAdConfigData = NativeAdConfigData()
+)
+
+data class OnboardingScreenConfig(
+    val showOb1Native: Boolean = true,
+    val showOb2Native: Boolean = true,
+    val showOb3Native: Boolean = true,
+    val showOb4Native: Boolean = true,
+    val showOb5Native: Boolean = true,
+    val showFullNativeOnBoarding: Boolean = true,
+    val showOnboardingInterstitial: Boolean = true,
+    val onBoardingCrossButtonVisible: Boolean = true,
+    val onBoardingMonetizationStrategy: Int = 0,
+    val fullNativeAdPosition: Int = 1,
+    val showOnboardingNativeMedia: Boolean = false,
+    val nativeOnBoardingAdID: String? = null,
+    val fullNativeOnBoardingAdID: String? = null,
+    val interstitialOnboardingID: String? = null,
+    val nativeConfig: NativeAdConfigData = NativeAdConfigData()
+)
+
+data class HomeScreenConfig(
+    val showHomeBanner: Boolean = true,
+    val showExitBanner: Boolean = true,
+    val showHomeNative: Boolean = true,
+    val showAdvancedNative: Boolean = false,
+    val showHomeInterstitial: Boolean = true,
+    val showNativeMedia: Boolean = false,
     val bannerHomeAdID: String? = null,
     val bannerExitAdID: String? = null,
-    val nativeAdvancedID: String? = null,
-    val nativeLanguageID: String? = null,
     val nativeAdID: String? = null,
+    val nativeAdvancedID: String? = null,
+    val interstitialAdID: String? = null,
+    val nativeConfig: NativeAdConfigData = NativeAdConfigData()
+)
 
-    // Ad Frequency Control
-    val maxAdsPerDay: Int = 50,              // Per-user daily cap
-    val dailyResetHours: Int = 24,           // Reset interval in hours
-    val maxAdsPerSession: Int = 10,          // Per-session cap
-    val sessionCooldownSeconds: Int = 30,    // Min seconds between any two ads in a session
-    val interstitialMaxPerSession: Int = 5,  // Per-unit: interstitial session cap (cooldown uses interstitialMaxTimer)
-    val openAdMaxPerSession: Int = 3,        // Per-unit: open ad session cap (cooldown uses openAdResumeTimer)
-    val bannerMaxPerSession: Int = Int.MAX_VALUE, // Per-unit: banner (effectively unlimited)
-    val bannerCooldownSeconds: Int = 0,      // Per-unit: banner cooldown
-    val nativeMaxPerSession: Int = Int.MAX_VALUE, // Per-unit: native ad session cap
-    val nativeCooldownSeconds: Int = 0,      // Per-unit: native ad cooldown
+data class PremiumScreenConfig(
+    val premiumCloseBtnDelay: Int = 3000,
+    val clickCountPremiumActivity: Int = 3,
+    val showPremiumActivityOnResume: Boolean = false,
+    val showPremiumActivityAfterThreeClick: Boolean = false,
+    val showPremiumInterstitial: Boolean = false
+)
+
+data class GlobalAdRulesConfig(
+    val interstitialMaxTimer: Int = 20,
+    val interstitialMinTimer: Int = 10,
+    val interstitialCounter: Int = 2,
+    val interstitialDelay: Int = 20,
+    val showAppOpenAdOnResume: Boolean = true,
+    val openAdResumeTimer: Int = 10,
+    val maxAdsPerDay: Int = 50,
+    val dailyResetHours: Int = 24,
+    val maxAdsPerSession: Int = 10,
+    val sessionCooldownSeconds: Int = 30,
+    val interstitialMaxPerSession: Int = 5,
+    val openAdMaxPerSession: Int = 3,
+    val bannerMaxPerSession: Int = Int.MAX_VALUE,
+    val bannerCooldownSeconds: Int = 0,
+    val nativeMaxPerSession: Int = 100,
+    val nativeCooldownSeconds: Int = 0
 )
