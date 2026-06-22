@@ -21,7 +21,7 @@ import com.umer_tf.ads.domain.core.AdMobManager
 import com.tf.phonecleaner.booster.app.AppPreferences
 import com.tf.phonecleaner.booster.constants.Constants
 import com.tf.phonecleaner.booster.remoteconfig.RemoteConfigManager
-import com.tf.phonecleaner.booster.ui.screens.PremiumActivity
+// import com.tf.phonecleaner.booster.ui.screens.PremiumActivity
 
 /**
 
@@ -117,11 +117,11 @@ fun View.setClickWithTimeout(
                     RemoteConfigManager.getPremiumScreenConfig().showPremiumActivityAfterThreeClick
                 ) {
                     SessionClickManager.hasShownPremiumThisSession = true
-                    view.context.startActivity(
-                        Intent(view.context, PremiumActivity::class.java).apply {
-                            putExtra(Constants.EXTRA_PREMIUM_FROM_ICON, true)
-                        }
-                    )
+                    // view.context.startActivity(
+                    //     Intent(view.context, PremiumActivity::class.java).apply {
+                    //         putExtra(Constants.EXTRA_PREMIUM_FROM_ICON, true)
+                    //     }
+                    // )
                 }
             }
         }

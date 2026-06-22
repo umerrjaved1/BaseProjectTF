@@ -20,11 +20,8 @@ import com.tf.phonecleaner.booster.iab.AppBillingClient
 import com.tf.phonecleaner.booster.iab.ConnectResponse
 import com.tf.phonecleaner.booster.iab.SubscriptionItem
 import com.tf.phonecleaner.booster.remoteconfig.RemoteConfigManager
-import com.tf.phonecleaner.booster.ui.screens.LanguageActivity
-import com.tf.phonecleaner.booster.ui.screens.OnboardingActivity
-import com.tf.phonecleaner.booster.ui.screens.StartActivity
 import com.tf.phonecleaner.booster.utils.StatusBarUtils
-import com.tf.phonecleaner.booster.ui.screens.PremiumActivity
+// import com.tf.phonecleaner.booster.ui.screens.PremiumActivity
 import com.tf.phonecleaner.booster.utils.AdFrequencyControl
 import com.tf.phonecleaner.booster.utils.AdUnitFrequencyController
 import dagger.hilt.android.HiltAndroidApp
@@ -52,10 +49,6 @@ class MyApp : Application() {
      * even if the AdMob library's AdActivity lives in a different package.
      */
     private val excludedSimpleNames = setOf(
-        StartActivity::class.java.simpleName,      // Splash
-        LanguageActivity::class.java.simpleName,   // Language selection
-        OnboardingActivity::class.java.simpleName, // Onboarding
-        PremiumActivity::class.java.simpleName,    // Premium itself
         "AdActivity"                               // AdMob full-screen overlay
     )
 
@@ -145,11 +138,11 @@ class MyApp : Application() {
         Log.d(TAG, "App resumed to: $simpleName | isPremium=$isPremium | isExcluded=$isExcluded")
 
         if (!isPremium && !isExcluded && RemoteConfigManager.getPremiumScreenConfig().showPremiumActivityOnResume) {
-            activity.startActivity(
-                Intent(activity, PremiumActivity::class.java)
-                    .putExtra(Constants.EXTRA_PREMIUM_FROM_RESUME, true)
-            )
-            Log.d(TAG, "Showing PremiumActivity on app resume")
+            // activity.startActivity(
+            //    Intent(activity, PremiumActivity::class.java)
+            //        .putExtra(Constants.EXTRA_PREMIUM_FROM_RESUME, true)
+            // )
+            Log.d(TAG, "Showing PremiumActivity on app resume (DISABLED)")
         } else if (!isPremium && !isExcluded && RemoteConfigManager.getGlobalAdRulesConfig().showAppOpenAdOnResume) {
             if (!AdFrequencyControl.canShowAd(activity, AdUnitFrequencyController.UNIT_OPEN_AD)) {
                 Log.d(TAG, "App Open Ad blocked by frequency control on resume")

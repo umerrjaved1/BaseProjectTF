@@ -20,7 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class StartViewModel @Inject constructor(
     private val appPreferences: AppPreferences,
-    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
+    val adMobManager: com.umer_tf.ads.domain.core.AdMobManager,
+    val analyticsManager: com.tf.phonecleaner.booster.app.AnalyticsManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UIState<StartData>>(UIState.Loading)

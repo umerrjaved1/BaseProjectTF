@@ -18,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
+    val adMobManager: com.umer_tf.ads.domain.core.AdMobManager,
+    val analyticsManager: com.tf.phonecleaner.booster.app.AnalyticsManager
 ) : ViewModel() {
 
     private val _selectedLanguage = MutableStateFlow<LanguageModel?>(null)

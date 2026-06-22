@@ -37,23 +37,20 @@ class NetworkChangeReceiver(private val activity: Activity) : BroadcastReceiver(
         if (activity.isFinishing || activity.isDestroyed) return
 
         isDialogShowing = true
-        val dialogView =
-            LayoutInflater.from(activity).inflate(R.layout.dialog_internet_connection, null)
-        val dialog = AlertDialog.Builder(activity).create().apply {
-            setView(dialogView)
-            setCancelable(false)
-        }
-
-        dialogView.findViewById<TextView>(R.id.btnYes).setClickWithTimeout {
-            isDialogShowing = false
-            dialog.dismiss()
-            activity.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
-        }
-
-        dialogView.findViewById<TextView>(R.id.btnNo).setClickWithTimeout {
-            isDialogShowing = false
-            dialog.dismiss()
-        }
+        val dialog = AlertDialog.Builder(activity)
+            .setTitle("No Internet Connection")
+            .setMessage("Please check your internet connection to continue.")
+            .setCancelable(false)
+            .setPositiveButton("Settings") { d, _ ->
+                isDialogShowing = false
+                d.dismiss()
+                activity.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
+            }
+            .setNegativeButton("Cancel") { d, _ ->
+                isDialogShowing = false
+                d.dismiss()
+            }
+            .create()
 
         dialog.setOnDismissListener { isDialogShowing = false }
         dialog.show()

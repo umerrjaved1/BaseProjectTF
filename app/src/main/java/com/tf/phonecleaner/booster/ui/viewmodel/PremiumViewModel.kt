@@ -16,7 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PremiumViewModel @Inject constructor(
-    private val appPreferences: AppPreferences
+    private val appPreferences: AppPreferences,
+    val adMobManager: com.umer_tf.ads.domain.core.AdMobManager,
+    val analyticsManager: com.tf.phonecleaner.booster.app.AnalyticsManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UIState<PremiumUiState>>(UIState.Loading)

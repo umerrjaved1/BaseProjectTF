@@ -120,12 +120,12 @@ object AdUtils {
         onComplete: (Boolean) -> Unit = {}
     ) {   // Never show ads to premium users
         if (AdMobManager.isPremium) {
-            activity.finish()
+            onComplete(false)
             return
         }
         // Frequency control check
         if (!AdFrequencyControl.canShowAd(activity, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
-            activity.finish()
+            onComplete(false)
             return
         }
         val loadingDialog = LoadingDialogUtil.create(activity)
@@ -151,13 +151,13 @@ object AdUtils {
                             activity,
                             AdUnitFrequencyController.UNIT_INTERSTITIAL
                         )
-                        activity.finish()
+                        onComplete(true)
                     }
                 } else {
                     eventNamePrefix?.let { prefix ->
                         analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
                     }
-                    activity.finish()
+                    onComplete(false)
                 }
             }
         }
@@ -423,85 +423,6 @@ object AdUtils {
         nativeConfig: NativeAdConfigData? = null,
         onComplete: (Boolean) -> Unit
     ) {
-        if (AdMobManager.isPremium) {
-            onComplete(false)
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(activity, AdUnitFrequencyController.UNIT_NATIVE)) {
-            onComplete(false)
-            return
-        }
-
-        val dialog = android.app.Dialog(activity, R.style.Theme_App)
-        dialog.setContentView(R.layout.layout_full_native_ad)
-        dialog.setCancelable(false)
-
-        dialog.window?.let {
-            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(it, false)
-            it.statusBarColor = android.graphics.Color.TRANSPARENT
-            it.navigationBarColor = android.graphics.Color.TRANSPARENT
-        }
-
-        val adFrame = dialog.findViewById<FrameLayout>(R.id.adFrame)
-        val shimmerFbAd = dialog.findViewById<ShimmerFrameLayout>(R.id.shimmerFbAd)
-        val fallbackContainer =
-            dialog.findViewById<android.widget.LinearLayout>(R.id.fallbackContainer)
-        val btnContinue = dialog.findViewById<android.widget.TextView>(R.id.btnContinue)
-        val btnCloseAd = dialog.findViewById<android.widget.ImageView>(R.id.btnCloseAd)
-
-        dialog.show()
-
-        btnCloseAd.setOnClickListener {
-            dialog.dismiss()
-            onComplete(true)
-        }
-
-        btnContinue.setOnClickListener {
-            dialog.dismiss()
-            onComplete(false)
-        }
-
-        val builder = NativeAdBuilder.Builder(
-            R.layout.full_native_ad_design,
-            adFrame,
-            shimmerFbAd
-        ).setShowMedia(true).setShowBody(true).setShowRating(false).setIconEnabled(true)
-
-        nativeConfig?.let {
-            builder.setAdTitleColor(it.heading)
-            builder.setAdBodyColor(it.description)
-            builder.setCtaTextColor(it.ctaText)
-            builder.setCtaBgColor(it.callActionButtonColor)
-        }
-
-        val loader = com.umer_tf.ads.domain.ads.native_ad.NativeAd(activity)
-        eventNamePrefix?.let { prefix ->
-            analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_request")
-        }
-        loader.loadAndShow(adUnitId, builder.build()) { success ->
-            if (success) {
-                eventNamePrefix?.let { prefix ->
-                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_pass")
-                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_view")
-                }
-                btnCloseAd.visibility = android.view.View.VISIBLE
-                AdFrequencyControl.recordAdShown(activity, AdUnitFrequencyController.UNIT_NATIVE)
-                
-                AdUtils.solidApplyNativeAdColors(adFrame, nativeConfig)
-            } else {
-                eventNamePrefix?.let { prefix ->
-                    analyticsManager?.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${prefix}_fail")
-                }
-                shimmerFbAd.stopShimmer()
-                shimmerFbAd.visibility = android.view.View.GONE
-                adFrame.visibility = android.view.View.GONE
-                fallbackContainer.visibility = android.view.View.VISIBLE
-                btnContinue.visibility = android.view.View.VISIBLE
-                btnCloseAd.visibility = android.view.View.VISIBLE
-
-                dialog.dismiss()
-                onComplete(false)
-            }
-        }
+        onComplete(false)
     }
 }

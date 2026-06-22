@@ -29,36 +29,12 @@
 
 
         <activity
-            android:name=".ui.screens.PremiumActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.screens.DocumentViewerActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.cherry.lib.doc.DocViewerActivity"
-            android:exported="false"
-            android:theme="@style/Theme.App.DocViewer" />
-        <activity
-            android:name=".ui.screens.RecentFilesActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.screens.MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.screens.OnboardingActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".ui.screens.LanguageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.screens.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <provider
