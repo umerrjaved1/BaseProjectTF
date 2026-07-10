@@ -1,4 +1,4 @@
-package com.professor.baseproject
+package com.tf.gpsmapcamera
 
 import org.junit.Test
 

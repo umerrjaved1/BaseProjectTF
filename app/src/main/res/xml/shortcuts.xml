@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="uninstall_shortcut"
+        android:enabled="true"
+        android:icon="@drawable/ic_uninstall_setting"
+        android:shortcutShortLabel="@string/uninstall"
+        android:shortcutLongLabel="@string/uninstall_app">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.tf.gpsmapcamera"
+            android:targetClass="com.tf.gpsmapcamera.ui.activities.UninstallActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

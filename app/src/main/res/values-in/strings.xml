@@ -1,5 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" ?>
 <resources>
+
+    <string name="splash_title">Judul Splash</string>
+    <string name="splash_description">Deskripsi Splash.</string>
+    <string name="onboarding_title_1">Pembersih Otomatis</string>
+    <string name="onboarding_title_2">Kontrol Manual</string>
+    <string name="onboarding_title_3">Mode Getaran</string>
+    <string name="onboarding_desc_1">Keluarkan air secara otomatis menggunakan frekuensi suara yang dioptimalkan.</string>
+    <string name="onboarding_desc_2">Atur frekuensi dan volume untuk pengalaman pembersihan yang disesuaikan dan kuat.</string>
+    <string name="onboarding_desc_3">Goyangkan debu membandel dan partikel air dengan denyut getaran yang dalam.</string>
+    <string name="iap_feature_1">Fitur 1</string>
+    <string name="iap_feature_2">Fitur 2</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
+    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
+    <string name="french" translatable="false">French (Français)</string>
+    <string name="german" translatable="false">German (Deutsch)</string>
+    <string name="danish" translatable="false">Danish (Dansk)</string>
+    <string name="japanese" translatable="false">Japanese (日本語)</string>
+    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
+    <string name="polish" translatable="false">Polish (Polskie)</string>
+    <string name="romanian" translatable="false">Romanian (Românâ)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="image_flag">Bendera Gambar</string>
+    <string name="icon_checked">Ikon Dicentang</string>
+    <string name="done">Selesai</string>
+    <string name="choose_language">Pilih Bahasa</string>
+    <string name="language_subtitle">Pilih bahasa pilihan Anda untuk antarmuka dan instruksi.</string>
+    <string name="icon_back">Ikon Kembali</string>
+    <string name="please_select_a_language">Silakan Pilih Bahasa</string>
     <string name="exit_application">Keluar Aplikasi</string>
     <string name="are_you_sure_you_want_to_exit_this_application">Apakah Anda yakin ingin keluar dari aplikasi ini?</string>
     <string name="no">Tidak</string>
@@ -12,18 +60,92 @@
     <string name="continuee">Lanjutkan</string>
     <string name="get_started">Mulai</string>
     <string name="nav_home">Beranda</string>
-        <string name="unable_to_load_ad">Tidak dapat memuat iklan</string>
+    <string name="home_hero_title">Pembersihan Speaker</string>
+    <string name="home_hero_subtitle">Hapus air &amp; debu secara instan</string>
+    <string name="home_quick_actions">Tindakan Cepat</string>
+    <string name="auto_cleaner">Pembersih Otomatis</string>
+    <string name="manual_cleaner">Manual</string>
+    <string name="vibration">Getaran</string>
+    <string name="speaker_test">Tes Speaker</string>
+    <string name="auto_cleaner_hint">Perbaiki satu ketukan</string>
+    <string name="manual_cleaner_hint">Frekuensi khusus</string>
+    <string name="vibration_hint">Kocok kuat</string>
+    <string name="speaker_test_hint">Cek kualitas</string>
+    <string name="manual_cleaner_title">Pembersih Manual</string>
+    <string name="vibration_cleaner_title">Pembersih Getaran</string>
+    <string name="frequency_range">Rentang Frekuensi</string>
+    <string name="frequency_range_value">100Hz – 1000Hz</string>
+    <string name="ejection_frequency">Frekuensi Ejeksi</string>
+    <string name="hz">Hz</string>
+    <string name="cleaning_duration">Durasi Pembersihan</string>
+    <string name="seconds_30">30d</string>
+    <string name="seconds_45">45d</string>
+    <string name="seconds_60">60d</string>
+    <string name="info">Info</string>
+    <string name="icon_menu">Ikon Menu</string>
+    <string name="icon_premium">Ikon Premium</string>
+    <string name="icon_speaker_cleaning">Ikon Pembersihan Speaker</string>
+    <string name="navigation">Navigasi</string>
+    <string name="ad">Iklan</string>
+    <string name="boost_battery_life">Tingkatkan Masa Pakai Baterai</string>
+    <string name="ad_download_companion">Unduh aplikasi pendamping kami</string>
+    <string name="cleaning">Membersihkan</string>
+    <string name="speaker">Speaker</string>
+    <string name="earphone">Earphone</string>
+    <string name="volume">Volume</string>
+    <string name="volume_value">%1$d%%</string>
+    <string name="start_cleaning">Mulai Pembersihan</string>
+    <string name="stop_cleaning">Hentikan Pembersihan</string>
+    <string name="start_vibration_test">Mulai Tes Getaran</string>
+    <string name="stop_vibration_test">Hentikan Tes Getaran</string>
+    <string name="manual_test_hint_idle">Sesuaikan frekuensi dan ketuk mulai.</string>
+    <string name="manual_test_hint_running">Memutar nada… Anda dapat berhenti kapan saja.</string>
+    <string name="remaining_seconds">%1$dd</string>
+    <string name="system_diagnostic_active">Diagnostik Sistem Aktif</string>
+    <string name="left_speaker">Speaker Kiri</string>
+    <string name="right_speaker">Speaker Kanan</string>
+    <string name="stereo_balance">Keseimbangan Stereo</string>
+    <string name="high_freq">Frekuensi Tinggi</string>
+    <string name="passed">Lulus</string>
+    <string name="running">Berjalan</string>
+    <string name="ready">Siap</string>
+    <string name="run_full_diagnostic">Jalankan Diagnostik Lengkap</string>
+    <string name="cleaning_in_progress">Pembersihan sedang Berlangsung</string>
+    <string name="wait_until_vibration_finishes">Tunggu hingga getaran selesai</string>
+    <string name="vibration_test_ready">Tes Getaran Siap</string>
+    <string name="vibration_test_running">Tes Getaran Berjalan</string>
+    <string name="vibration_test_hint">Ketuk mulai untuk merasakan pola getaran.</string>
+    <string name="normal">Normal</string>
+    <string name="medium">Sedang</string>
+    <string name="high">Tinggi</string>
+    <string name="sponsored">Dipersponsori</string>
+    <string name="premium_protection_pro">Premium Protection Pro</string>
+    <string name="premium_protection_subtitle">Jaga perangkat Anda tetap bersih dan aman 24/7</string>
+    <string name="learn_more">Pelajari Lebih Lanjut</string>
+    <string name="icon_volume">Ikon Volume</string>
+    <string name="icon_ad">Ikon Iklan</string>
+    <string name="ad_title">Tingkatkan Suara Perangkat</string>
+    <string name="ad_subtitle">Kualitas premium untuk audio Anda.</string>
+    <string name="install">Instal</string>
+    <string name="start_test">Mulai Tes</string>
+    <string name="stop_test">Hentikan Tes</string>
+    <string name="testing">Menguji</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="auto_test_hint_idle">Ketuk mulai untuk menjalankan diagnostik lengkap speaker.</string>
+    <string name="auto_test_hint_running">Memutar nada… dengarkan baik-baik dan jaga volume tetap stabil.</string>
+    <string name="auto_test_hint_complete">Tes selesai. Membuka hasil…</string>
+    <string name="unable_to_load_ad">Tidak dapat memuat iklan</string>
     <string name="remove_ads">Hapus Iklan</string>
     <string name="home">Beranda</string>
     <string name="settings">Pengaturan</string>
-    <string name="rate_app">Beri Nilai Aplikasi</string>
+    <string name="rate_app">Beri Rating Aplikasi</string>
     <string name="share_this_app">Bagikan Aplikasi Ini</string>
     <string name="send_feedback">Kirim Masukan</string>
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="change_language">Ubah Bahasa</string>
     <string name="wow_thank_you_so_much">Wow! Terima Kasih Banyak</string>
     <string name="help_us_reach_perfection">Bantu kami mencapai kesempurnaan dengan masukan Anda.</string>
-    <string name="rate_on_play_store">Beri Nilai di Play Store</string>
+    <string name="rate_on_play_store">Beri Rating di Play Store</string>
     <string name="error">Kesalahan</string>
     <string name="something_went_wrong">Terjadi kesalahan</string>
     <string name="retry">Coba Lagi</string>
@@ -34,32 +156,162 @@
     <string name="features">Fitur</string>
     <string name="unlock_all_features">Buka semua fitur</string>
     <string name="premium">Premium</string>
-    <string name="_3_days_free_trial">Mulai UJI COBA GRATIS 3 HARI</string>
+    <string name="_3_days_free_trial">Mulai PERCOBAAN GRATIS 3 HARI</string>
     <string name="most_popular">Paling Populer</string>
-    <string name="start_free_trial">Mulai Uji Coba Gratis 3 Hari</string>
+    <string name="start_free_trial">Mulai percobaan gratis 3 hari</string>
     <string name="subscribe_monthly_with_price">Berlangganan Bulanan – %1$s</string>
     <string name="subscribe_weekly_with_price">Berlangganan Mingguan – %1$s</string>
-    <string name="purchase_successfully">Berhasil Membeli</string>
+    <string name="purchase_successfully">Pembelian Berhasil</string>
     <string name="subscribe_weekly">Berlangganan Mingguan</string>
     <string name="subscribe_monthly">Berlangganan Bulanan</string>
     <string name="premium_error_dialog_message">Ada masalah dengan langganan Anda. Klik LANJUTKAN untuk pergi ke pengaturan langganan Google Play untuk memperbaiki metode pembayaran Anda.</string>
+    <string name="success_title">Berhasil</string>
+    <string name="cleaning_complete">Pembersihan Selesai</string>
+    <string name="cleaning_complete_subtitle">Speaker Anda sekarang bersih dan dioptimalkan</string>
+    <string name="manual_cleaning_complete">Pembersihan Manual Selesai</string>
+    <string name="manual_cleaning_complete_subtitle">Pembersihan manual selesai dengan sukses</string>
+    <string name="vibration_cleaning_complete">Pembersihan Getaran Selesai</string>
+    <string name="vibration_cleaning_complete_subtitle">Tes getaran selesai dengan sukses</string>
+    <string name="speaker_test_complete">Tes Speaker Selesai</string>
+    <string name="speaker_test_complete_subtitle">Semua diagnostik speaker berhasil</string>
+    <string name="test_speaker">Tes Speaker</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="try_other_features">Coba Fitur Lain</string>
+    <string name="smart_cleaning">Pembersihan cerdas</string>
+    <string name="vibration_mode">Getaran</string>
+    <string name="shake_out_dust">Kocok debu</string>
+    <string name="manual_cleaner_subtitle">Tune halus dengan tangan</string>
+    <string name="close">Tutup</string>
     <string name="weekly_subscription">Langganan Mingguan</string>
     <string name="monthly_subscription">Langganan Bulanan</string>
-    <string name="free_trial_disclaimer">%1$s/minggu setelah UJI COBA GRATIS 3 hari</string>
-    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Pembayaran akan dibebankan ke akun Google Play Anda di akhir masa uji coba jika Anda tidak memulai uji coba. Langganan diperbarui secara otomatis kecuali dibatalkan setidaknya 24 jam sebelum akhir uji coba atau periode berjalan Anda. Akun Anda akan dibebankan.</string>
-    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Langganan diperbarui secara otomatis kecuali dibatalkan setidaknya 24 jam sebelum akhir periode berjalan. Akun Anda akan ditagih untuk perpanjangan dalam beberapa jam sebelum akhir periode berjalan. Anda dapat mengelola dan membatalkan langganan Anda kapan saja melalui Google Play Store.</string>
+    <string name="free_trial_disclaimer">%1$s/minggu setelah PERCOBAAN GRATIS 3 hari</string>
     <string name="loading">Memuat</string>
     <string name="allow">Izinkan</string>
-    <string name="not_now">Jangan Sekarang</string>
+    <string name="not_now">Tidak Sekarang</string>
     <string name="stay_updated_with_notifications">Tetap Diperbarui dengan Notifikasi</string>
-    <string name="notification_description">Kami memerlukan izin notifikasi untuk memberi tahu Anda tentang pembaruan penting. Ini memastikan pengalaman pengguna yang lebih baik dengan pemberitahuan yang tepat waktu.</string>
+    <string name="notification_description">Kami memerlukan izin notifikasi untuk menjaga Anda tetap informasi tentang pembaruan penting. Ini memastikan pengalaman pengguna yang lebih baik dengan peringatan tepat waktu.</string>
     <string name="allow_access">Izinkan Akses</string>
     <string name="maybe_later">Mungkin Nanti</string>
+    <string name="initializing_speaker_cleaner">Menginisialisasi Pembersih Speaker</string>
+    <string name="remove_water_amp_dust">Hapus Air &amp; Debu</string>
+    <string name="intensity_level">Tingkat Intensitas</string>
+    <string name="vibration_disabled_msg">Getaran sistem dinonaktifkan. Harap aktifkan agar fitur ini dapat berfungsi.</string>
+    <string name="enable">Aktifkan</string>
+    <string name="start_like_a_pro">Mulai seperti pro</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Langganan diperpanjang otomatis kecuali dibatalkan setidaknya 24 jam sebelum perpanjangan.</string>
+    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Diperpanjang otomatis kecuali dibatalkan 24+ jam sebelum perpanjangan. Kelola atau batalkan kapan saja di Google Play.</string>
+    <string name="unlimited_cleaning">Pembersihan tanpa batas</string>
+    <string name="deep_water_and_dust_removal">Penghapusan air dan debu mendalam</string>
+    <string name="ad_free_experience">Pengalaman bebas iklan</string>
+    <string name="boosted_sound_and_vibration">Suara dan getaran ditingkatkan</string>
+    <string name="open_document">Buka dokumen</string>
+    <string name="browse_files_securely">Jelajahi file Anda dengan aman</string>
+    <string name="browse_files">Jelajahi file</string>
+    <string name="quick_access">Akses cepat</string>
+    <string name="view_all">Lihat semua</string>
+    <string name="no_recent_files">Belum ada file terbaru</string>
+    <string name="starred_content_subtitle">Dokumen terpenting Anda di satu tempat.</string>
+    <string name="no_favorites_yet">Belum ada favorit</string>
+    <string name="favorites_hint">Ketuk ikon bintang pada dokumen apa pun untuk menambahkannya ke favorit.</string>
+    <string name="settings_subtitle">Kelola preferensi aplikasi dan detail akun Anda.</string>
+    <string name="appearance">Tampilan</string>
+    <string name="about">Tentang</string>
+    <string name="dark_mode">Mode gelap</string>
+    <string name="language">Bahasa</string>
+    <string name="clear_history">Hapus riwayat</string>
+    <string name="more_options">Opsi lainnya</string>
+    <string name="document_viewer">Penampil dokumen</string>
+    <string name="zoom_out">Perkecil</string>
+    <string name="zoom_in">Perbesar</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="document_page">Halaman dokumen</string>
+    <string name="document">Dokumen</string>
+    <string name="search">Cari</string>
+    <string name="open">Buka</string>
+    <string name="add_to_favorites">Tambahkan ke favorit</string>
+    <string name="remove_from_favorites">Hapus dari favorit</string>
+    <string name="share_file">Bagikan file</string>
+    <string name="file_details">Detail file</string>
+    <string name="file_details_format">Nama: %1$s\nTipe: %2$s\nUkuran: %3$d byte</string>
+    <string name="file_name_value">Nama: %1$s</string>
+    <string name="file_type_value">Tipe: %1$s</string>
+    <string name="file_size_value">Ukuran: %1$s</string>
+    <string name="file_last_opened_value">Terakhir dibuka: %1$s</string>
+    <string name="preview_not_available">Pratinjau tidak tersedia</string>
+    <string name="unable_to_load_text">Tidak dapat memuat teks</string>
+    <string name="recent_files">File terbaru</string>
+    <string name="favorites">Favorit</string>
+    <string name="history_cleared">Riwayat dihapus</string>
 
-    <string name="image_flag">Bendera Gambar</string>
-    <string name="icon_checked">Ikon Dicentang</string>
-    <string name="done">Selesai</string>
-    <string name="choose_language">Pilih Bahasa</string>
-    <string name="icon_back">Ikon Kembali</string>
-    <string name="please_select_a_language">Silakan Pilih Bahasa</string>
+
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Peta Bumi Langsung</string>
+    <string name="live_camera_marker_hint">Ketuk untuk menonton langsung</string>
+    <string name="this_action_may_contain_ads">Tindakan ini mungkin Berisi Iklan</string>
+    <string name="error_loading_panorama">Gagal memuat gambar panorama.</string>
+    <string name="error_panorama_memory">Memori tidak cukup untuk memuat panorama. Coba mulai ulang aplikasi.</string>
+    <string name="swift_cleaner">Pembersih Cepat</string>
+    <string name="clean_your_phone">Bersihkan Ponsel Anda</string>
+    <string name="free_up_space">Kosongkan Ruang</string>
+    <string name="scan_and_clean">Pindai &amp; Bersihkan</string>
+    <string name="uninstall_apps">Copot Pemasangan Aplikasi</string>
+    <string name="uninstall_app">Copot Pemasangan Aplikasi</string>
+    <string name="upgrade_to_pro">Tingkatkan ke Pro</string>
+    <string name="pro_features_subtitle">Tanpa iklan · semua templat · Ekspor HD</string>
+    <string name="remove_all_ads_premium">Hapus semua iklan</string>
+    <string name="unlock_premium">Buka kunci Premium</string>
+    <string name="yearly">Tahunan</string>
+    <string name="weekly">Mingguan</string>
+    <string name="restore">Memulihkan</string>
+    <string name="terms">Ketentuan</string>
+    <string name="terms_of_servuce">Ketentuan Layanan</string>
+    <string name="privacy">Pribadi</string>
+    <string name="initializing">Menginisialisasi...</string>
+    <string name="current_location">LOKASI SAAT INI</string>
+    <string name="traffic_map">Peta Lalu Lintas</string>
+    <string name="moderate_traffic_nearby">Lalu Lintas Sedang di Sekitar</string>
+    <string name="slow_and_fast">Lambat dan Cepat</string>
+    <string name="current_status">Status Saat Ini</string>
+    <string name="try_for_free">Coba GRATIS</string>
+    <string name="sorry_to_see_you_go">Maaf melihatmu pergi</string>
+    <string name="uninstall_description">Sebelum Anda mencopot pemasangannya, beri tahu kami apa yang salah.\nMasukan Anda membantu kami menyempurnakan aplikasi.</string>
+    <string name="keep_app">Pertahankan Aplikasi</string>
+    <string name="uninstall">Copot pemasangan</string>
+    <string name="compass">Kompas</string>
+    <string name="famous_places">Tempat Terkenal</string>
+    <string name="live_earth">Bumi Hidup</string>
+    <string name="seven_wonders">7 Keajaiban</string>
+    <string name="world_clock">Jam Dunia</string>
+    <string name="gallery">Galeri</string>
+    <string name="gps_camera">KAMERA GPS</string>
+    <string name="image_details">Detail Gambar</string>
+    <string name="pro">Pro</string>
+    <string name="next">Berikutnya</string>
+    <string name="share">Membagikan</string>
+    <string name="delete">Menghapus</string>
+    <string name="add_home_location">Tambahkan Lokasi Rumah</string>
+    <string name="no_photos_found">Tidak ada foto yang ditemukan</string>
+    <string name="compass_default_bearing">0°</string>
+    <string name="compass_north_label">N</string>
+    <string name="compass_locating">Menemukan…</string>
+    <string name="loading_360_view">Memuat Tampilan 360°…</string>
+    <string name="survey_title">Pilih Fitur Anda</string>
+    <string name="survey_subtitle">Pilih fitur yang Anda inginkan di Beranda. Anda dapat mengubahnya kapan saja.</string>
+    <string name="survey_selected_count">0 item dipilih</string>
+    <string name="start_like_a_pro_caps">MULAI SEPERTI PROFESIONAL</string>
+    <string name="unlimited_premium">Premi Tanpa Batas</string>
+    <string name="ads_free_experience">Pengalaman Bebas Iklan</string>
+    <string name="vip_support">Dukungan VIP</string>
+    <string name="trial_prefix">Kalau begitu, uji coba gratis 3 hari</string>
+    <string name="default_weekly_price">$4,99/minggu</string>
+    <string name="cancel_anytime">Batalkan kapan saja</string>
+    <string name="cancel_anytime_sub">Langganan Diperbarui Otomatis, Batalkan kapan saja</string>
+    <string name="version_name">Versi v1.0.1</string>
+    <string name="live_247">24/7 LANGSUNG</string>
+    <string name="default_language">Bahasa Inggris (standar)</string>
+    <string name="doc_zoom_placeholder">100%</string>
+    <string name="doc_page_placeholder">1 / 12</string>
+    <string name="video_placeholder_title">Piala Dunia FIFA</string>
 </resources>

@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:paddingTop="4dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clAd"
@@ -29,31 +27,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+            <com.google.android.gms.ads.nativead.MediaView
+                android:id="@+id/ad_media"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-
-                android:visibility="gone">
-
-                <com.google.android.gms.ads.nativead.MediaView
-                    android:id="@+id/ad_media"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible" />
-
-
-                <ImageView
-                    android:id="@+id/ad_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="4dp"
-                    android:src="@drawable/ic_down_ad"
-                    android:visibility="gone" />
-
-            </FrameLayout>
+                android:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutAdDetails"
@@ -102,11 +80,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
-                            android:fontFamily="@font/urbanist_medium"
                             android:maxLines="1"
                             android:text="@string/app_name"
                             android:textColor="@color/ad_title_color"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:fontFamily="@font/urbanist_medium" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <LinearLayout
@@ -124,9 +102,9 @@
                             android:background="@drawable/bg_round_stroke_grey"
                             android:paddingHorizontal="6dp"
                             android:paddingVertical="2dp"
-                            android:text="Ad"
+                            android:text="@string/txt_ad"
                             android:textAllCaps="true"
-                            android:textColor="@color/primary_color"
+                            android:textColor="@color/accent_color"
                             android:textSize="11sp"
                             android:textStyle="bold"
                             android:visibility="visible" />
@@ -150,11 +128,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/urbanist_medium"
                 android:maxLines="2"
-                android:text="@string/app_name"
+                tools:text="Ad body text goes here"
                 android:textColor="@color/ad_body_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:fontFamily="@font/urbanist_medium" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ad_call_to_action"
@@ -163,17 +141,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/ad_btn_bg"
+                android:background="@drawable/bg_round_accent_ad"
                 android:clickable="true"
                 android:elevation="2dp"
                 android:focusable="true"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:text="Install"
+
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:backgroundTint="@color/ad_btn_color"
-                app:cornerRadius="4dp" />
+                app:backgroundTint="@color/ad_btn_color2"
+                app:cornerRadius="4dp"
+                app:fontFamily="@font/poppins_semi_bold" />
 
             <!-- Hidden Views for Ad SDK -->
             <TextView
@@ -181,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="bottom"
-                android:textSize="9dp"
+                android:textSize="9sp"
                 android:textStyle="normal"
                 android:visibility="gone" />
 

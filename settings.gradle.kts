@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         google {
@@ -11,27 +13,39 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io")}
-        
+        maven { url = uri("https://jitpack.io") }
+
         // Firebase Maven repository
         maven { url = uri("https://maven.google.com") }
 
+        // Mediation Repositories
+        maven { url = uri("https://android-sdk.is.com/") }
+        maven { url = uri("https://artifact.bytedance.com/repository/pangle") }
+        maven { url = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea") }
+
         maven {
-            url = uri("https://maven.pkg.github.com/RanaUmer1/MzalogicsAdManager")
+            url = uri("https://maven.pkg.github.com/umerrjaved1/AdsManager")
             credentials {
-                username = providers.gradleProperty("gpr.user").orNull
-                password = providers.gradleProperty("gpr.key").orNull
+                val localProps = Properties()
+                val localPropsFile = settingsDir.resolve("local.properties")
+                if (localPropsFile.exists()) {
+                    localProps.load(localPropsFile.inputStream())
+                }
+                username = localProps.getProperty("gpr.user") ?: providers.gradleProperty("gpr.user").orNull
+                password = localProps.getProperty("gpr.key") ?: providers.gradleProperty("gpr.key").orNull
             }
             content {
-                includeGroup("com.mzalogics.admob")
+                includeGroup("com.umer_tf.ads")
             }
         }
     }
@@ -39,3 +53,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "BaseProject"
 include(":app")
+include(":core:designsystem")
+include(":core:network")

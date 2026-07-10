@@ -29,4 +29,18 @@
     </style>
 
 
+    <style name="CleanerSlider" parent="Widget.Material3.Slider">
+        <item name="trackHeight">8dp</item>
+        <item name="thumbRadius">10dp</item>
+    </style>
+
+
+    <!-- For dynamic checked state -->
+    <style name="DurationButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/selector_duration_text</item>
+        <item name="backgroundTint">@color/selector_duration_bg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+    </style>
+
+
 </resources>

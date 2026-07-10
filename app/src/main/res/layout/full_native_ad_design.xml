@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nativeAdView"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_ads"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
+                    app:fontFamily="@font/poppins_regular"
                     android:maxLines="1"
                     android:text="@string/app_name"
                     android:textColor="@color/ad_title_color"
@@ -58,10 +59,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:background="@drawable/bg_round_stroke_grey"
-                    android:fontFamily="@font/poppins_regular"
+                    app:fontFamily="@font/poppins_regular"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="2dp"
-                    android:text="Ad"
+                    android:text="@string/txt_ad"
                     android:textAllCaps="true"
                     android:textColor="@color/ad_body_color"
                     android:textSize="12sp"
@@ -74,9 +75,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/poppins_regular"
+                app:fontFamily="@font/poppins_regular"
                 android:maxLines="3"
-                android:text="Ad description..."
+                android:text="@string/txt_ad_description"
                 android:textColor="@color/ad_body_color"
                 android:textSize="14sp" />
 
@@ -85,10 +86,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/bg_round_accent"
-                android:fontFamily="@font/poppins_regular"
+                android:background="@drawable/bg_round_accent_ad"
+                app:fontFamily="@font/poppins_regular"
                 android:gravity="center"
-                android:text="INSTALL"
+                android:text="@string/txt_install"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />

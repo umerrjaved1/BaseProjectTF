@@ -1,131 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color">
-
+    android:background="@color/bg_color"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="16dp">
 
-        <!-- Rate App -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textColor="@color/text_color_primary"
+            android:textSize="26sp"
+            android:visibility="visible"
+            app:fontFamily="@font/plus_jakarta_sans_bold" />
+
+        <!-- Upgrade to Pro Card -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_rate"
+            android:id="@+id/card_pro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/stroke_color"
-            app:strokeWidth="1dp">
+            app:strokeWidth="0dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:fontFamily="@font/poppins_medium"
+                android:background="@drawable/bg_settings_pro_card"
                 android:gravity="center_vertical"
-                android:padding="16dp"
-                android:text="@string/rate_app"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_rate_us"
-                app:drawableTint="@color/text_color_secondary" />
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="18dp">
+
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_pro_icon_container">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_crown"
+                        app:tint="#FFBE2D" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/upgrade_to_pro"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/plus_jakarta_sans_bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/pro_features_subtitle"
+                        android:textColor="#E6FFFFFF"
+                        android:textSize="13sp"
+                        app:fontFamily="@font/plus_jakarta_sans_medium" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_forward"
+                    app:tint="@color/white" />
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Send Feedback -->
+        <!-- Settings Options Card -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/stroke_color"
-            app:strokeWidth="1dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:text="@string/send_feedback"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_feedback"
-                app:drawableTint="@color/text_color_secondary" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Share this App -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_share"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/stroke_color"
-            app:strokeWidth="1dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:text="@string/share_this_app"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_share_icon"
-                app:drawableTint="@color/text_color_secondary" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Privacy Policy -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_privacy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/stroke_color"
-            app:strokeWidth="1dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="16dp"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:text="@string/privacy_policy"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:drawableStartCompat="@drawable/ic_privacy"
-                app:drawableTint="@color/text_color_secondary" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Change Language -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_language"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeColor="@color/stroke_color"
             app:strokeWidth="1dp">
@@ -133,41 +105,166 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_language"
-                    app:tint="@color/text_color_secondary" />
-
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/row_rate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/change_language"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
 
-                <TextView
-                    android:id="@+id/tv_current_language"
-                    android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/rate_app"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="17sp"
+                        app:drawableStartCompat="@drawable/ic_rate_us_setting"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/rate_app"
+                        android:src="@drawable/ic_forward" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_color" />
+
+                <LinearLayout
+                    android:id="@+id/row_share"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_round_stroke_accent_extra_less"
-                    android:fontFamily="@font/poppins_medium"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:text="English (default)"
-                    android:textColor="@color/primary_color"
-                    android:textSize="12sp" />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/share_this_app"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="17sp"
+                        app:drawableStartCompat="@drawable/ic_share_app"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/share_this_app"
+                        android:src="@drawable/ic_forward" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_color" />
+
+                <LinearLayout
+                    android:id="@+id/row_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/privacy_policy"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="17sp"
+                        app:drawableStartCompat="@drawable/ic_privacy_setting"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/privacy_policy"
+                        android:src="@drawable/ic_forward" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_color" />
+
+                <LinearLayout
+                    android:id="@+id/row_uninstall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/uninstall_app"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="17sp"
+                        app:drawableStartCompat="@drawable/ic_uninstall_setting"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/uninstall_app"
+                        android:src="@drawable/ic_forward" />
+                </LinearLayout>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Native Ad Container -->
+
+
+        <!-- Version and Copyright -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/version_name"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="14sp"
+            app:fontFamily="@font/plus_jakarta_sans_medium" />
+
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

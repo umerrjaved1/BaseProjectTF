@@ -21,26 +21,14 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:9"
+            android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/llAdRight"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.45" />
 
         <!-- Ad Tag -->
-        <TextView
-            android:id="@+id/ad_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@color/accent_color"
-            android:paddingHorizontal="6dp"
-            android:paddingVertical="2dp"
-            android:text="Ad"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/ad_media"
-            app:layout_constraintTop_toTopOf="@id/ad_media" />
+
 
         <!-- Right side: Icon + Text + Button -->
         <LinearLayout
@@ -74,16 +62,40 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/ad_headline"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="App Name"
-                        android:textColor="#000000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/ad_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/txt_ad"
+                            android:background="@drawable/bg_pill_grey"
+                            android:backgroundTint="@color/dot_color"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/ad_headline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/txt_app_name"
+                            android:layout_marginStart="4dp"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/ad_body"
@@ -91,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Ad description..."
+                        android:text="@string/txt_ad_description"
                         android:textColor="#7D8E9F"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -102,10 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_accent"
-                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/bg_round_accent_ad"
+                app:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="INSTALL"
+                android:text="@string/txt_install"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@color/ad_btn_color2"

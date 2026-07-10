@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/retry"
-        app:backgroundTint="@color/primary_color"
+        app:backgroundTint="@color/accent_color"
         app:cornerRadius="20dp" />
 
 </LinearLayout>

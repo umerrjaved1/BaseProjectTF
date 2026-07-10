@@ -5,9 +5,28 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.vibrator"
+        android:required="false" />
 
     <application
-        android:name=".app.Application"
+        android:name=".app.MyApp"
         android:allowBackup="true"
         android:allowClearUserData="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,24 +43,46 @@
 
         <activity
             android:name=".ui.screens.PremiumActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
+
         <activity
             android:name=".ui.screens.MainActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".ui.screens.OnboardingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.screens.SurveyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.screens.LanguageActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
+            android:name=".ui.screens.UninstallActivity"
+            android:screenOrientation="portrait"
+            android:exported="true" />
+        <activity
             android:name=".ui.screens.StartActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
         </activity>
 
         <provider
@@ -56,6 +97,10 @@
 
 
         <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyASoRiGTXul5lW4B69VQCoKrpQZ9c_vquQ" />
+
+        <meta-data
             android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
             android:value="true" />
         <meta-data
@@ -64,6 +109,16 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
+
+        <!-- Meta SDK -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+
+
     </application>
 
 </manifest>

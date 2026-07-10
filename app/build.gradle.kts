@@ -1,21 +1,23 @@
+@file:Suppress("UnstableApiUsage")
+
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "com.professor.baseproject"
-    compileSdk = 36
+    namespace = "com.tf.gpsmapcamera"
+    compileSdk = 37
 
     signingConfigs {
         create("release") {
-            storeFile = file("../keystore/mzalogics_keystore.jks")
+            storeFile = file("../keystore/AppKeyStore.jks")
             storePassword = "123456"
             keyAlias = "key0"
             keyPassword = "123456"
@@ -23,13 +25,12 @@ android {
     }
     defaultConfig {
         applicationId = "com.professor.baseproject"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = 26
+        targetSdk = 37
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "AppName_vCode_${versionCode}_vName${versionName}")
         val localProperties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
 
@@ -45,11 +46,10 @@ android {
             "\"${localProperties.getProperty("BASE_URL", "https://your-default-api.com/")}\""
         )
 
-        resourceConfigurations.addAll(
-            listOf(
-                "en", "ar", "es", "in", "fa", "hi", "ru", "pt", "bn", "tr"
-            )
-        )
+    }
+
+    androidResources {
+        localeFilters += listOf("en", "ar", "es", "in", "fa", "hi", "ru", "pt", "bn", "tr")
     }
 
     bundle {
@@ -60,6 +60,7 @@ android {
 
     buildTypes {
         release {
+
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -76,7 +77,12 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
     }
+}
+
+base {
+    archivesName.set("AppName_vCode_${android.defaultConfig.versionCode}_vName${android.defaultConfig.versionName}")
 }
 
 kotlin {
@@ -87,21 +93,33 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    // RecyclerView
-    implementation(libs.androidx.recyclerview)
+
+    // Jetpack Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.activity.compose)
+    debugImplementation(libs.compose.ui.tooling)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+
     // Lifecycle + ViewModel
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.multidex)
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.gson)
     implementation(libs.glide)
+
 
 
     // Navigation
@@ -109,15 +127,10 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     // Hilt DI
     implementation(libs.hilt.android)
-    implementation(libs.androidx.room.ktx)
-//    implementation(libs.firebase.perf.ktx)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
+
     // Shimmer
     implementation(libs.shimmer)
-
-    implementation(libs.lottie)
-
-
 
     // Networking
 
@@ -128,16 +141,29 @@ dependencies {
 // For URL manipulation
     implementation(libs.okhttp.urlconnection)
 
+
     // Firebase (BOM)
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
-    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.config)
     implementation(libs.billing.ktx)
     implementation(libs.ads)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.work.testing)
+    // Mediation Adapters
+    implementation(libs.mediation.applovin)
+    implementation(libs.mediation.facebook)
+    implementation(libs.mediation.mintegral)
+    implementation(libs.mediation.pangle)
+    implementation(libs.mediation.fyber)
+    implementation(libs.mediation.ironsource)
+    implementation(libs.mediation.unity)
+    implementation(libs.mediation.inmobi)
+    implementation(libs.mediation.vungle)
+
+    // Facebook SDK for AppEvents
+    implementation(libs.facebook.android.sdk)
+
+
+
 }

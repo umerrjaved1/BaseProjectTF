@@ -98,7 +98,7 @@
 
 
     <Button
-        android:id="@+id/ad_call_to_action"
+        android:id="@+id/ad_call_to_action_placeholder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"

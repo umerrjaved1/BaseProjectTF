@@ -5,30 +5,41 @@
 
 
     <!--    App colors-->
-    <color name="text_color_primary">#1D1B20</color>
-    <color name="text_color_dark">#161717</color>
-    <color name="text_color_secondary">#6A7984</color>
+    <color name="text_color_primary">#101828</color>
+    <color name="text_color_blue">#2563EB</color>
 
-    <color name="primary_color">#007AFF</color>
-    <color name="primary_color_14">#24007AFF</color>
-    <color name="primary_color_6">#0F007AFF</color>
-    <color name="accent_color">#007AFF</color>
+    <color name="text_color_secondary">#475467</color>
+    <color name="text_color_dark">#030712</color>
+
+    <color name="accent_color">#2563EB</color>
+    <color name="accent_color_ad">#254AA6</color>
+    <color name="tab_bg">#64748B</color>
+    <color name="bg_gradient_start">#2563EB</color>
+    <color name="bg_gradient_center">#143A9E</color>
+    <color name="bg_gradient_end">#0B1B4D</color>
+    <color name="primary_color_10">#1A137FEC</color>
+    <color name="primary_color_6">#0A137FEC</color>
+    <color name="language_item_color">#DDE5FA</color>
     <color name="primary_color_light">#E6F4FF</color>
-    <color name="stroke_color">#E9ECEF</color>
+    <color name="stroke_color">#E2E8F0</color>
     <color name="dot_color">#737F8D4D</color>
-    <color name="bg_color">#F8F9FA</color>
+    <color name="bg_color">#DDE5FA</color>
+    <color name="onboarding_circle">#EAF3FF</color>
+    <color name="onboarding_indicator_active">#005DA7</color>
+    <color name="onboarding_indicator_inactive">@color/white</color>
     <color name="red">#DE2525</color>
     <color name="red_14">#24DE2525</color>
     <color name="green">#2AD352</color>
+    <color name="yellow">#FFB743</color>
 
 
 
     <!--ads color-->
 
-    <color name="ad_btn_color2">#FB7E6A</color>
-    <color name="ad_btn_color">#007AFF</color>
+    <color name="ad_btn_color2">#254AA6</color>
+    <color name="ad_btn_color">#00B4D8</color>
     <color name="ad_color">#FFBE2D</color>
-    <color name="ad_bg_color">#EBEBEB</color>
+    <color name="ad_bg_color">#C5D4FB</color>
     <color name="ad_title_color">#04061A</color>
     <color name="ad_body_color">#6F6F6F</color>
     <color name="shimmer_color">#666666</color>
@@ -36,4 +47,6 @@
     <color name="light_bg">#6F6F6F</color>
     <color name="grey_color">#6F6F6F</color>
 
+
+    <color name="warning_color">#F59E0B</color>
 </resources>
