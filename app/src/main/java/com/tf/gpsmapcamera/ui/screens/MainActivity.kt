@@ -5,6 +5,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -18,6 +20,8 @@ import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.databinding.ActivityMainBinding
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
 import com.tf.gpsmapcamera.ui.base.BaseActivity
+import com.tf.gpsmapcamera.update.AppUpdateManager
+import com.tf.gpsmapcamera.update.AppUpdateReadyDialogFragment
 import com.tf.gpsmapcamera.utils.AdUtils
 import com.tf.gpsmapcamera.utils.setClickWithTimeout
 import com.umer_tf.ads.domain.core.AdMobManager
@@ -38,10 +42,17 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var adMobManager: AdMobManager
 
+    @Inject
+    lateinit var appUpdateManager: AppUpdateManager
+
     private lateinit var binding: ActivityMainBinding
     private val homeFragment = com.tf.gpsmapcamera.ui.fragments.HomeFragment()
     private val settingsFragment = com.tf.gpsmapcamera.ui.fragments.SettingsFragment()
     private var activeTag = "MainActivity"
+
+    private val updateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +75,31 @@ class MainActivity : BaseActivity() {
         updateToolbarForFragment(activeTag)
 
         checkNotificationPermission()
+
+        appUpdateManager.setOnFlexibleDownloadCompleteListener {
+            showFlexibleUpdateReadyDialog()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager.handleOnResume(this, updateLauncher)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        appUpdateManager.setOnFlexibleDownloadCompleteListener(null)
+    }
+
+    private fun showFlexibleUpdateReadyDialog() {
+        if (isFinishing || isDestroyed) return
+        if (supportFragmentManager.findFragmentByTag(AppUpdateReadyDialogFragment.TAG) != null) return
+
+        val dialog = AppUpdateReadyDialogFragment.newInstance()
+        dialog.setOnInstallListener {
+            appUpdateManager.completeFlexibleUpdate()
+        }
+        dialog.show(supportFragmentManager, AppUpdateReadyDialogFragment.TAG)
     }
 
     override fun handleBackPress() {

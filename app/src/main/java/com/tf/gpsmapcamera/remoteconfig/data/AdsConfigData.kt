@@ -107,5 +107,16 @@ data class GlobalAdRulesConfig(
     val openAdResumeTimer: Int = 5,
     val enableExitNotification: Boolean = false,
     val exitNotificationTitle: String = "We miss you!",
-    val exitNotificationDescription: String = "Come back and explore the live earth map."
+    val exitNotificationDescription: String = "Come back and explore the live earth map.",
+
+    val sessionCooldownSeconds : Int = 0,
+    val dailyResetHours : Int = 24,
+    val maxAdsPerDay : Int = 0,
+    val maxAdsPerSession : Int = 500,
+    val interstitialMaxPerSession : Int = 10,
+    val openAdMaxPerSession : Int = 100,
+    val bannerMaxPerSession : Int = Integer.MAX_VALUE,
+    val bannerCooldownSeconds : Int = 10,
+    val  nativeMaxPerSession : Int = 50,
+    val nativeCooldownSeconds : Int = 5,
 )

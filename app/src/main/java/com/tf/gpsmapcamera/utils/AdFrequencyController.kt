@@ -168,7 +168,7 @@ object AdFrequencyControl {
 
     /**
      * Check all 3 layers before showing an ad.
-     * @param context Application or Activity context
+     * @param context BaseApplication or Activity context
      * @param adUnitKey One of [AdUnitFrequencyController.UNIT_INTERSTITIAL],
      *                  [AdUnitFrequencyController.UNIT_OPEN_AD],
      *                  [AdUnitFrequencyController.UNIT_BANNER]

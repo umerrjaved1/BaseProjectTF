@@ -96,4 +96,12 @@
         <item name="cornerSize">16dp</item>
     </style>
 
+    <style name="FullScreenDialogTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>

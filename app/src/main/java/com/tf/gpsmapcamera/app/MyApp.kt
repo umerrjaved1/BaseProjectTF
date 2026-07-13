@@ -370,6 +370,6 @@ class MyApp : Application() {
         super.onTerminate()
         // Clean up billing client
         billingClient.disconnect()
-        Log.d(TAG, "Application terminated")
+        Log.d(TAG, "BaseApplication terminated")
     }
 }

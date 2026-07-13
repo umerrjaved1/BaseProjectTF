@@ -148,6 +148,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.config)
     implementation(libs.billing.ktx)
+    implementation(libs.play.app.update.ktx)
     implementation(libs.ads)
 
     // Mediation Adapters

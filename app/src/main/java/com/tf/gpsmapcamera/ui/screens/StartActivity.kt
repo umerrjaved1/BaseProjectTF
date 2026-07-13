@@ -13,6 +13,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -23,7 +25,11 @@ import com.tf.gpsmapcamera.app.AdIds
 import com.tf.gpsmapcamera.app.AnalyticsManager
 import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
+import com.tf.gpsmapcamera.ui.viewmodel.StartData
 import com.tf.gpsmapcamera.ui.viewmodel.StartViewModel
+import com.tf.gpsmapcamera.update.AppUpdateDialogFragment
+import com.tf.gpsmapcamera.update.AppUpdateManager
+import com.tf.gpsmapcamera.update.AppUpdateReadyDialogFragment
 import com.tf.gpsmapcamera.utils.AdFrequencyControl
 import com.tf.gpsmapcamera.utils.AdUnitFrequencyController
 import com.tf.gpsmapcamera.utils.AdUtils
@@ -64,6 +70,9 @@ class StartActivity : AppCompatActivity() {
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var appUpdateManager: AppUpdateManager
+
 
     private val adsConsentManager by lazy { AdsConsentManager(this) }
 
@@ -84,6 +93,20 @@ class StartActivity : AppCompatActivity() {
     private var isAdShow = false
     private var hasTriggeredInterstitialNavigation = false
     private var hasHandledState = false
+    private var pendingStartData: StartData? = null
+    private var currentUpdateType: Int? = null
+    private var isImmediateUpdate = false
+
+    private val updateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        appUpdateManager.handleUpdateResult(
+            resultCode = result.resultCode,
+            isImmediate = isImmediateUpdate,
+            onImmediateCanceled = { showAppUpdateDialog(isImmediate = true) },
+            onFlexibleStarted = { proceedWithStartupIfPending() }
+        )
+    }
 
     private val splashDelayLength = 8000L
 
@@ -125,21 +148,7 @@ class StartActivity : AppCompatActivity() {
                             val data = state.data
                             isPremium = data.isPremium
                             AdMobManager.isPremium = isPremium
-
-                            if (isPremium) {
-                                if (RemoteConfigManager.getStartScreenConfig().showGetStartedButton) {
-                                    showGetStartedButton()
-                                } else {
-                                    moveToNextScreen()
-                                }
-                            } else {
-                                if (!data.hasInternet) {
-                                    Log.w(TAG, "No internet at start. Proceeding without ads.")
-                                    startOfflineFlow()
-                                } else {
-                                    initConsent()
-                                }
-                            }
+                            checkForAppUpdateAndProceed(data)
                         }
                     }
                 }
@@ -149,6 +158,86 @@ class StartActivity : AppCompatActivity() {
         viewModel.initialize()
 
         startLoadingAnimation()
+
+        appUpdateManager.setOnFlexibleDownloadCompleteListener {
+            showFlexibleUpdateReadyDialog()
+        }
+    }
+
+    private fun checkForAppUpdateAndProceed(data: StartData) {
+        if (!data.hasInternet) {
+            proceedWithStartup(data)
+            return
+        }
+
+        lifecycleScope.launch {
+            when (val result = appUpdateManager.checkForUpdate()) {
+                is AppUpdateManager.UpdateCheckResult.Available -> {
+                    pendingStartData = data
+                    currentUpdateType = result.updateType
+                    isImmediateUpdate = result.isImmediate
+                    showAppUpdateDialog(result.isImmediate)
+                }
+
+                else -> proceedWithStartup(data)
+            }
+        }
+    }
+
+    private fun proceedWithStartupIfPending() {
+        pendingStartData?.let { proceedWithStartup(it) }
+    }
+
+    private fun proceedWithStartup(data: StartData) {
+        pendingStartData = null
+
+        if (isPremium) {
+            if (RemoteConfigManager.getStartScreenConfig().showGetStartedButton) {
+                showGetStartedButton()
+            } else {
+                moveToNextScreen()
+            }
+        } else if (!data.hasInternet) {
+            Log.w(TAG, "No internet at start. Proceeding without ads.")
+            startOfflineFlow()
+        } else {
+            initConsent()
+        }
+    }
+
+    private fun showAppUpdateDialog(isImmediate: Boolean) {
+        if (supportFragmentManager.findFragmentByTag(AppUpdateDialogFragment.TAG) != null) return
+
+        val dialog = AppUpdateDialogFragment.newInstance(isImmediate)
+        dialog.setOnUpdateNowListener {
+            val updateType = currentUpdateType
+            if (updateType != null) {
+                appUpdateManager.startUpdate(this, updateType, updateLauncher)
+            } else {
+                appUpdateManager.openPlayStore(this)
+                if (!isImmediate) proceedWithStartupIfPending()
+            }
+        }
+        dialog.setOnUpdateLaterListener {
+            proceedWithStartupIfPending()
+        }
+        dialog.show(supportFragmentManager, AppUpdateDialogFragment.TAG)
+    }
+
+    private fun showFlexibleUpdateReadyDialog() {
+        if (isFinishing || isDestroyed) return
+        if (supportFragmentManager.findFragmentByTag(AppUpdateReadyDialogFragment.TAG) != null) return
+
+        val dialog = AppUpdateReadyDialogFragment.newInstance()
+        dialog.setOnInstallListener {
+            appUpdateManager.completeFlexibleUpdate()
+        }
+        dialog.show(supportFragmentManager, AppUpdateReadyDialogFragment.TAG)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager.handleOnResume(this, updateLauncher)
     }
 
     private var isAdLoadingFinished = false
@@ -461,5 +550,7 @@ class StartActivity : AppCompatActivity() {
         loadingAnimator?.cancel()
         adMobManager.setSplash(false)
         splashJob?.cancel()
+        appUpdateManager.unregisterFlexibleUpdateListener()
+        appUpdateManager.setOnFlexibleDownloadCompleteListener(null)
     }
 }

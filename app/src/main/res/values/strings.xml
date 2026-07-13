@@ -311,6 +311,14 @@
     <string name="cancel_anytime">Cancel anytime</string>
     <string name="cancel_anytime_sub">Subscription Auto Renews, Cancel anytime</string>
     <string name="version_name">Version v1.0.1</string>
+    <string name="app_update_title">Update Available</string>
+    <string name="app_update_message">A new version of this app is available on Google Play. Update now to get the latest features and improvements.</string>
+    <string name="app_update_message_immediate">A new version is required to continue using this app. Please update now from Google Play.</string>
+    <string name="app_update_now">Update Now</string>
+    <string name="app_update_later">Later</string>
+    <string name="app_update_ready_title">Update Ready</string>
+    <string name="app_update_ready_message">The update has been downloaded. Install it now to finish updating the app.</string>
+    <string name="app_update_install">Install</string>
     <string name="live_247">24/7 LIVE</string>
     <string name="default_language">English (default)</string>
     <string name="doc_zoom_placeholder" translatable="false">100%</string>

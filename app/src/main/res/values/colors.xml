@@ -7,6 +7,7 @@
     <!--    App colors-->
     <color name="text_color_primary">#101828</color>
     <color name="text_color_blue">#2563EB</color>
+    <color name="primary_color">#2563EB</color>
 
     <color name="text_color_secondary">#475467</color>
     <color name="text_color_dark">#030712</color>
