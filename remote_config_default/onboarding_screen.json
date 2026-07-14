@@ -1,0 +1,27 @@
+{
+  "skipOnboardingScreen": false,
+  "showObSlide1": true,
+  "showObSlide2": true,
+  "showObSlide3": true,
+  "showOb1Native": true,
+  "showOb2Native": true,
+  "showOb3Native": true,
+  "showFullNativeOnBoarding": true,
+  "showOnboardingInterstitial": true,
+  "onBoardingCrossButtonVisible": true,
+  "fullNativeAdPosition": 1,
+  "showOnboardingNativeMedia": false,
+  "native_ob1": "",
+  "native_fs_ob1": "",
+  "int_onboarding": "",
+  "native_ob2": "",
+  "native_fs_ob2": "",
+  "native_ob3": "",
+  "nativeConfig": {
+    "callActionButtonColor": "#254AA6",
+    "backgroundColor": "#C5D4FB",
+    "ctaText": "#FFFFFF",
+    "heading": "#04061A",
+    "description": "#6F6F6F"
+  }
+}

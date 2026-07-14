@@ -1,0 +1,19 @@
+{
+  "showAppOpenSplashAd": true,
+  "showSplashInterstitialAd": true,
+  "showFullScreenNativeSplashAd": false,
+  "showSplashNativeAd": true,
+  "startupTime": 8,
+  "showGetStartedButton": true,
+  "appopen_splash": "",
+  "int_splash_hf": "",
+  "int_splash": "",
+  "native_splash": "",
+  "nativeConfig": {
+    "callActionButtonColor": "#254AA6",
+    "backgroundColor": "#C5D4FB",
+    "ctaText": "#FFFFFF",
+    "heading": "#04061A",
+    "description": "#6F6F6F"
+  }
+}

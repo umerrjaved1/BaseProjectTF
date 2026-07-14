@@ -1,0 +1,9 @@
+{
+  "skipPremiumScreen": false,
+  "premiumCloseBtnDelay": 3000,
+  "clickCountPremiumActivity": 3,
+  "showPremiumActivityOnResume": false,
+  "showPremiumActivityAfterThreeClick": false,
+  "showPremiumInterstitial": true,
+  "int_back_premium": ""
+}

@@ -1,0 +1,17 @@
+{
+  "skipSurveyScreen": false,
+  "showSurveyNative1": true,
+  "showSurveyNative2": true,
+  "showSurveyInterstitial": false,
+  "native_survey1": "",
+  "native_survey2": "",
+  "int_survey": "",
+  "int_back_survey": "",
+  "nativeConfig": {
+    "callActionButtonColor": "#254AA6",
+    "backgroundColor": "#C5D4FB",
+    "ctaText": "#FFFFFF",
+    "heading": "#04061A",
+    "description": "#6F6F6F"
+  }
+}

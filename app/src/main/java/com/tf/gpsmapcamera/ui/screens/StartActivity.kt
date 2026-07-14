@@ -43,9 +43,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import android.view.animation.AnimationUtils
+import com.applovin.sdk.AppLovinPrivacySettings
 import com.tf.gpsmapcamera.constants.Constants
 import com.tf.gpsmapcamera.utils.setClickWithTimeout
 import com.tf.gpsmapcamera.utils.startShakeAnimation
+import com.vungle.ads.VunglePrivacySettings
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
@@ -347,10 +349,10 @@ class StartActivity : AppCompatActivity() {
 
     private fun setMediationConsent(isConsent: Boolean) {
         Log.e(TAG, "setMediationConsent: ")
-//        AppLovinPrivacySettings.setHasUserConsent(isConsent)
-//        AppLovinPrivacySettings.setDoNotSell(isConsent)
-//        VunglePrivacySettings.setGDPRStatus(isConsent, "v1.0.0")
-//        VunglePrivacySettings.setCCPAStatus(isConsent)
+        AppLovinPrivacySettings.setHasUserConsent(isConsent)
+        AppLovinPrivacySettings.setDoNotSell(isConsent)
+        VunglePrivacySettings.setGDPRStatus(isConsent, "v1.0.0")
+        VunglePrivacySettings.setCCPAStatus(isConsent)
 
     }
 

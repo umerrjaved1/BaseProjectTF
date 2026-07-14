@@ -256,16 +256,14 @@ class MainActivity : BaseActivity() {
         }
 
         val channelId = "${getString(R.string.app_name)}_channel"
-        val notificationManager = getSystemService(android.content.Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = android.app.NotificationChannel(
-                channelId,
-                "${getString(R.string.app_name)} Notifications",
-                android.app.NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = android.app.NotificationChannel(
+            channelId,
+            "${getString(R.string.app_name)} Notifications",
+            android.app.NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(channel)
 
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

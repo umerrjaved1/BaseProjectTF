@@ -53,5 +53,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BaseProject"
 include(":app")
-include(":core:designsystem")
-include(":core:network")
+

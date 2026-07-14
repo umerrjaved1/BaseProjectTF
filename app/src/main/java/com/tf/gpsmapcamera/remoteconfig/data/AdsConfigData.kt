@@ -105,7 +105,7 @@ data class GlobalAdRulesConfig(
     val showAppOpenAdOnResume: Boolean = true,
     @SerializedName("appopen_resume") val openAdResumeID: String? = null,
     val openAdResumeTimer: Int = 5,
-    val enableExitNotification: Boolean = false,
+    val enableExitNotification: Boolean = true,
     val exitNotificationTitle: String = "We miss you!",
     val exitNotificationDescription: String = "Come back and explore the live earth map.",
 

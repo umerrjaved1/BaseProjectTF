@@ -1,0 +1,12 @@
+{
+  "interstitialMaxTimer": 20,
+  "interstitialMinTimer": 10,
+  "interstitialCounter": 2,
+  "showAppOpenAdOnResume": true,
+  "appopen_resume": "",
+  "openAdResumeTimer": 5,
+  "enableExitNotification": false,
+  "exitNotificationTitle": "We miss you!",
+  "exitNotificationDescription": "Come back and explore the live earth map.",
+ 
+}

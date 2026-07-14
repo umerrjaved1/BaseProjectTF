@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
+      <module name="BaseProject.core.designsystem" target="21" />
+      <module name="BaseProject.core.network" target="21" />
       <module name="Docuview.core.designsystem" target="21" />
       <module name="Docuview.core.network" target="21" />
       <module name="LiveEarth.core.designsystem" target="21" />

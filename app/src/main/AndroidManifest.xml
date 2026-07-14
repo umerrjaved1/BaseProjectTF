@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
@@ -17,16 +15,10 @@
         android:maxSdkVersion="29" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <uses-feature
-        android:name="android.hardware.vibrator"
-        android:required="false" />
 
     <application
         android:name=".app.MyApp"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:allowClearUserData="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -37,19 +29,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App"
-        android:usesCleartextTraffic="true"
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
 
         <activity
             android:name=".ui.screens.PremiumActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.screens.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
@@ -62,16 +53,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.screens.LanguageActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.screens.UninstallActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.screens.StartActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -97,10 +88,6 @@
 
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyASoRiGTXul5lW4B69VQCoKrpQZ9c_vquQ" />
-
-        <meta-data
             android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
             android:value="true" />
         <meta-data
@@ -117,7 +104,6 @@
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
-
 
     </application>
 

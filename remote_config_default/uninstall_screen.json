@@ -1,0 +1,17 @@
+{
+  "showUninstallNative1": true,
+  "showUninstallNative2": true,
+  "showUninstallInterstitial": false,
+  "showBackInterstitial": true,
+  "native_uninstall1": "",
+  "native_uninstall2": "",
+  "int_uninstall": "",
+  "int_back_uninstall": "",
+  "nativeConfig": {
+    "callActionButtonColor": "#254AA6",
+    "backgroundColor": "#C5D4FB",
+    "ctaText": "#FFFFFF",
+    "heading": "#04061A",
+    "description": "#6F6F6F"
+  }
+}
