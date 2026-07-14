@@ -32,10 +32,14 @@ object StartupNavigationManager {
         val isOnboardingDone = appPreferences.getBoolean(AppPreferences.IS_ONBOARDING)
         val isPremium = AdMobManager.isPremium
 
-        val showLanguage = !RemoteConfigManager.getLanguageScreenConfig().skipLanguageScreen && !isLanguageSelected
-        val showOnboarding = !RemoteConfigManager.getOnboardingScreenConfig().skipOnboardingScreen && !isOnboardingDone
-        val showSurvey = !RemoteConfigManager.getSurveyScreenConfig().skipSurveyScreen && !isOnboardingDone // Assuming survey is part of onboarding flow
-        val showPremium = !isPremium && !RemoteConfigManager.getPremiumScreenConfig().skipPremiumScreen
+        val showLanguage =
+            !RemoteConfigManager.getLanguageScreenConfig().skipLanguageScreen && !isLanguageSelected
+        val showOnboarding =
+            !RemoteConfigManager.getOnboardingScreenConfig().skipOnboardingScreen && !isOnboardingDone
+        val showSurvey =
+            !RemoteConfigManager.getSurveyScreenConfig().skipSurveyScreen && !isOnboardingDone // Assuming survey is part of onboarding flow
+        val showPremium =
+            !isPremium && !RemoteConfigManager.getPremiumScreenConfig().skipPremiumScreen
 
         // Evaluate from current step onwards
         var nextStep: Step? = currentStep
@@ -45,13 +49,25 @@ object StartupNavigationManager {
                 Step.PREMIUM -> {
                     // StartActivity has special logic for premium
                     if (showPremium) {
-                        return Intent(context, PremiumActivity::class.java).putExtra(Constants.EXTRA_PREMIUM_FROM_SPLASH, true)
+                        return Intent(
+                            context,
+                            PremiumActivity::class.java
+                        ).putExtra(Constants.EXTRA_PREMIUM_FROM_SPLASH, true)
                     }
                     // If premium is skipped, the loop will just continue with nextStep = Step.PREMIUM,
                     // and the next iteration will fetch getNextStepEnum(Step.PREMIUM), returning the next step.
                 }
-                Step.LANGUAGE -> if (showLanguage) return Intent(context, LanguageActivity::class.java).apply { putExtra(Constants.EXTRA_LANGUAGE_FROM_START, true) }
-                Step.ONBOARDING -> if (showOnboarding) return Intent(context, OnboardingActivity::class.java)
+
+                Step.LANGUAGE -> if (showLanguage) return Intent(
+                    context,
+                    LanguageActivity::class.java
+                ).apply { putExtra(Constants.EXTRA_LANGUAGE_FROM_START, true) }
+
+                Step.ONBOARDING -> if (showOnboarding) return Intent(
+                    context,
+                    OnboardingActivity::class.java
+                )
+
                 Step.SURVEY -> if (showSurvey) return Intent(context, SurveyActivity::class.java)
                 else -> return Intent(context, MainActivity::class.java)
             }
@@ -71,7 +87,12 @@ object StartupNavigationManager {
     /**
      * Preloads the native ad for the *next* screen that will be shown.
      */
-    fun preloadNextScreenAd(context: Context, currentStep: Step, appPreferences: AppPreferences, adMobManager: AdMobManager) {
+    fun preloadNextScreenAd(
+        context: Context,
+        currentStep: Step,
+        appPreferences: AppPreferences,
+        adMobManager: AdMobManager
+    ) {
         if (AdMobManager.isPremium) return
 
         val config = RemoteConfigManager.getStartScreenConfig()
@@ -79,9 +100,12 @@ object StartupNavigationManager {
         val isLanguageSelected = appPreferences.getBoolean(AppPreferences.IS_LANGUAGE_SELECTED)
         val isOnboardingDone = appPreferences.getBoolean(AppPreferences.IS_ONBOARDING)
 
-        val showLanguage = !RemoteConfigManager.getLanguageScreenConfig().skipLanguageScreen && !isLanguageSelected
-        val showOnboarding = !RemoteConfigManager.getOnboardingScreenConfig().skipOnboardingScreen && !isOnboardingDone
-        val showSurvey = !RemoteConfigManager.getSurveyScreenConfig().skipSurveyScreen && !isOnboardingDone
+        val showLanguage =
+            !RemoteConfigManager.getLanguageScreenConfig().skipLanguageScreen && !isLanguageSelected
+        val showOnboarding =
+            !RemoteConfigManager.getOnboardingScreenConfig().skipOnboardingScreen && !isOnboardingDone
+        val showSurvey =
+            !RemoteConfigManager.getSurveyScreenConfig().skipSurveyScreen && !isOnboardingDone
 
         var nextStep: Step? = currentStep
         while (true) {
@@ -95,6 +119,7 @@ object StartupNavigationManager {
                         return
                     }
                 }
+
                 Step.ONBOARDING -> {
                     if (showOnboarding) {
                         if (RemoteConfigManager.getOnboardingScreenConfig().showOb1Native) {
@@ -103,6 +128,7 @@ object StartupNavigationManager {
                         return
                     }
                 }
+
                 Step.SURVEY -> {
                     if (showSurvey) {
                         // In SurveyActivity, the Ad ID used is getSurveyNative1AdId() but previously getNativeOnboardingAdId()
@@ -112,6 +138,7 @@ object StartupNavigationManager {
                         return
                     }
                 }
+
                 Step.PREMIUM -> return // No native ad to preload for premium typically, or handled by interstitial
                 else -> return
             }
@@ -127,11 +154,13 @@ object StartupNavigationManager {
         currentStep: Step,
         appPreferences: AppPreferences,
         adMobManager: AdMobManager,
-        analyticsManager: AnalyticsManager
+        analyticsManager: AnalyticsManager,
+        onBeforeNavigate: (() -> Unit)? = null
     ) {
         val nextIntent = getNextIntent(activity, currentStep, appPreferences)
-        
+
         if (AdMobManager.isPremium) {
+            onBeforeNavigate?.invoke()
             activity.startActivity(nextIntent)
             activity.finish()
             return
@@ -150,14 +179,16 @@ object StartupNavigationManager {
                     eventPrefix = "lng_int"
                 }
             }
+
             Step.ONBOARDING -> {
                 val config = RemoteConfigManager.getOnboardingScreenConfig()
                 if (config.showOnboardingInterstitial) {
                     showAd = true
                     adUnitId = AdIds.getInterstitialOnboardingID()
-                    eventPrefix = "getstarted_int"
+                    eventPrefix = "ob_int"
                 }
             }
+
             Step.SURVEY -> {
                 val config = RemoteConfigManager.getSurveyScreenConfig()
                 if (config.showSurveyInterstitial) {
@@ -166,6 +197,7 @@ object StartupNavigationManager {
                     eventPrefix = "survey_int"
                 }
             }
+
             else -> {}
         }
 
@@ -179,10 +211,12 @@ object StartupNavigationManager {
                 eventNamePrefix = eventPrefix,
                 ignoreFrequency = true
             ) {
+                onBeforeNavigate?.invoke()
                 activity.startActivity(nextIntent)
                 activity.finish()
             }
         } else {
+            onBeforeNavigate?.invoke()
             activity.startActivity(nextIntent)
             activity.finish()
         }

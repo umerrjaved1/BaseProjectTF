@@ -10,7 +10,6 @@ object RemoteConfigKeys {
     const val CONFIG_UNINSTALL_SCREEN = "uninstall_screen"
     const val CONFIG_GLOBAL_AD_RULES = "global_ad_rules"
     
-    const val SHOW_ADS = "show_ads"
     const val FIRST_LAUNCH = "first_launch"
     const val NOTIFICATION_DELAY_TIME = "notification_delay_time"
     const val NOTIFICATION_REPEAT_INTERVAL = "notification_time"

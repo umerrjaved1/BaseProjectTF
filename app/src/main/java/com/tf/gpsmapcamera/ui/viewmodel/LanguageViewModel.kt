@@ -37,20 +37,16 @@ class LanguageViewModel @Inject constructor(
         if (hasNavigated) return
 
         val selected = _selectedLanguage.value ?: return
-        val savedLanguageId = appPreferences.getInt(AppPreferences.Companion.LANGUAGE_ID)
+        val savedLanguageId = appPreferences.getInt(AppPreferences.LANGUAGE_ID)
 
         if (selected.id != savedLanguageId) {
-            appPreferences.setInt(AppPreferences.Companion.LANGUAGE_ID, selected.id)
-            appPreferences.setString(AppPreferences.Companion.LANGUAGE_CODE, selected.code)
-            
-            // Apply language change immediately
-            val localeList = LocaleListCompat.forLanguageTags(selected.code)
-            AppCompatDelegate.setApplicationLocales(localeList)
+            appPreferences.setInt(AppPreferences.LANGUAGE_ID, selected.id)
+            appPreferences.setString(AppPreferences.LANGUAGE_CODE, selected.code)
         }
 
-        val isFirstTime = !appPreferences.getBoolean(AppPreferences.Companion.IS_LANGUAGE_SELECTED)
+        val isFirstTime = !appPreferences.getBoolean(AppPreferences.IS_LANGUAGE_SELECTED)
         if (isFirstTime) {
-            appPreferences.setBoolean(AppPreferences.Companion.IS_LANGUAGE_SELECTED, true)
+            appPreferences.setBoolean(AppPreferences.IS_LANGUAGE_SELECTED, true)
         }
 
         hasNavigated = true

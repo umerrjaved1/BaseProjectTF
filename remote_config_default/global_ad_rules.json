@@ -1,4 +1,5 @@
 {
+  "showAds": true,
   "interstitialMaxTimer": 20,
   "interstitialMinTimer": 10,
   "interstitialCounter": 2,

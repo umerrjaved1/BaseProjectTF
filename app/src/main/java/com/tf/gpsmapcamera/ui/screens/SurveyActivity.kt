@@ -3,9 +3,7 @@ package com.tf.gpsmapcamera.ui.screens
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -46,8 +44,6 @@ class SurveyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySurveyBinding.inflate(layoutInflater)
 
-        val localeList = LocaleListCompat.forLanguageTags(appPreferences.getString(AppPreferences.LANGUAGE_CODE))
-        AppCompatDelegate.setApplicationLocales(localeList)
         setContentView(binding.root)
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)

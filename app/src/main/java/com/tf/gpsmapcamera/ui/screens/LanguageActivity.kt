@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -122,11 +124,23 @@ class LanguageActivity : AppCompatActivity() {
                                 currentStep = com.tf.gpsmapcamera.utils.StartupNavigationManager.Step.LANGUAGE,
                                 appPreferences = appPreferences,
                                 adMobManager = adMobManager,
-                                analyticsManager = analyticsManager
+                                analyticsManager = analyticsManager,
+                                onBeforeNavigate = {
+                                    val code = appPreferences.getString(AppPreferences.LANGUAGE_CODE)
+                                    if (code.isNotEmpty()) {
+                                        val localeList = LocaleListCompat.forLanguageTags(code)
+                                        AppCompatDelegate.setApplicationLocales(localeList)
+                                    }
+                                }
                             )
                         }
 
                         LanguageNav.MAIN -> {
+                            val code = appPreferences.getString(AppPreferences.LANGUAGE_CODE)
+                            if (code.isNotEmpty()) {
+                                val localeList = LocaleListCompat.forLanguageTags(code)
+                                AppCompatDelegate.setApplicationLocales(localeList)
+                            }
                             startActivity(
                                 Intent(this@LanguageActivity, MainActivity::class.java).addFlags(
                                         Intent.FLAG_ACTIVITY_CLEAR_TOP

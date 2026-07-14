@@ -99,6 +99,7 @@ data class PremiumScreenConfig(
 )
 
 data class GlobalAdRulesConfig(
+    val showAds: Boolean = true,
     val interstitialMaxTimer: Int = 20,
     val interstitialMinTimer: Int = 10,
     val interstitialCounter: Int = 2,
