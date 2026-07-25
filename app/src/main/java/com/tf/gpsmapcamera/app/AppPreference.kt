@@ -22,7 +22,7 @@ class AppPreferences @Inject constructor(@ApplicationContext context: Context) {
 
         // Preference Keys
         const val IS_PREMIUM = "is_premium"
-        const val TIME_STAMP = "time_stamp"
+
         const val IS_LANGUAGE_SELECTED = "is_language_selected"
         const val IS_ONBOARDING = "is_onboarding"
         const val LANGUAGE_ID = "language_id"
@@ -56,10 +56,10 @@ class AppPreferences @Inject constructor(@ApplicationContext context: Context) {
     }
 
     fun getInt(key: String, defaultValue: Int = 0): Int {
-        try {
-            return prefs.getInt(key, defaultValue)
+        return try {
+            prefs.getInt(key, defaultValue)
         } catch (e: Exception) {
-            return defaultValue
+            defaultValue
         }
     }
 
@@ -68,10 +68,10 @@ class AppPreferences @Inject constructor(@ApplicationContext context: Context) {
     }
 
     fun getString(key: String, defaultValue: String = ""): String {
-        try {
-            return prefs.getString(key, defaultValue) ?: defaultValue
+        return try {
+            prefs.getString(key, defaultValue) ?: defaultValue
         } catch (e: Exception) {
-            return defaultValue
+            defaultValue+" is Default Value. Error "+e.message
         }
     }
 
@@ -79,11 +79,4 @@ class AppPreferences @Inject constructor(@ApplicationContext context: Context) {
         prefs.edit(commit = false) { remove(key) }
     }
 
-    fun saveFav(key: String, ids: Set<Int>) {
-        prefs.edit(commit = false) { putStringSet(key, ids.map { it.toString() }.toSet()) }
-    }
-
-    fun loadFav(key: String): Set<Int> {
-        return prefs.getStringSet(key, emptySet())?.mapNotNull { it.toIntOrNull() }?.toSet() ?: emptySet()
-    }
 }

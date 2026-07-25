@@ -86,9 +86,7 @@
     <string name="icon_premium">আইকন প্রিমিয়াম</string>
     <string name="icon_speaker_cleaning">স্পিকার ক্লিনিং আইকন</string>
     <string name="navigation">নেভিগেশন</string>
-    <string name="ad">বিজ্ঞাপন</string>
     <string name="boost_battery_life">ব্যাটারির আয়ু বাড়ান</string>
-    <string name="ad_download_companion">আমাদের সঙ্গী অ্যাপ ডাউনলোড করুন</string>
     <string name="cleaning">পরিষ্কার করা হচ্ছে</string>
     <string name="speaker">স্পিকার</string>
     <string name="earphone">ইয়ারফোন</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">আপনার ডিভাইসটিকে ২৪/৭ পরিষ্কার এবং নিরাপদ রাখুন</string>
     <string name="learn_more">আরও জানুন</string>
     <string name="icon_volume">আইকন ভলিউম</string>
-    <string name="icon_ad">আইকন বিজ্ঞাপন</string>
-    <string name="ad_title">ডিভাইস সাউন্ড বৃদ্ধি করুন</string>
-    <string name="ad_subtitle">আপনার অডিওর জন্য প্রিমিয়াম মানের।</string>
     <string name="install">ইনস্টল</string>
     <string name="start_test">পরীক্ষা শুরু করুন</string>
     <string name="stop_test">পরীক্ষা বন্ধ করুন</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">সম্পূর্ণ স্পিকার ডায়াগনস্টিক চালাতে স্টার্ট ট্যাপ করুন।</string>
     <string name="auto_test_hint_running">টোন বাজছে... মনোযোগ দিয়ে শুনুন এবং ভলিউম স্থির রাখুন।</string>
     <string name="auto_test_hint_complete">পরীক্ষা সম্পন্ন। ফলাফল খোলা হচ্ছে...</string>
-    <string name="unable_to_load_ad">বিজ্ঞাপন লোড করতে অক্ষম</string>
     <string name="remove_ads">বিজ্ঞাপন সরান</string>
     <string name="home">হোম</string>
     <string name="settings">সেটিংস</string>
@@ -249,7 +243,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">লাইভ পৃথিবীর মানচিত্র</string>
     <string name="live_camera_marker_hint">লাইভ দেখতে ট্যাপ করুন</string>
-    <string name="this_action_may_contain_ads">এই অ্যাকশনে বিজ্ঞাপন থাকতে পারে</string>
     <string name="error_loading_panorama">প্যানোরামা ছবি লোড করতে ব্যর্থ হয়েছে৷</string>
     <string name="error_panorama_memory">প্যানোরামা লোড করার জন্য যথেষ্ট মেমরি নেই৷ অ্যাপটি পুনরায় চালু করার চেষ্টা করুন।</string>
     <string name="swift_cleaner">সুইফট ক্লিনার</string>

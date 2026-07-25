@@ -17,7 +17,6 @@ import kotlin.math.log10
 import kotlin.math.pow
 import android.content.Intent
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.umer_tf.ads.domain.core.AdMobManager
 import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.constants.Constants
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
@@ -101,17 +100,18 @@ fun View.setClickWithTimeout(
                 putString("screen_name", screenName.take(40))
             })
 
-        if (!AdMobManager.isPremium && !SessionClickManager.hasShownPremiumThisSession) {
+        if (!SessionClickManager.hasShownPremiumThisSession) {
 
             val prefs = view.context.getSharedPreferences(
                 AppPreferences.Companion.PREF_NAME,
                 Context.MODE_PRIVATE
             )
+            val isPremium = prefs.getBoolean(AppPreferences.Companion.IS_PREMIUM, false)
             val isOnboardingComplete =
                 prefs.getBoolean(AppPreferences.Companion.IS_ONBOARDING, false)
 
 
-            if (isOnboardingComplete) {
+            if (!isPremium && isOnboardingComplete) {
 
                 SessionClickManager.globalClickCount++
 

@@ -86,9 +86,7 @@
     <string name="icon_premium">Premium İkonu</string>
     <string name="icon_speaker_cleaning">Hoparlör Temizleme Simgesi</string>
     <string name="navigation">Navigasyon</string>
-    <string name="ad">Reklam</string>
     <string name="boost_battery_life">Pil Ömrünü Artır</string>
-    <string name="ad_download_companion">Yardımcı uygulamamızı indirin</string>
     <string name="cleaning">Temizleniyor</string>
     <string name="speaker">Hoparlör</string>
     <string name="earphone">Kulaklık</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">Cihazınızı 24/7 temiz ve güvenli tutun</string>
     <string name="learn_more">Daha Fazla Öğren</string>
     <string name="icon_volume">Ses İkonu</string>
-    <string name="icon_ad">Reklam İkonu</string>
-    <string name="ad_title">Cihaz Sesini Artır</string>
-    <string name="ad_subtitle">Sesiniz için premium kalite.</string>
     <string name="install">Yükle</string>
     <string name="start_test">Testi Başlat</string>
     <string name="stop_test">Testi Durdur</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">Tam hoparlör tanılamasını çalıştırmak için başlata dokunun.</string>
     <string name="auto_test_hint_running">Tonlar çalınıyor… yakından dinleyin ve sesi sabit tutun.</string>
     <string name="auto_test_hint_complete">Test tamamlandı. Sonuçlar açılıyor…</string>
-    <string name="unable_to_load_ad">Reklam yüklenemedi</string>
     <string name="remove_ads">Reklamları Kaldır</string>
     <string name="home">Ana Sayfa</string>
     <string name="settings">Ayarlar</string>
@@ -246,7 +240,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">Canlı Dünya Haritası</string>
     <string name="live_camera_marker_hint">Canlı izlemek için dokunun</string>
-    <string name="this_action_may_contain_ads">Bu Eylem Reklam İçerebilir</string>
     <string name="error_loading_panorama">Panorama görüntüsü yüklenemedi.</string>
     <string name="error_panorama_memory">Panoramayı yüklemek için yeterli bellek yok. Uygulamayı yeniden başlatmayı deneyin.</string>
     <string name="swift_cleaner">Hızlı Temizleyici</string>

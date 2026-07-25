@@ -9,11 +9,9 @@ Email: umerr8019@gmail.com
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +19,6 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.tf.gpsmapcamera.app.AdIds
 import com.tf.gpsmapcamera.app.AnalyticsManager
 import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
@@ -30,29 +27,19 @@ import com.tf.gpsmapcamera.ui.viewmodel.StartViewModel
 import com.tf.gpsmapcamera.update.AppUpdateDialogFragment
 import com.tf.gpsmapcamera.update.AppUpdateManager
 import com.tf.gpsmapcamera.update.AppUpdateReadyDialogFragment
-import com.tf.gpsmapcamera.utils.AdFrequencyControl
-import com.tf.gpsmapcamera.utils.AdUnitFrequencyController
-import com.tf.gpsmapcamera.utils.AdUtils
 import com.tf.gpsmapcamera.utils.UIState
 import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.databinding.ActivityStartBinding
 import com.tf.gpsmapcamera.utils.StartupNavigationManager
-import com.umer_tf.ads.domain.consent.AdsConsentManager
-import com.umer_tf.ads.domain.core.AdMobManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import android.view.animation.AnimationUtils
-import com.applovin.sdk.AppLovinPrivacySettings
-import com.tf.gpsmapcamera.constants.Constants
 import com.tf.gpsmapcamera.utils.setClickWithTimeout
 import com.tf.gpsmapcamera.utils.startShakeAnimation
-import com.vungle.ads.VunglePrivacySettings
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
-
-private var nativeAdTimeoutPosted = false
 
 @AndroidEntryPoint
 class StartActivity : AppCompatActivity() {
@@ -64,9 +51,6 @@ class StartActivity : AppCompatActivity() {
     private var loadingAnimator: ValueAnimator? = null
 
     @Inject
-    lateinit var adMobManager: AdMobManager
-
-    @Inject
     lateinit var analyticsManager: AnalyticsManager
 
     @Inject
@@ -75,13 +59,7 @@ class StartActivity : AppCompatActivity() {
     @Inject
     lateinit var appUpdateManager: AppUpdateManager
 
-
-    private val adsConsentManager by lazy { AdsConsentManager(this) }
-
     private val viewModel: StartViewModel by viewModels()
-
-
-    private var isPremium: Boolean = false
 
 
     private val isLanguageSelected: Boolean
@@ -92,8 +70,6 @@ class StartActivity : AppCompatActivity() {
 
 
     private var hasMovedToNext = false
-    private var isAdShow = false
-    private var hasTriggeredInterstitialNavigation = false
     private var hasHandledState = false
     private var pendingStartData: StartData? = null
     private var currentUpdateType: Int? = null
@@ -126,8 +102,6 @@ class StartActivity : AppCompatActivity() {
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = true // Dark icons for light background
 
-        // Preload somewhere sensible (e.g., onResume)
-
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, TAG)
         analyticsManager.sendAnalytics(
             AnalyticsManager.Action.ACTION_TYPE,
@@ -147,10 +121,7 @@ class StartActivity : AppCompatActivity() {
                         is UIState.Success -> {
                             if (hasHandledState) return@collect
                             hasHandledState = true
-                            val data = state.data
-                            isPremium = data.isPremium
-                            AdMobManager.isPremium = isPremium
-                            checkForAppUpdateAndProceed(data)
+                            checkForAppUpdateAndProceed(state.data)
                         }
                     }
                 }
@@ -193,17 +164,16 @@ class StartActivity : AppCompatActivity() {
     private fun proceedWithStartup(data: StartData) {
         pendingStartData = null
 
-        if (isPremium) {
-            if (RemoteConfigManager.getStartScreenConfig().showGetStartedButton) {
-                showGetStartedButton()
-            } else {
-                moveToNextScreen()
-            }
-        } else if (!data.hasInternet) {
-            Log.w(TAG, "No internet at start. Proceeding without ads.")
+        if (!data.hasInternet) {
+            Log.w(TAG, "No internet at start.")
             startOfflineFlow()
+            return
+        }
+
+        if (RemoteConfigManager.getStartScreenConfig().showGetStartedButton) {
+            showGetStartedButton()
         } else {
-            initConsent()
+            moveToNextScreen()
         }
     }
 
@@ -242,51 +212,30 @@ class StartActivity : AppCompatActivity() {
         appUpdateManager.handleOnResume(this, updateLauncher)
     }
 
-    private var isAdLoadingFinished = false
+    private var isStartupReady = false
     private var isAnimationFinished = false
 
     private fun showGetStartedButton() {
-        isAdLoadingFinished = true
+        isStartupReady = true
         checkAndShowUI()
     }
 
     private fun checkAndShowUI() {
-        if (isAdLoadingFinished && isAnimationFinished) {
+        if (isStartupReady && isAnimationFinished) {
             binding.llLoading.visibility = View.GONE
             if (RemoteConfigManager.getStartScreenConfig().showGetStartedButton) {
                 binding.shimmerBtn.visibility = View.VISIBLE
                 binding.btnGetStarted.visibility = View.VISIBLE
-                binding.tvAdsDisclaimer.visibility = View.VISIBLE
                 binding.shimmerBtn.startShakeAnimation(lifecycleScope)
                 binding.btnGetStarted.setClickWithTimeout {
                     val popAnim = AnimationUtils.loadAnimation(this, R.anim.pop_button)
                     binding.btnGetStarted.startAnimation(popAnim)
-                    triggerNextNavigationStep()
+                    moveToNextScreen()
                 }
             } else {
                 binding.shimmerBtn.visibility = View.GONE
                 binding.btnGetStarted.visibility = View.GONE
-                binding.tvAdsDisclaimer.visibility = View.GONE
             }
-        }
-    }
-
-    private fun triggerNextNavigationStep() {
-        val startConfig = RemoteConfigManager.getStartScreenConfig()
-        
-        if (isPremium) {
-            moveToNextScreen()
-            return
-        }
-
-        if (startConfig.showSplashInterstitialAd) {
-            showInterstitialAndNavigate()
-        } else if (startConfig.showAppOpenSplashAd) {
-            showOpenAdAndNavigate()
-        } else if (startConfig.showFullScreenNativeSplashAd) {
-            showFullScreenNativeAdAndNavigate()
-        } else {
-            moveToNextScreen()
         }
     }
 
@@ -307,16 +256,6 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (isAdShow) {
-            moveToNextScreen()
-            isAdShow = false
-        }
-
-    }
-
-
     private fun startOfflineFlow() {
         if (hasMovedToNext) return
 
@@ -333,204 +272,6 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    private fun initConsent() {
-        if (!adsConsentManager.canRequestAds) {
-            adsConsentManager.showGDPRConsent(this, false) { error ->
-                error?.let {
-                    Log.w(TAG, "Consent error: ${it.errorCode} - ${it.message}")
-                }
-                setMediationConsent(adsConsentManager.canRequestAds)
-                proceedWithAds()
-            }
-        } else {
-            proceedWithAds()
-        }
-    }
-
-    private fun setMediationConsent(isConsent: Boolean) {
-        Log.e(TAG, "setMediationConsent: ")
-        AppLovinPrivacySettings.setHasUserConsent(isConsent)
-        AppLovinPrivacySettings.setDoNotSell(isConsent)
-        VunglePrivacySettings.setGDPRStatus(isConsent, "v1.0.0")
-        VunglePrivacySettings.setCCPAStatus(isConsent)
-
-    }
-
-    private fun proceedWithAds() {
-        val startConfig = RemoteConfigManager.getStartScreenConfig()
-        // If all ads on start screen are disabled
-        if (!startConfig.showAppOpenSplashAd && !startConfig.showSplashInterstitialAd && !startConfig.showSplashNativeAd && !startConfig.showFullScreenNativeSplashAd) {
-            if (startConfig.showGetStartedButton) {
-                showGetStartedButton()
-            } else {
-                moveToNextScreen()
-            }
-            return
-        }
-
-        Log.d(TAG, "Initializing Ads")
-
-        val globalRules = RemoteConfigManager.getGlobalAdRulesConfig()
-        adMobManager
-            .setInterstitialAdMaxTime(globalRules.interstitialMaxTimer.toLong())
-            .setInterstitialAdMinTime(globalRules.interstitialMinTimer.toLong())
-            .setInterstitialCounter(globalRules.interstitialCounter)
-            .setOpenAdResumeTime(globalRules.openAdResumeTimer.toLong())
-            .setPremium(isPremium).setSplash(true)
-            .setAppOpenAdStartId(AdIds.getAppOpenAdId())
-            .setAppOpenAdResumeId(AdIds.getAppResumeAdId())
-
-        StartupNavigationManager.preloadNextScreenAd(this, StartupNavigationManager.Step.START, appPreferences, adMobManager)
-
-        if (startConfig.showGetStartedButton) {
-            if (startConfig.showSplashNativeAd) {
-                loadAndShowSplashNativeAd()
-            } else {
-                showGetStartedButton()
-            }
-        } else {
-            if (startConfig.showSplashInterstitialAd) {
-                showInterstitialAndNavigate()
-            } else if (startConfig.showAppOpenSplashAd) {
-                showOpenAdAndNavigate()
-            } else if (startConfig.showFullScreenNativeSplashAd) {
-                showFullScreenNativeAdAndNavigate()
-            } else {
-                moveToNextScreen()
-            }
-        }
-    }
-
-
-    private fun loadAndShowSplashNativeAd() {
-        Log.e(TAG, "loadNativeAd: ")
-
-        scheduleNativeAdTimeout()
-
-        AdUtils.loadAndShowNativeAd(
-            adMobManager = adMobManager,
-            adUnitId = AdIds.getNativeAdId(),
-            layoutResId = R.layout.native_ad_modern,
-            frameLayout = binding.includeAd.adFrame,
-            shimmerFrameLayout = binding.includeAd.shimmerFbAd,
-            showMedia = true,
-            analyticsManager = analyticsManager,
-            eventNamePrefix = "splash_native"
-        ) {
-            lifecycleScope.launch {
-                nativeAdTimeoutPosted = false
-                showGetStartedButton()
-            }
-        }
-    }
-
-    private fun scheduleNativeAdTimeout() {
-        if (nativeAdTimeoutPosted) return
-        nativeAdTimeoutPosted = true
-        binding.root.postDelayed({
-            if (nativeAdTimeoutPosted) {
-                nativeAdTimeoutPosted = false
-                binding.includeAd.shimmerFbAd.stopShimmer()
-                binding.includeAd.shimmerFbAd.visibility = View.GONE
-                showGetStartedButton()
-            }
-        }, 10000)
-    }
-
-    private fun showInterstitialAndNavigate() {
-        Log.e(TAG, "showInterstitialAndNavigate")
-        if (hasTriggeredInterstitialNavigation) return
-        hasTriggeredInterstitialNavigation = true
-
-        if (isPremium) {
-            moveToNextScreen()
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
-            proceedAfterInterstitial(false)
-            return
-        }
-        val hfAdId = AdIds.getInterstitialSplashHfAdId()
-        val normalAdId = AdIds.getInterstitialSplashAdId()
-
-        AdUtils.loadAndShowWaterfallInterAdWithDialog(
-            this,
-            adMobManager,
-            hfAdId,
-            normalAdId,
-            lifecycleScope,
-            analyticsManager,
-            "splash_int"
-        ) { adShown ->
-            proceedAfterInterstitial(adShown)
-        }
-    }
-
-    private fun proceedAfterInterstitial(adShown: Boolean) {
-        navigateAfterAd()
-    }
-
-    private fun navigateAfterAd() {
-        moveToNextScreen()
-    }
-
-    private fun showOpenAdAndNavigate() {
-        Log.e(TAG, "showOpenAdAndNavigate")
-        if (hasTriggeredInterstitialNavigation) return
-        hasTriggeredInterstitialNavigation = true
-
-        if (isPremium) {
-            moveToNextScreen()
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_OPEN_AD)) {
-            navigateAfterAd()
-            return
-        }
-        analyticsManager.sendAnalytics(
-            AnalyticsManager.Action.ACTION_TYPE,
-            AnalyticsManager.Events.APPOPEN_REQUEST
-        )
-        adMobManager.appOpenAdLoader.loadAppOpenAd(this) { isLoaded ->
-            if (isLoaded) {
-                analyticsManager.sendAnalytics(
-                    AnalyticsManager.Action.ACTION_TYPE,
-                    AnalyticsManager.Events.APPOPEN_REQUEST_PASS
-                )
-                adMobManager.appOpenAdLoader.showAppOpenAdIfAvailable { _ ->
-                    analyticsManager.sendAnalytics(
-                        AnalyticsManager.Action.ACTION_TYPE,
-                        AnalyticsManager.Events.APPOPEN_VIEW
-                    )
-                    AdFrequencyControl.recordAdShown(
-                        this@StartActivity,
-                        AdUnitFrequencyController.UNIT_OPEN_AD
-                    )
-                    navigateAfterAd()
-                }
-            } else {
-                analyticsManager.sendAnalytics(
-                    AnalyticsManager.Action.ACTION_TYPE,
-                    AnalyticsManager.Events.APPOPEN_REQUEST_FAIL
-                )
-                navigateAfterAd()
-            }
-        }
-    }
-
-    private fun showFullScreenNativeAdAndNavigate() {
-        Log.e(TAG, "showFullScreenNativeAdAndNavigate")
-        if (hasTriggeredInterstitialNavigation) return
-        hasTriggeredInterstitialNavigation = true
-
-        AdUtils.loadAndShowFullScreenNativeAdWithDialog(
-            activity = this,
-            adUnitId = AdIds.getNativeAdId(),
-        ) { adShown ->
-            navigateAfterAd()
-        }
-    }
-
     private fun moveToNextScreen() {
         Log.e(TAG, "moveToNextScreen: ")
         if (hasMovedToNext) return
@@ -538,7 +279,11 @@ class StartActivity : AppCompatActivity() {
         splashJob?.cancel()
         splashJob = null
 
-        val nextActivity = com.tf.gpsmapcamera.utils.StartupNavigationManager.getNextIntent(this, com.tf.gpsmapcamera.utils.StartupNavigationManager.Step.START, appPreferences)
+        val nextActivity = StartupNavigationManager.getNextIntent(
+            this,
+            StartupNavigationManager.Step.START,
+            appPreferences
+        )
         // Guard: don't start on a finishing/destroyed Activity
         if (!isFinishing && !isDestroyed) {
             startActivity(nextActivity)
@@ -550,7 +295,6 @@ class StartActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         loadingAnimator?.cancel()
-        adMobManager.setSplash(false)
         splashJob?.cancel()
         appUpdateManager.unregisterFlexibleUpdateListener()
         appUpdateManager.setOnFlexibleDownloadCompleteListener(null)

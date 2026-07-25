@@ -92,9 +92,7 @@
     <string name="icon_premium">Icon Premium</string>
     <string name="icon_speaker_cleaning">Icon Speaker Cleaning</string>
     <string name="navigation">Navigation</string>
-    <string name="ad">Ad</string>
     <string name="boost_battery_life">Boost Battery Life</string>
-    <string name="ad_download_companion">Download our companion app</string>
     <string name="cleaning">Cleaning</string>
     <string name="speaker">Speaker</string>
     <string name="earphone">Earphone</string>
@@ -129,9 +127,6 @@
     <string name="premium_protection_subtitle">Keep your device clean and safe 24/7</string>
     <string name="learn_more">Learn More</string>
     <string name="icon_volume">Icon Volume</string>
-    <string name="icon_ad">Icon Ad</string>
-    <string name="ad_title">Boost Device Sound</string>
-    <string name="ad_subtitle">Premium quality for your audio.</string>
     <string name="install">Install</string>
     <string name="start_test">Start Test</string>
     <string name="stop_test">Stop Test</string>
@@ -140,7 +135,6 @@
     <string name="auto_test_hint_idle">Tap start to run the full speaker diagnostic.</string>
     <string name="auto_test_hint_running">Playing tones… listen closely and keep the volume steady.</string>
     <string name="auto_test_hint_complete">Test complete. Opening results…</string>
-    <string name="unable_to_load_ad">Unable to load ad</string>
     <string name="remove_ads">Remove AD</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
@@ -260,7 +254,6 @@
     <string name="remove_all_ads_premium">Remove all ads</string>
     <string name="unlock_premium">Unlock Premium</string>
     <string name="yearly">Yearly</string>
-    <string name="this_action_may_contain_ads">This Action may Contain Ads</string>
     <string name="app_name">Live Earth Map</string>
     <string name="live_camera_marker_hint">Tap to watch live</string>
     <string name="weekly">Weekly</string>
@@ -329,20 +322,13 @@
     <string name="txt_symbol_9634">—</string>
     <string name="txt_symbol_1902">·</string>
     <string name="txt_time_stamp">Time Stamp</string>
-    <string name="txt_ad_description">Ad description...</string>
     <string name="txt_install">INSTALL</string>
-    <string name="txt_ad">Ad</string>
     <string name="txt_docuview_reader">DocuView Reader</string>
     <string name="txt_page_1_of_12">Page 1 of 12</string>
     <string name="txt_symbol_0533">  </string>
     <string name="txt_place_title">Place Title</string>
     <string name="txt_country_name">Country Name</string>
     <string name="txt_install_1">Install</string>
-    <string name="txt_sponsored_banner_placeholder">Sponsored · banner placeholder</string>
-    <string name="txt_ad_1">AD</string>
-    <string name="txt_your_ad_here">Your ad here</string>
-    <string name="txt_sadapay_money_made_simple">SadaPay: Money made simple</string>
-    <string name="txt_financial_freedom_the_sada_way_nmake">Financial freedom, the Sada way!\nMake payments faster than you think.</string>
     <string name="txt_app_name">App Name</string>
     <string name="txt_altitude">ALTITUDE</string>
     <string name="txt_date_amp_time">DATE &amp; TIME</string>

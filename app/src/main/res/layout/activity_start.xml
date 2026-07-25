@@ -79,9 +79,9 @@
         android:id="@+id/shimmer_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/tv_ads_disclaimer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.6"
@@ -106,29 +106,5 @@
             app:cornerRadius="100dp"
             app:elevation="6dp" />
     </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <TextView
-        android:id="@+id/tv_ads_disclaimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/this_action_may_contain_ads"
-        android:textColor="#CCFFFFFF"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:fontFamily="@font/plus_jakarta_sans_regular"
-        app:layout_constraintBottom_toTopOf="@id/includeAd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
-        android:id="@+id/includeAd"
-        layout="@layout/ad_container_modern"
-        android:layout_width="match_parent"
-        android:layout_margin="12dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

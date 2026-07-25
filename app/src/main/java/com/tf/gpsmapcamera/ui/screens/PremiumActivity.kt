@@ -16,10 +16,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
-import com.umer_tf.ads.domain.core.AdMobManager
 import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.adapter.PremiumSliderAdapter
-import com.tf.gpsmapcamera.app.AdIds
 import com.tf.gpsmapcamera.app.AnalyticsManager
 import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.constants.Constants
@@ -30,9 +28,7 @@ import com.tf.gpsmapcamera.iab.PurchaseResponse
 import com.tf.gpsmapcamera.iab.SubscriptionItem
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
 import com.tf.gpsmapcamera.ui.viewmodel.PremiumViewModel
-import com.tf.gpsmapcamera.utils.AdFrequencyControl
-import com.tf.gpsmapcamera.utils.AdUnitFrequencyController
-import com.tf.gpsmapcamera.utils.AdUtils
+import com.tf.gpsmapcamera.utils.StartupNavigationManager
 import com.tf.gpsmapcamera.utils.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -43,9 +39,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PremiumActivity : AppCompatActivity(), View.OnClickListener {
-
-    @Inject
-    lateinit var adMobManager: AdMobManager
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
@@ -466,29 +459,12 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         analyticsManager.sendAnalytics("clicked", "${TAG}close_button")
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CROSS)
 
-        if (fromProIcon) {
-            handleBackPress { finish() }
-        } else if (fromOnboardingActivity) {
-            navigateToMain()
-        } else if (fromSplashActivity || fromResumeApp) {
-            showInterstitialAndNavigate()
-        } else {
-            handleBackPress { finish() }
-        }
-    }
-
-    private fun handleBackPress(onComplete: () -> Unit) {
-        val config = RemoteConfigManager.getPremiumScreenConfig()
-        AdUtils.showBackPressInterstitial(
-            activity = this,
-            adMobManager = adMobManager,
-            shouldShow = config.showPremiumInterstitial,
-            adId = AdIds.getPremiumBackInterAdId() ?: "",
-            analyticsManager = analyticsManager,
-            eventNamePrefix = "premium_back_int",
-            ignoreFrequency = true
-        ) {
-            onComplete()
+        when {
+            fromProIcon -> finish()
+            fromOnboardingActivity -> navigateToMain()
+            fromSplashActivity -> navigateToNextStartupScreen()
+            fromResumeApp -> navigateToMain()
+            else -> finish()
         }
     }
 
@@ -595,7 +571,6 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
         // Update premium status
         appPreferences.setBoolean(AppPreferences.IS_PREMIUM, true)
         viewModel.setPremiumStatus(true)
-        AdMobManager.isPremium = true
 
         // Show success message
         Toast.makeText(
@@ -613,9 +588,9 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun navigateAfterPurchase() {
-        // Always restart the app from the beginning so that billing verification,
-        // AdMobManager.isPremium, and all other app-level state are re-initialized
-        // cleanly — no stale pre-purchase state survives.
+        // Always restart the app from the beginning so that billing verification
+        // and all other app-level state are re-initialized cleanly — no stale
+        // pre-purchase state survives.
         val restartIntent = Intent(this, StartActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
@@ -625,29 +600,10 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener {
 
     // onBackPressed() removed — handled by OnBackPressedCallback registered in onCreate()
 
-    private fun showInterstitialAndNavigate() {
-        val isPremium = appPreferences.getBoolean(AppPreferences.IS_PREMIUM, false)
-        if (isPremium || !RemoteConfigManager.getPremiumScreenConfig().showPremiumInterstitial) {
-            if (fromSplashActivity) navigateToNextStartupScreen() else navigateToMain()
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_INTERSTITIAL)) {
-            if (fromSplashActivity) navigateToNextStartupScreen() else navigateToMain()
-            return
-        }
-        adMobManager.interstitialAdLoader.loadAndShowAd(
-            this,
-            AdIds.getInterstitialSplashAdId(), true
-        ) {
-            AdFrequencyControl.recordAdShown(this@PremiumActivity, AdUnitFrequencyController.UNIT_INTERSTITIAL)
-            if (fromSplashActivity) navigateToNextStartupScreen() else navigateToMain()
-        }
-    }
-
     private fun navigateToNextStartupScreen() {
-        val nextActivity = com.tf.gpsmapcamera.utils.StartupNavigationManager.getNextIntent(
+        val nextActivity = StartupNavigationManager.getNextIntent(
             this,
-            com.tf.gpsmapcamera.utils.StartupNavigationManager.Step.PREMIUM,
+            StartupNavigationManager.Step.PREMIUM,
             appPreferences
         )
         startActivity(nextActivity)

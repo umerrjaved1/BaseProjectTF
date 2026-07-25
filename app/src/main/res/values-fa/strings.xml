@@ -86,9 +86,7 @@
     <string name="icon_premium">آیکون پریمیوم</string>
     <string name="icon_speaker_cleaning">آیکون پاک‌سازی اسپیکر</string>
     <string name="navigation">ناوبری</string>
-    <string name="ad">تبلیغ</string>
     <string name="boost_battery_life">افزایش عمر باتری</string>
-    <string name="ad_download_companion">برنامه همراه ما را دانلود کنید</string>
     <string name="cleaning">در حال پاک‌سازی</string>
     <string name="speaker">اسپیکر</string>
     <string name="earphone">هدفون</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">دستگاه خود را 24/7 تمیز و امن نگه دارید</string>
     <string name="learn_more">بیشتر بدانید</string>
     <string name="icon_volume">آیکون صدا</string>
-    <string name="icon_ad">آیکون تبلیغ</string>
-    <string name="ad_title">بهبود صدای دستگاه</string>
-    <string name="ad_subtitle">کیفیت پریمیوم برای صدای شما.</string>
     <string name="install">نصب</string>
     <string name="start_test">شروع تست</string>
     <string name="stop_test">توقف تست</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">برای اجرای عیب‌یابی کامل اسپیکر روی شروع ضربه بزنید.</string>
     <string name="auto_test_hint_running">در حال پخش صدا... با دقت گوش دهید و صدا را ثابت نگه دارید.</string>
     <string name="auto_test_hint_complete">تست کامل شد. در حال باز کردن نتایج...</string>
-    <string name="unable_to_load_ad">قادر به بارگذاری تبلیغ نیست</string>
     <string name="remove_ads">حذف تبلیغات</string>
     <string name="home">صفحه اصلی</string>
     <string name="settings">تنظیمات</string>
@@ -249,7 +243,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">نقشه زنده زمین</string>
     <string name="live_camera_marker_hint">برای تماشای زنده ضربه بزنید</string>
-    <string name="this_action_may_contain_ads">این اقدام ممکن است حاوی تبلیغات باشد</string>
     <string name="error_loading_panorama">تصویر پانوراما بارگیری نشد.</string>
     <string name="error_panorama_memory">حافظه کافی برای بارگیری پانوراما وجود ندارد. سعی کنید برنامه را دوباره راه اندازی کنید.</string>
     <string name="swift_cleaner">Swift Cleaner</string>

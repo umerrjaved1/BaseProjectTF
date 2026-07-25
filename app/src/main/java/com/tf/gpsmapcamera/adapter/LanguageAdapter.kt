@@ -38,9 +38,9 @@ class LanguageAdapter(
             oldItem: LanguageListItem,
             newItem: LanguageListItem
         ): Boolean {
-            return when {
-                oldItem is LanguageListItem.Header && newItem is LanguageListItem.Header -> oldItem.title == newItem.title
-                oldItem is LanguageListItem.Language && newItem is LanguageListItem.Language -> oldItem.model.id == newItem.model.id
+            return when (oldItem) {
+                is LanguageListItem.Header if newItem is LanguageListItem.Header -> oldItem.title == newItem.title
+                is LanguageListItem.Language if newItem is LanguageListItem.Language -> oldItem.model.id == newItem.model.id
                 else -> false
             }
         }
@@ -53,7 +53,7 @@ class LanguageAdapter(
         }
     }
 
-    inner class HeaderViewHolder(private val binding: ItemLangHeaderBinding) :
+    class HeaderViewHolder(private val binding: ItemLangHeaderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(header: LanguageListItem.Header) {
             binding.tvHeader.text = header.title
@@ -79,11 +79,16 @@ class LanguageAdapter(
             if (selectedLanguageModel == null && position == 1) {
                 binding.ivHandPointer.visibility = View.VISIBLE
                 binding.ivHandPointer.rotation = 0f
-                
+
                 animator?.cancel()
                 val density = binding.root.context.resources.displayMetrics.density
                 val translationAmount = -10f * density
-                animator = ObjectAnimator.ofFloat(binding.ivHandPointer, "translationY", 0f, translationAmount).apply {
+                animator = ObjectAnimator.ofFloat(
+                    binding.ivHandPointer,
+                    "translationY",
+                    0f,
+                    translationAmount
+                ).apply {
                     duration = 800
                     repeatCount = ObjectAnimator.INFINITE
                     repeatMode = ObjectAnimator.REVERSE

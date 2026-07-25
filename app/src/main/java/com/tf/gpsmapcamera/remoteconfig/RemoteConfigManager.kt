@@ -23,11 +23,9 @@ object RemoteConfigManager {
     private var startScreenConfig = StartScreenConfig()
     private var languageScreenConfig = LanguageScreenConfig()
     private var onboardingScreenConfig = OnboardingScreenConfig()
-    private var homeScreenConfig = HomeScreenConfig()
     private var surveyScreenConfig = SurveyScreenConfig()
-    private var uninstallScreenConfig = UninstallScreenConfig()
     private var premiumScreenConfig = PremiumScreenConfig()
-    private var globalAdRulesConfig = GlobalAdRulesConfig()
+    private var globalConfig = GlobalConfig()
     private var assetsConfigData: AssetsConfigData = AssetsConfigData()
     private var notificationTime = 3L
     private var notificationInitialDelay = 24L
@@ -71,11 +69,9 @@ object RemoteConfigManager {
         startScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_START_SCREEN) ?: StartScreenConfig()
         languageScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_LANGUAGE_SCREEN) ?: LanguageScreenConfig()
         onboardingScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_ONBOARDING_SCREEN) ?: OnboardingScreenConfig()
-        homeScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_HOME_SCREEN) ?: HomeScreenConfig()
         surveyScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_SURVEY_SCREEN) ?: SurveyScreenConfig()
-        uninstallScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_UNINSTALL_SCREEN) ?: UninstallScreenConfig()
         premiumScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_PREMIUM_SCREEN) ?: PremiumScreenConfig()
-        globalAdRulesConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_GLOBAL_AD_RULES) ?: GlobalAdRulesConfig()
+        globalConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_GLOBAL) ?: GlobalConfig()
 
         notificationInitialDelay =
             firebaseRemoteConfig.getLong(RemoteConfigKeys.NOTIFICATION_DELAY_TIME)
@@ -119,20 +115,17 @@ object RemoteConfigManager {
     fun getStartScreenConfig() = startScreenConfig
     fun getLanguageScreenConfig() = languageScreenConfig
     fun getOnboardingScreenConfig() = onboardingScreenConfig
-    fun getHomeScreenConfig() = homeScreenConfig
     fun getSurveyScreenConfig() = surveyScreenConfig
-    fun getUninstallScreenConfig() = uninstallScreenConfig
 
     fun getPremiumScreenConfig(): PremiumScreenConfig {
         return parseConfig(RemoteConfigKeys.CONFIG_PREMIUM_SCREEN, PremiumScreenConfig::class.java, PremiumScreenConfig())
     }
 
-    fun getGlobalAdRulesConfig() = globalAdRulesConfig
+    fun getGlobalConfig() = globalConfig
 
     fun getAssetsConfig(): AssetsConfigData = assetsConfigData
 
     fun getNotificationInitialDelay(): Long = notificationInitialDelay // Default 24 hours
     fun getNotificationRepeatInterval(): Long = notificationRepeatInterval
     fun shouldEnableRepeatingNotifications(): Boolean = enableRepeatingNotifications
-    fun getShowAds(): Boolean = globalAdRulesConfig.showAds
 }

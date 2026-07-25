@@ -93,13 +93,4 @@
         android:layout_weight="1"
         android:paddingHorizontal="16dp" />
 
-    <include
-        android:id="@+id/includeAd"
-        layout="@layout/shimmer_layout_lang_ad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        />
-
-
 </LinearLayout>

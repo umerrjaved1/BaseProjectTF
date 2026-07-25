@@ -14,17 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
-import com.tf.gpsmapcamera.app.AdIds
 import com.tf.gpsmapcamera.app.AnalyticsManager
+import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.databinding.ActivityMainBinding
 import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
 import com.tf.gpsmapcamera.ui.base.BaseActivity
 import com.tf.gpsmapcamera.update.AppUpdateManager
 import com.tf.gpsmapcamera.update.AppUpdateReadyDialogFragment
-import com.tf.gpsmapcamera.utils.AdUtils
 import com.tf.gpsmapcamera.utils.setClickWithTimeout
-import com.umer_tf.ads.domain.core.AdMobManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -40,7 +38,7 @@ class MainActivity : BaseActivity() {
     lateinit var analyticsManager: AnalyticsManager
 
     @Inject
-    lateinit var adMobManager: AdMobManager
+    lateinit var appPreferences: AppPreferences
 
     @Inject
     lateinit var appUpdateManager: AppUpdateManager
@@ -111,24 +109,8 @@ class MainActivity : BaseActivity() {
             switchFragmentTo("home")
             return
         }
-        // On final back (exit), show interstitial then finish
-        val config = RemoteConfigManager.getHomeScreenConfig()
-        if (!config.showBackInterstitial) {
-            showExitNotification()
-            finish()
-            return
-        }
-
-        AdUtils.loadAndShowAdWithTimer(
-            activity = this@MainActivity,
-            adMobManager = adMobManager,
-            adUnit = AdIds.getHomeBackInterAdId() ?: "",
-            analyticsManager = analyticsManager,
-            eventNamePrefix = "exit_int"
-        ) {
-            showExitNotification()
-            finish()
-        }
+        showExitNotification()
+        finish()
     }
 
 
@@ -212,11 +194,8 @@ class MainActivity : BaseActivity() {
         }
         binding.btnBack.visibility = View.GONE
 
-        if (AdMobManager.isPremium) {
-            binding.btnPro.visibility = View.GONE
-        } else {
-            binding.btnPro.visibility = View.VISIBLE
-        }
+        binding.btnPro.visibility =
+            if (appPreferences.getBoolean(AppPreferences.IS_PREMIUM)) View.GONE else View.VISIBLE
     }
     fun switchFragmentTo(tag: String) {
         binding.bottomNav.selectedItemId = when (tag) {
@@ -247,7 +226,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showExitNotification() {
-        val globalConfig = RemoteConfigManager.getGlobalAdRulesConfig()
+        val globalConfig = RemoteConfigManager.getGlobalConfig()
         if (!globalConfig.enableExitNotification) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&

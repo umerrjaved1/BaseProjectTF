@@ -20,11 +20,7 @@ object Constants {
     // Yearly plan
     const val BASE_PLAN_YEARLY          = "yearlysub"
     const val SKU_SUBSCRIPTION_YEARLY   = "sku_yearly"
-    // const val OFFER_ID_MONTHLY_TRIAL    = ""   // fill in if monthly has a trial offer
-    // const val BASE_PLAN_MONTHLY         = "monthlysub"
-    // const val SKU_SUBSCRIPTION_MONTHLY  = "sku_monthly"
-    // -------------------------------------------------------
-    // Subscription product IDs (as defined in Google Play Console)
+
 
 
 

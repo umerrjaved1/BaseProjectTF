@@ -1,9 +1,9 @@
 package com.tf.gpsmapcamera.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.databinding.ItemSurveyToolBinding
@@ -22,7 +22,7 @@ class SurveyAdapter(
             binding.ivIcon.setImageResource(item.iconResId)
             
             // Set the background color programmatically using ColorStateList
-            val bgColor = Color.parseColor(item.bgColorHex)
+            val bgColor = item.bgColorHex.toColorInt()
             binding.root.backgroundTintList = ColorStateList.valueOf(bgColor)
 
             updateSelectionUI(item)

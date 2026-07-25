@@ -5,15 +5,6 @@
     android:background="@drawable/bg_round_white"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/includeAd"
-        layout="@layout/ad_banner_rectangle_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="8dp" />
-
     <TextView
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"

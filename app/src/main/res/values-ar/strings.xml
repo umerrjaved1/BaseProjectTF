@@ -86,9 +86,7 @@
     <string name="icon_premium">أيقونة المميز</string>
     <string name="icon_speaker_cleaning">أيقونة تنظيف السماعة</string>
     <string name="navigation">الملاحة</string>
-    <string name="ad">إعلان</string>
     <string name="boost_battery_life">تحسين عمر البطارية</string>
-    <string name="ad_download_companion">قم بتنزيل تطبيقنا المصاحب</string>
     <string name="cleaning">تنظيف</string>
     <string name="speaker">سماعة</string>
     <string name="earphone">سماعة أذن</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">احتفظ بجهازك نظيفًا وآمنًا على مدار الساعة</string>
     <string name="learn_more">اعرف المزيد</string>
     <string name="icon_volume">أيقونة الصوت</string>
-    <string name="icon_ad">أيقونة الإعلان</string>
-    <string name="ad_title">تحسين صوت الجهاز</string>
-    <string name="ad_subtitle">جودة مميزة للصوت الخاص بك.</string>
     <string name="install">تثبيت</string>
     <string name="start_test">بدء الاختبار</string>
     <string name="stop_test">إيقاف الاختبار</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">اضغط على ابدأ لتشغيل تشخيص السماعة الكامل.</string>
     <string name="auto_test_hint_running">تشغيل النغمات... استمع جيداً وحافظ على استقرار الصوت.</string>
     <string name="auto_test_hint_complete">اكتمل الاختبار. يتم فتح النتائج...</string>
-    <string name="unable_to_load_ad">تعذر تحميل الإعلان</string>
     <string name="remove_ads">إزالة الإعلانات</string>
     <string name="home">الرئيسية</string>
     <string name="settings">الإعدادات</string>
@@ -249,7 +243,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">خريطة الأرض الحية</string>
     <string name="live_camera_marker_hint">انقر للمشاهدة المباشرة</string>
-    <string name="this_action_may_contain_ads">قد يحتوي هذا الإجراء على إعلانات</string>
     <string name="error_loading_panorama">فشل تحميل الصورة البانورامية.</string>
     <string name="error_panorama_memory">لا توجد ذاكرة كافية لتحميل الصورة البانورامية. حاول إعادة تشغيل التطبيق.</string>
     <string name="swift_cleaner">منظف ​​سويفت</string>

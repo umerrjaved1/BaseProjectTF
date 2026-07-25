@@ -61,14 +61,12 @@ NotificationWorker(
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Create notification channel (required for API 26+)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "${context.getString(R.string.app_name)} Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(
+            channelId,
+            "${context.getString(R.string.app_name)} Notifications",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        notificationManager.createNotificationChannel(channel)
 
         val messages = listOf(
             "${context.getString(R.string.app_name)} is amazing App",

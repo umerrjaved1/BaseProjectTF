@@ -58,7 +58,7 @@
         android:background="@color/bg_color"
         android:paddingHorizontal="24dp"
         android:paddingBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/adContainerWrapper">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <View
             android:id="@+id/topDivider"
@@ -111,14 +111,5 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/adContainerWrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <include layout="@layout/shimmer_layout_onboarding_ad" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

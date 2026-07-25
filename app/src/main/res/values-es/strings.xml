@@ -86,9 +86,7 @@
     <string name="icon_premium">Icono Premium</string>
     <string name="icon_speaker_cleaning">Icono Limpieza Altavoz</string>
     <string name="navigation">Navegación</string>
-    <string name="ad">Anuncio</string>
     <string name="boost_battery_life">Mejorar Vida de Batería</string>
-    <string name="ad_download_companion">Descarga nuestra app complementaria</string>
     <string name="cleaning">Limpiando</string>
     <string name="speaker">Altavoz</string>
     <string name="earphone">Auricular</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">Mantén tu dispositivo limpio y seguro 24/7</string>
     <string name="learn_more">Aprende Más</string>
     <string name="icon_volume">Icono Volumen</string>
-    <string name="icon_ad">Icono Anuncio</string>
-    <string name="ad_title">Mejorar Sonido del Dispositivo</string>
-    <string name="ad_subtitle">Calidad premium para tu audio.</string>
     <string name="install">Instalar</string>
     <string name="start_test">Iniciar Prueba</string>
     <string name="stop_test">Detener Prueba</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">Toca iniciar para ejecutar el diagnóstico completo del altavoz.</string>
     <string name="auto_test_hint_running">Reproduciendo tonos… escucha atentamente y mantén el volumen constante.</string>
     <string name="auto_test_hint_complete">Prueba completa. Abriendo resultados…</string>
-    <string name="unable_to_load_ad">No se puede cargar el anuncio</string>
     <string name="remove_ads">Quitar Anuncios</string>
     <string name="home">Inicio</string>
     <string name="settings">Configuración</string>
@@ -249,7 +243,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">Mapa de la Tierra Viva</string>
     <string name="live_camera_marker_hint">Toca para verlo en vivo</string>
-    <string name="this_action_may_contain_ads">Esta acción puede contener anuncios</string>
     <string name="error_loading_panorama">No se pudo cargar la imagen panorámica.</string>
     <string name="error_panorama_memory">No hay suficiente memoria para cargar el panorama. Intente reiniciar la aplicación.</string>
     <string name="swift_cleaner">Limpiador veloz</string>

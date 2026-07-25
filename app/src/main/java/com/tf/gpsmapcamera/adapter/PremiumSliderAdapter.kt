@@ -8,7 +8,7 @@ import com.tf.gpsmapcamera.databinding.ItemPremiumSliderBinding
 class PremiumSliderAdapter(private val images: List<Int>) :
     RecyclerView.Adapter<PremiumSliderAdapter.SliderViewHolder>() {
 
-    inner class SliderViewHolder(val binding: ItemPremiumSliderBinding) :
+    class SliderViewHolder(val binding: ItemPremiumSliderBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(imageResId: Int) {
             binding.ivSlide.setImageResource(imageResId)

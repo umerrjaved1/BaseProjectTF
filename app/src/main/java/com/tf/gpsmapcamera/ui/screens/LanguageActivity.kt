@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,28 +20,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.umer_tf.ads.domain.ads.native_ad.NativeAdBuilder
-import com.umer_tf.ads.domain.core.AdMobManager
 import com.tf.gpsmapcamera.adapter.LanguageAdapter
-import com.tf.gpsmapcamera.app.AdIds
 import com.tf.gpsmapcamera.app.AnalyticsManager
 import com.tf.gpsmapcamera.app.AppPreferences
 import com.tf.gpsmapcamera.constants.Constants
 import com.tf.gpsmapcamera.model.LanguageListItem
 import com.tf.gpsmapcamera.model.LanguageModel
-import com.tf.gpsmapcamera.remoteconfig.RemoteConfigManager
 import com.tf.gpsmapcamera.ui.viewmodel.LanguageNav
 import com.tf.gpsmapcamera.ui.viewmodel.LanguageViewModel
-import com.tf.gpsmapcamera.utils.AdFrequencyControl
-import com.tf.gpsmapcamera.utils.AdUnitFrequencyController
-import com.tf.gpsmapcamera.utils.AdUtils
+import com.tf.gpsmapcamera.utils.StartupNavigationManager
 import com.tf.gpsmapcamera.utils.setClickWithTimeout
 import com.tf.gpsmapcamera.utils.startShakeAnimation
 import com.tf.gpsmapcamera.R
 import com.tf.gpsmapcamera.databinding.ActivityLanguageBinding
 import com.tf.gpsmapcamera.databinding.DialogExitBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,12 +42,8 @@ import javax.inject.Inject
 class LanguageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLanguageBinding
     private lateinit var adapter: LanguageAdapter
-    private var hasShownSecondAd = false
 
     private val viewModel: LanguageViewModel by viewModels()
-
-    @Inject
-    lateinit var adMobManager: AdMobManager
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
@@ -106,7 +94,6 @@ class LanguageActivity : AppCompatActivity() {
 
 
         isFromStart = intent.getBooleanExtra(Constants.EXTRA_LANGUAGE_FROM_START, false)
-        loadNativeAd()
 
         initAdapter()
         initClickListeners()
@@ -119,12 +106,10 @@ class LanguageActivity : AppCompatActivity() {
                 viewModel.navigate.collect { nav ->
                     when (nav) {
                         LanguageNav.ONBOARDING -> {
-                            com.tf.gpsmapcamera.utils.StartupNavigationManager.navigateNextWithAd(
+                            StartupNavigationManager.navigateNext(
                                 activity = this@LanguageActivity,
-                                currentStep = com.tf.gpsmapcamera.utils.StartupNavigationManager.Step.LANGUAGE,
+                                currentStep = StartupNavigationManager.Step.LANGUAGE,
                                 appPreferences = appPreferences,
-                                adMobManager = adMobManager,
-                                analyticsManager = analyticsManager,
                                 onBeforeNavigate = {
                                     val code = appPreferences.getString(AppPreferences.LANGUAGE_CODE)
                                     if (code.isNotEmpty()) {
@@ -163,7 +148,6 @@ class LanguageActivity : AppCompatActivity() {
         val binding = DialogExitBinding.inflate(layoutInflater)
         exitDialog.setContentView(binding.root)
         exitDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        loadExitBannerAd(binding)
 
         val layoutParams = binding.root.layoutParams
         val width = resources.displayMetrics.widthPixels
@@ -177,56 +161,6 @@ class LanguageActivity : AppCompatActivity() {
             finishAffinity()
         }
     }
-
-    private fun loadExitBannerAd(binding: DialogExitBinding) {
-        if (AdMobManager.isPremium || !RemoteConfigManager.getHomeScreenConfig().showExitBanner) {
-            binding.includeAd.root.visibility = View.GONE
-            return
-        }
-        if (!AdFrequencyControl.canShowAd(this, AdUnitFrequencyController.UNIT_BANNER)) {
-            binding.includeAd.root.visibility = View.GONE
-            return
-        }
-        adMobManager.bannerAdLoader.showMemRecBanner(
-            this,
-            binding.includeAd.adFrame,
-            binding.includeAd.shimmerFbAd,
-            AdIds.getBannerAdIdExit()
-        )
-        AdFrequencyControl.recordAdShown(this, AdUnitFrequencyController.UNIT_BANNER)
-    }
-
-    private fun loadNativeAd(forceLoadNew: Boolean = !isFromStart) {
-        val config = RemoteConfigManager.getLanguageScreenConfig()
-        val showNative1 = !hasShownSecondAd && config.showLanguageNative1
-        val showNative2 = hasShownSecondAd && config.showLanguageNative2
-
-        if (!showNative1 && !showNative2) {
-            binding.includeAd.root.visibility = View.GONE
-            return
-        }
-
-        val prefix = if (hasShownSecondAd) "lng_scr_native2" else "lng_scr_native1"
-        val adId = if (hasShownSecondAd) AdIds.getNativeLanguage2AdId() else AdIds.getNativeLanguageAdId()
-        AdUtils.loadAndShowNativeAd(
-            adMobManager = adMobManager,
-            adUnitId = adId,
-            layoutResId = R.layout.native_ad_large,
-            frameLayout = binding.includeAd.adFrame,
-            shimmerFrameLayout = binding.includeAd.shimmerFbAd,
-            showMedia = true,
-            forceLoadNew = forceLoadNew,
-            analyticsManager = analyticsManager,
-            eventNamePrefix = prefix
-        ) {
-            // Preload the second ad after the first ad finishes loading
-            if (!hasShownSecondAd && config.showLanguageNative2) {
-                adMobManager.nativeAdLoader.loadAd(AdIds.getNativeLanguage2AdId())
-            }
-        }
-    }
-
-
 
     private fun initClickListeners() {
 
@@ -279,12 +213,6 @@ class LanguageActivity : AppCompatActivity() {
         )
 
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.LNG_SELECTED)
-
-        // Force load the second native ad when a language is selected (only once)
-        if (!hasShownSecondAd) {
-            hasShownSecondAd = true
-            loadNativeAd(forceLoadNew = true)
-        }
     }
 
 

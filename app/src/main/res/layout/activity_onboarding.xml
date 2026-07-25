@@ -37,7 +37,7 @@
         android:paddingHorizontal="24dp"
         android:background="@color/bg_color"
         android:paddingBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/adContainerWrapper">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/ll_indicators"
@@ -86,14 +86,5 @@
                 app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
         </com.facebook.shimmer.ShimmerFrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <FrameLayout
-        android:id="@+id/adContainerWrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-        
-        <include layout="@layout/shimmer_layout_onboarding_ad" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,3 @@
 {
-  "skipLanguageScreen": false,
-  "showLanguageNative1": true,
-  "showLanguageNative2": true,
-  "showLanguageInterstitial": true,
-  "native_lng1": "",
-  "int_lng": "",
-  "native_lng2": "",
-  "nativeConfig": {
-    "callActionButtonColor": "#254AA6",
-    "backgroundColor": "#C5D4FB",
-    "ctaText": "#FFFFFF",
-    "heading": "#04061A",
-    "description": "#6F6F6F"
-  }
+  "skipLanguageScreen": false
 }

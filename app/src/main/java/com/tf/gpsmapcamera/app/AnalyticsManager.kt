@@ -40,10 +40,6 @@ class AnalyticsManager @Inject constructor(
 
         // App Resume
         const val APP_RESUME = "app_resume"
-        const val APPOPEN_REQUEST = "appopen_request"
-        const val APPOPEN_REQUEST_PASS = "appopen_request_pass"
-        const val APPOPEN_REQUEST_FAIL = "appopen_request_fail"
-        const val APPOPEN_VIEW = "appopen_view"
 
         // Language
         const val LNG_SCR_VIEW = "lng_scr_view"
@@ -97,12 +93,8 @@ class AnalyticsManager @Inject constructor(
     }
 
     /**
-     * Helper to explicitly log standard Meta 'ad imp' and 'start trial'
+     * Helper to explicitly log the standard Meta 'start trial' event
      */
-    fun logMetaAdImpression() {
-        logFacebookEvent(AppEventsConstants.EVENT_NAME_AD_IMPRESSION)
-    }
-
     fun logMetaStartTrial() {
         logFacebookEvent(AppEventsConstants.EVENT_NAME_START_TRIAL)
     }

@@ -86,9 +86,7 @@
     <string name="icon_premium">आइकन प्रीमियम</string>
     <string name="icon_speaker_cleaning">स्पीकर सफाई आइकन</string>
     <string name="navigation">नेविगेशन</string>
-    <string name="ad">विज्ञापन</string>
     <string name="boost_battery_life">बैटरी लाइफ बढ़ाएं</string>
-    <string name="ad_download_companion">हमारा साथी ऐप डाउनलोड करें</string>
     <string name="cleaning">सफाई हो रही है</string>
     <string name="speaker">स्पीकर</string>
     <string name="earphone">इयरफ़ोन</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">अपने डिवाइस को 24/7 साफ और सुरक्षित रखें</string>
     <string name="learn_more">और जानें</string>
     <string name="icon_volume">आइकन वॉल्यूम</string>
-    <string name="icon_ad">आइकन विज्ञापन</string>
-    <string name="ad_title">डिवाइस ध्वनि बढ़ाएं</string>
-    <string name="ad_subtitle">आपके ऑडियो के लिए प्रीमियम गुणवत्ता।</string>
     <string name="install">इंस्टॉल करें</string>
     <string name="start_test">परीक्षण शुरू करें</string>
     <string name="stop_test">परीक्षण रोकें</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">पूर्ण स्पीकर डायग्नोस्टिक चलाने के लिए स्टार्ट टैप करें।</string>
     <string name="auto_test_hint_running">टोन बज रहे हैं... ध्यान से सुनें और वॉल्यूम स्थिर रखें।</string>
     <string name="auto_test_hint_complete">परीक्षण पूर्ण। परिणाम खुल रहे हैं...</string>
-    <string name="unable_to_load_ad">विज्ञापन लोड करने में असमर्थ</string>
     <string name="remove_ads">विज्ञापन हटाएं</string>
     <string name="home">होम</string>
     <string name="settings">सेटिंग्स</string>
@@ -247,7 +241,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">लाइव अर्थ मैप</string>
     <string name="live_camera_marker_hint">लाइव देखने के लिए टैप करें</string>
-    <string name="this_action_may_contain_ads">इस कार्रवाई में विज्ञापन शामिल हो सकते हैं</string>
     <string name="error_loading_panorama">पैनोरमा छवि लोड करने में विफल.</string>
     <string name="error_panorama_memory">पैनोरमा लोड करने के लिए पर्याप्त मेमोरी नहीं है. ऐप को पुनः प्रारंभ करने का प्रयास करें.</string>
     <string name="swift_cleaner">स्विफ्ट क्लीनर</string>

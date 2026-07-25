@@ -86,9 +86,7 @@
     <string name="icon_premium">Иконка Премиум</string>
     <string name="icon_speaker_cleaning">Иконка очистки динамика</string>
     <string name="navigation">Навигация</string>
-    <string name="ad">Реклама</string>
     <string name="boost_battery_life">Увеличить срок службы батареи</string>
-    <string name="ad_download_companion">Загрузите наше сопутствующее приложение</string>
     <string name="cleaning">Очистка</string>
     <string name="speaker">Динамик</string>
     <string name="earphone">Наушник</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">Держите ваше устройство чистым и безопасным 24/7</string>
     <string name="learn_more">Узнать Больше</string>
     <string name="icon_volume">Иконка Громкость</string>
-    <string name="icon_ad">Иконка Реклама</string>
-    <string name="ad_title">Улучшить Звук Устройства</string>
-    <string name="ad_subtitle">Премиум качество для вашего аудио.</string>
     <string name="install">Установить</string>
     <string name="start_test">Начать тест</string>
     <string name="stop_test">Остановить тест</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">Нажмите "Старт", чтобы запустить полную диагностику динамика.</string>
     <string name="auto_test_hint_running">Воспроизведение тонов... слушайте внимательно и держите громкость стабильной.</string>
     <string name="auto_test_hint_complete">Тест завершен. Открытие результатов...</string>
-    <string name="unable_to_load_ad">Не удалось загрузить рекламу</string>
     <string name="remove_ads">Удалить Рекламу</string>
     <string name="home">Главная</string>
     <string name="settings">Настройки</string>
@@ -247,7 +241,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">Живая карта Земли</string>
     <string name="live_camera_marker_hint">Нажмите, чтобы посмотреть в прямом эфире</string>
-    <string name="this_action_may_contain_ads">Это действие может содержать рекламу</string>
     <string name="error_loading_panorama">Не удалось загрузить панорамное изображение.</string>
     <string name="error_panorama_memory">Недостаточно памяти для загрузки панорамы. Попробуйте перезапустить приложение.</string>
     <string name="swift_cleaner">Быстрый очиститель</string>

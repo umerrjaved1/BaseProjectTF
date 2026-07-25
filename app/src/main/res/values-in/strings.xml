@@ -86,9 +86,7 @@
     <string name="icon_premium">Ikon Premium</string>
     <string name="icon_speaker_cleaning">Ikon Pembersihan Speaker</string>
     <string name="navigation">Navigasi</string>
-    <string name="ad">Iklan</string>
     <string name="boost_battery_life">Tingkatkan Masa Pakai Baterai</string>
-    <string name="ad_download_companion">Unduh aplikasi pendamping kami</string>
     <string name="cleaning">Membersihkan</string>
     <string name="speaker">Speaker</string>
     <string name="earphone">Earphone</string>
@@ -123,9 +121,6 @@
     <string name="premium_protection_subtitle">Jaga perangkat Anda tetap bersih dan aman 24/7</string>
     <string name="learn_more">Pelajari Lebih Lanjut</string>
     <string name="icon_volume">Ikon Volume</string>
-    <string name="icon_ad">Ikon Iklan</string>
-    <string name="ad_title">Tingkatkan Suara Perangkat</string>
-    <string name="ad_subtitle">Kualitas premium untuk audio Anda.</string>
     <string name="install">Instal</string>
     <string name="start_test">Mulai Tes</string>
     <string name="stop_test">Hentikan Tes</string>
@@ -134,7 +129,6 @@
     <string name="auto_test_hint_idle">Ketuk mulai untuk menjalankan diagnostik lengkap speaker.</string>
     <string name="auto_test_hint_running">Memutar nada… dengarkan baik-baik dan jaga volume tetap stabil.</string>
     <string name="auto_test_hint_complete">Tes selesai. Membuka hasil…</string>
-    <string name="unable_to_load_ad">Tidak dapat memuat iklan</string>
     <string name="remove_ads">Hapus Iklan</string>
     <string name="home">Beranda</string>
     <string name="settings">Pengaturan</string>
@@ -249,7 +243,6 @@
     <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
     <string name="app_name">Peta Bumi Langsung</string>
     <string name="live_camera_marker_hint">Ketuk untuk menonton langsung</string>
-    <string name="this_action_may_contain_ads">Tindakan ini mungkin Berisi Iklan</string>
     <string name="error_loading_panorama">Gagal memuat gambar panorama.</string>
     <string name="error_panorama_memory">Memori tidak cukup untuk memuat panorama. Coba mulai ulang aplikasi.</string>
     <string name="swift_cleaner">Pembersih Cepat</string>
