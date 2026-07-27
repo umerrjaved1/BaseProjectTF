@@ -4,7 +4,7 @@
     android:id="@+id/tvHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:fontFamily="@font/poppins_semi_bold"
+    app:fontFamily="@font/plus_jakarta_sans_semi_bold"
     android:paddingHorizontal="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="4dp"

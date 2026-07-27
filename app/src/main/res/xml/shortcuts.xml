@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  RENAME TOUCHPOINT. Resource XML receives no manifestPlaceholder substitution, so both
+  values below are hardcoded and must be edited by hand when a fork renames its package:
+
+    targetPackage = applicationId
+    targetClass   = applicationId + the activity's source package
+
+  Both are now the same root (namespace == applicationId == com.professor.baseproject).
+  Historically they were not, and this shortcut was dead on every build twice over:
+  targetPackage held the namespace instead of the installed applicationId, and
+  targetClass pointed at `ui.activities.UninstallActivity` — a package that has never
+  existed here (the activity lives in `ui.screens`).
+
+  UninstallActivity must stay android:exported="true" in the manifest for the launcher
+  to be able to start it from this shortcut.
+-->
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:shortcutId="uninstall_shortcut"
@@ -8,8 +24,9 @@
         android:shortcutLongLabel="@string/uninstall_app">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.tf.gpsmapcamera"
-            android:targetClass="com.tf.gpsmapcamera.ui.activities.UninstallActivity" />
-        <categories android:name="android.shortcut.conversation" />
+            android:targetPackage="com.professor.baseproject"
+            android:targetClass="com.professor.baseproject.ui.screens.UninstallActivity" />
+        <!-- The previous <categories android:name="android.shortcut.conversation"/> was
+             removed: that category is for People/conversation shortcuts. -->
     </shortcut>
 </shortcuts>

@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tf.gpsmapcamera"
+    namespace = "com.professor.baseproject"
     compileSdk = 37
 
     signingConfigs {
@@ -59,14 +59,67 @@ android {
     }
 
     buildTypes {
-        release {
+        // NOTE: every build type keeps the same applicationId (com.professor.baseproject).
+        //
+        // Do NOT add applicationIdSuffix here unless you also add a matching Android app
+        // to the Firebase project. app/google-services.json declares exactly one client,
+        // for com.professor.baseproject, and the Google Services plugin hard-fails the
+        // build with "No matching client found for package name ..." on any other id.
+        //
+        // Consequence: debug and release overwrite each other on a device. If you want
+        // them side by side, register com.professor.baseproject.debug in Firebase, re-
+        // download google-services.json, then set applicationIdSuffix = ".debug".
+        debug {
+            versionNameSuffix = "-debug"
+            isMinifyEnabled = false
+        }
 
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+
+        /**
+         * R8-processed like release, but debug-signed so it can actually be installed and
+         * run locally. The release variant is minified AND unsigned, so the shrunk code
+         * path was effectively never executed before upload — which is exactly where the
+         * package-name-hardcoded ProGuard keeps fail silently.
+         *
+         * Use: ./gradlew :app:assembleMinifiedDebug
+         */
+        create("minifiedDebug") {
+            initWith(getByName("release"))
+            versionNameSuffix = "-minified"
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
+    }
+
+    lint {
+        // Fail the build on real problems, and check the libraries too. None of this was
+        // configured before, so the unused-resource and unused-permission findings that
+        // lint reports natively were never surfaced.
+        warningsAsErrors = false
+        abortOnError = true
+        checkDependencies = true
+        // Regenerate with: ./gradlew :app:updateLintBaseline
+        baseline = file("lint-baseline.xml")
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
+    // Room's exported schema JSON must be on the instrumentation test classpath for
+    // MigrationTestHelper to find it. Without this, a migration test can compile and
+    // then fail at runtime with "Cannot find the schema file in the assets folder".
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDirs("$projectDir/schemas")
         }
     }
     compileOptions {
@@ -82,18 +135,33 @@ android {
 }
 
 base {
-    archivesName.set("AppName_vCode_${android.defaultConfig.versionCode}_vName${android.defaultConfig.versionName}")
+    // Was the literal placeholder "AppName_", which no fork ever substituted — every
+    // build shipped artefacts called AppName_vCode_1_vName1.0.1. Derived from the
+    // applicationId so it is correct automatically after a rename.
+    val appLabel = (android.defaultConfig.applicationId ?: "app").substringAfterLast('.')
+    archivesName.set(
+        "${appLabel}_vCode${android.defaultConfig.versionCode}_vName${android.defaultConfig.versionName}"
+    )
 }
 
 kotlin {
     jvmToolchain(17)
 }
 
+// Room schema export — required by @Database(exportSchema = true). The generated
+// JSON under app/schemas should be committed; it is what makes migration tests possible.
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    // Room — room-ktx alone does NOT generate AppDatabase_Impl; the KSP compiler is required.
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
@@ -164,6 +232,20 @@ dependencies {
 
     // Facebook SDK for AppEvents
     implementation(libs.facebook.android.sdk)
+
+    // ---------------------------------------------------------------------------
+    // Testing
+    // ---------------------------------------------------------------------------
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test) // runTest in AppDatabaseTest
 
 
 

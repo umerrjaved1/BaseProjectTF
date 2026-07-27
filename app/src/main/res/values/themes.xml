@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.App" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.App" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/accent_color</item>
         <item name="colorControlActivated">@color/accent_color</item>
@@ -78,13 +78,8 @@
         <item name="android:navigationBarColor">@color/white</item>
     </style>
 
-    <style name="Theme.App.DocViewer" parent="Theme.Material3.Light">
-        <item name="windowActionBar">true</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">@color/white</item>
-    </style>
 
-    <style name="SplashTheme" parent="Theme.Material3.Light.NoActionBar">
+    <style name="SplashTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
@@ -96,7 +91,7 @@
         <item name="cornerSize">16dp</item>
     </style>
 
-    <style name="FullScreenDialogTheme" parent="Theme.Material3.Light.NoActionBar">
+    <style name="FullScreenDialogTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>

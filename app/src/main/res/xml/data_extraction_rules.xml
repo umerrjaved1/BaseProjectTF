@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
+   Backup / device-transfer rules for API 31+.
+   https://developer.android.com/about/versions/12/backup-restore#xml-changes
+
+   `is_premium` lives in the "MyPreferences" SharedPreferences file and is excluded from
+   both cloud backup and device transfer: restoring it would carry a subscription across
+   devices or accounts. Entitlement is re-derived from Play via
+   AppBillingClient.refreshEntitlement() on every foreground, so nothing is lost by
+   dropping it here.
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
+        <exclude
+            domain="sharedpref"
+            path="MyPreferences.xml" />
     </cloud-backup>
-    <!--
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <exclude
+            domain="sharedpref"
+            path="MyPreferences.xml" />
     </device-transfer>
-    -->
 </data-extraction-rules>

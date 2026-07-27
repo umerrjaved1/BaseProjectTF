@@ -6,10 +6,13 @@
         android:icon="@drawable/ic_home_bottom"
         android:title="@string/home" />
 
+    <!-- NOTE: this item currently routes to the Settings fragment and returns false
+         from the listener, so it never highlights. It is a leftover from the
+         GPS-camera fork. Either point it at a real destination or delete it. -->
     <item
         android:id="@+id/nav_time_stamp"
         android:icon="@drawable/ic_time_stamp_bottom"
-        android:title="Time Stamp" />
+        android:title="@string/time_stamp" />
 
     <item
         android:id="@+id/nav_settings"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
@@ -180,6 +181,43 @@
                     android:background="@color/stroke_color" />
 
                 <LinearLayout
+                    android:id="@+id/row_dark_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="16dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/dark_mode"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="17sp"
+                        app:fontFamily="@font/plus_jakarta_sans_semi_bold" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_dark_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:contentDescription="@string/dark_mode" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_color" />
+
+                <LinearLayout
                     android:id="@+id/row_privacy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -259,7 +297,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="@string/version_name"
+            tools:text="Version v1.0.1"
             android:textColor="@color/text_color_secondary"
             android:textSize="14sp"
             app:fontFamily="@font/plus_jakarta_sans_medium" />

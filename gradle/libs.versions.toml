@@ -27,6 +27,13 @@ okhttpUrlconnection = "5.4.0"
 loggingInterceptor = "5.4.0"
 roomKtx = "2.8.4"
 
+# Testing
+junit = "4.13.2"
+androidxJunit = "1.2.1"
+androidxTest = "1.6.1"
+espresso = "3.6.1"
+coroutinesTest = "1.9.0"
+
 # Mediation and Meta
 applovinMediation = "13.6.3.0"
 metaMediation = "6.21.0.3"
@@ -84,6 +91,19 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
 shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+
+# Testing — the test source sets could not compile before: testInstrumentationRunner was
+# declared but no test dependency existed anywhere in the project.
+junit = { module = "junit:junit", version.ref = "junit" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTest" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTest" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomKtx" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomKtx" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomKtx" }
 
 mediation-applovin = { module = "com.google.ads.mediation:applovin", version.ref = "applovinMediation" }
 mediation-facebook = { module = "com.google.ads.mediation:facebook", version.ref = "metaMediation" }

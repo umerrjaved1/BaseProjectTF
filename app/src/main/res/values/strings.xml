@@ -6,28 +6,13 @@
     <string name="privacy_policy_url" translatable="false">https://www.terafort.com/privacy.html</string>
     <string name="terms_url" translatable="false">https://www.terafort.com/T&amp;C.html</string>
 
-    <string name="splash_title">Base Project</string>
-    <string name="splash_description">App Description</string>
-    <string name="onboarding_title_1">Live Earth Map</string>
-    <string name="onboarding_title_2">Famous Place</string>
-    <string name="onboarding_title_3">Stamp Your Photos</string>
-    <string name="onboarding_desc_1">Access files using system picker — no storage permission needed</string>
-    <string name="onboarding_desc_2">PDF • Word • Excel • PowerPoint • TXT • and more</string>
-    <string name="onboarding_desc_3">Your files stay private and secure on your device</string>
-    <string name="iap_feature_1">Feature 1</string>
-    <string name="iap_feature_2">Feature 2</string>
+    <string name="splash_description">Your app tagline goes here</string>
+    <string name="onboarding_title_1">Onboarding headline one</string>
+    <string name="onboarding_title_2">Onboarding headline two</string>
+    <string name="onboarding_title_3">Onboarding headline three</string>
     <string name="english" translatable="false">English</string>
     <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
     <string name="bengali" translatable="false">Bengali (বাংলা)</string>
-    <string name="chinese_traditional" translatable="false">Chinese Simplified (简体中文)</string>
-    <string name="chinese" translatable="false">Chinese Traditional (中国传统的)</string>
-    <string name="french" translatable="false">French (Français)</string>
-    <string name="german" translatable="false">German (Deutsch)</string>
-    <string name="danish" translatable="false">Danish (Dansk)</string>
-    <string name="japanese" translatable="false">Japanese (日本語)</string>
-    <string name="norwegian" translatable="false">Norwegian (Norsk)</string>
-    <string name="polish" translatable="false">Polish (Polskie)</string>
-    <string name="romanian" translatable="false">Romanian (Românâ)</string>
     <string name="hindi" translatable="false">Hindi (हिंदी)</string>
     <string name="spanish" translatable="false">Spanish (Español)</string>
     <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
@@ -55,255 +40,86 @@
     <string name="please_select_a_language">Please Select a Language</string>
     <string name="exit_application">Exit Application</string>
     <string name="are_you_sure_you_want_to_exit_this_application">Are you sure you want to exit this application?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
     <string name="exit">Exit</string>
-    <string name="do_you_want_to_open_network_settings">Do you want to open network settings?</string>
-    <string name="no_internet_connection">No internet connection !</string>
     <string name="skip">Skip</string>
     <string name="continuee">Continue</string>
     <string name="get_started">Get Started</string>
 
-    <string name="nav_home">Home</string>
-    <string name="home_hero_title">Speaker Cleaning</string>
-    <string name="home_hero_subtitle">Remove water &amp; dust instantly</string>
-    <string name="home_quick_actions">Quick Actions</string>
-    <string name="auto_cleaner">Auto Cleaner</string>
-    <string name="manual_cleaner">Manual</string>
-    <string name="vibration">Vibration</string>
-    <string name="speaker_test">Speaker Test</string>
-    <string name="auto_cleaner_hint">One-tap fix</string>
-    <string name="manual_cleaner_hint">Custom freq</string>
-    <string name="vibration_hint">Deep shake</string>
-    <string name="speaker_test_hint">Check quality</string>
-    <string name="manual_cleaner_title">Manual Cleaner</string>
-    <string name="vibration_cleaner_title">Vibration Cleaner</string>
-    <string name="frequency_range">Frequency Range</string>
-    <string name="frequency_range_value">100Hz – 1000Hz</string>
-    <string name="ejection_frequency">Ejection Frequency</string>
-    <string name="hz">Hz</string>
-    <string name="cleaning_duration">Cleaning Duration</string>
-    <string name="seconds_30">30s</string>
-    <string name="seconds_45">45s</string>
-    <string name="seconds_60">60s</string>
-    <string name="info">Info</string>
-    <string name="icon_menu">Icon Menu</string>
-    <string name="icon_premium">Icon Premium</string>
-    <string name="icon_speaker_cleaning">Icon Speaker Cleaning</string>
-    <string name="navigation">Navigation</string>
-    <string name="boost_battery_life">Boost Battery Life</string>
-    <string name="cleaning">Cleaning</string>
-    <string name="speaker">Speaker</string>
-    <string name="earphone">Earphone</string>
-    <string name="volume">Volume</string>
-    <string name="volume_value">%1$d%%</string>
-    <string name="start_cleaning">Start Cleaning</string>
-    <string name="stop_cleaning">Stop Cleaning</string>
-    <string name="start_vibration_test">Start Vibration Test</string>
-    <string name="stop_vibration_test">Stop Vibration Test</string>
-    <string name="manual_test_hint_idle">Adjust frequency and tap start.</string>
-    <string name="manual_test_hint_running">Playing tone… you can stop anytime.</string>
-    <string name="remaining_seconds">%1$ds</string>
-    <string name="system_diagnostic_active">System Diagnostic Active</string>
-    <string name="left_speaker">Left Speaker</string>
-    <string name="right_speaker">Right Speaker</string>
-    <string name="stereo_balance">Stereo Balance</string>
-    <string name="high_freq">High Freq</string>
-    <string name="passed">Passed</string>
-    <string name="running">Running</string>
-    <string name="ready">Ready</string>
-    <string name="run_full_diagnostic">Run Full Diagnostic</string>
-    <string name="cleaning_in_progress">Cleaning in Progress</string>
-    <string name="wait_until_vibration_finishes">Wait until vibration finishes</string>
-    <string name="vibration_test_ready">Vibration Test Ready</string>
-    <string name="vibration_test_running">Vibration Test Running</string>
-    <string name="vibration_test_hint">Tap start to feel the vibration pattern.</string>
-    <string name="normal">Normal</string>
-    <string name="medium">Medium</string>
-    <string name="high">High</string>
-    <string name="sponsored">Sponsored</string>
-    <string name="premium_protection_pro">Premium Protection Pro</string>
-    <string name="premium_protection_subtitle">Keep your device clean and safe 24/7</string>
-    <string name="learn_more">Learn More</string>
-    <string name="icon_volume">Icon Volume</string>
-    <string name="install">Install</string>
-    <string name="start_test">Start Test</string>
-    <string name="stop_test">Stop Test</string>
-    <string name="testing">Testing</string>
-    <string name="percent_value">%1$d%%</string>
-    <string name="auto_test_hint_idle">Tap start to run the full speaker diagnostic.</string>
-    <string name="auto_test_hint_running">Playing tones… listen closely and keep the volume steady.</string>
-    <string name="auto_test_hint_complete">Test complete. Opening results…</string>
-    <string name="remove_ads">Remove AD</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="rate_app">Rate App</string>
     <string name="share_this_app">Share this App</string>
-    <string name="send_feedback">Send Feedback</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="change_language">Change Language</string>
     <string name="wow_thank_you_so_much">Wow! Thank You So Much</string>
     <string name="help_us_reach_perfection">Help us reach perfection with your feedback.</string>
     <string name="rate_on_play_store">Rate On Play Store</string>
-    <string name="error">Error</string>
-    <string name="something_went_wrong">Something went wrong</string>
-    <string name="retry">Retry</string>
 
-    <string name="wait">Wait</string>
-    <string name="unlock_premium_features">Unlock Premium Features</string>
-    <string name="daily_notification">Daily Notification</string>
     <string name="free">Free</string>
     <string name="features">Features</string>
     <string name="unlock_all_features">Unlock all features</string>
-    <string name="premium">Premium</string>
-    <string name="_3_days_free_trial">Start 3 DAYS FREE TRIAL</string>
-    <string name="most_popular">Most Popular</string>
     <string name="start_free_trial">Start 3 day Free Trial</string>
-    <string name="subscribe_monthly_with_price">Subscribe Monthly – %1$s</string>
-    <string name="subscribe_weekly_with_price">Subscribe Weekly – %1$s</string>
     <string name="purchase_successfully">Purchase Successfully</string>
-    <string name="subscribe_weekly">"Subscribe Weekly "</string>
-    <string name="subscribe_monthly">"Subscribe Monthly "</string>
-    <string name="premium_error_dialog_message">There is a problem with your subscription. Click CONTINUE to go to the Google Play subscription settings to fix your payment method.</string>
-    <string name="success_title">Success</string>
-    <string name="cleaning_complete">Cleaning Complete</string>
-    <string name="cleaning_complete_subtitle">Your speaker is now clean and optimized</string>
-    <string name="manual_cleaning_complete">Manual Cleaning Complete</string>
-    <string name="manual_cleaning_complete_subtitle">Manual cleaning finished successfully</string>
-    <string name="vibration_cleaning_complete">Vibration Cleaning Complete</string>
-    <string name="vibration_cleaning_complete_subtitle">Vibration test finished successfully</string>
-    <string name="speaker_test_complete">Speaker Test Complete</string>
-    <string name="speaker_test_complete_subtitle">All speaker diagnostics passed</string>
-    <string name="test_speaker">Test Speaker</string>
-    <string name="try_again">Try Again</string>
-    <string name="try_other_features">Try Other Features</string>
-    <string name="smart_cleaning">Smart cleaning</string>
-    <string name="vibration_mode">Vibration</string>
-    <string name="shake_out_dust">Shake out dust</string>
-    <string name="manual_cleaner_subtitle">Fine tune by hand</string>
-    <string name="close">Close</string>
-    <string name="weekly_subscription">Weekly Subscription</string>
-    <string name="monthly_subscription">Monthly Subscription</string>
+    <!-- Billing. User-facing copy only: never surface raw Play debug messages. -->
+    <string name="billing_unavailable">Purchases are unavailable right now. Please try again later.</string>
+    <string name="no_plans_available">No subscription plans are available right now.</string>
+    <string name="purchase_pending">Your purchase is pending confirmation.</string>
+    <string name="already_subscribed">You already have an active subscription.</string>
+    <string name="purchase_failed_generic">Purchase could not be completed. Please try again.</string>
+    <string name="price_per_week_from">Just %1$s/week</string>
+    <!-- File sharing. %1$s = file name, %2$s = app name, %3$s = Play Store URL -->
+    <string name="file_not_found">File not found</string>
+    <string name="share_file_message">Sharing file: %1$s\n\nShared from %2$s\n\nDownload now: %3$s</string>
+    <string name="error_sharing_file">Error sharing file: %1$s</string>
     <string name="free_trial_disclaimer">%1$s/weekly after FREE 3-day trial</string>
     <string name="loading">Loading</string>
-    <string name="allow">Allow</string>
-    <string name="not_now">Not Now</string>
     <string name="stay_updated_with_notifications">Stay Updated with Notifications</string>
     <string name="notification_description">We need notification permission to keep you informed about important updates. This ensures a better user experience with timely alerts.</string>
     <string name="allow_access">Allow Access</string>
     <string name="maybe_later">Maybe Later</string>
-    <string name="initializing_speaker_cleaner">Initializing DocuView</string>
-    <string name="open_document">Open Document</string>
-    <string name="browse_files_securely">Browse your files securely</string>
-    <string name="browse_files">Browse Files</string>
-    <string name="quick_access">Quick Access</string>
-    <string name="view_all">View All</string>
-    <string name="no_recent_files">No recent files yet</string>
-    <string name="starred_content_subtitle">Your most important documents in one place.</string>
-    <string name="no_favorites_yet">No favorites yet</string>
-    <string name="favorites_hint">Tap the star icon on any document to add it to favorites.</string>
-    <string name="settings_subtitle">Manage your app preferences and account details.</string>
-    <string name="appearance">APPEARANCE</string>
-    <string name="about">ABOUT</string>
-    <string name="dark_mode">Dark mode</string>
-    <string name="language">Language</string>
-    <string name="clear_history">Clear history</string>
-    <string name="more_options">More options</string>
-    <string name="document_viewer">Document Viewer</string>
-    <string name="zoom_out">Zoom out</string>
-    <string name="zoom_in">Zoom in</string>
-    <string name="bookmark">Bookmark</string>
-    <string name="document_page">Document page</string>
-    <string name="document">Document</string>
-    <string name="search">Search</string>
-    <string name="open">Open</string>
-    <string name="add_to_favorites">Add to favorites</string>
-    <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="share_file">Share file</string>
-    <string name="file_details">File details</string>
-    <string name="file_details_format">Name: %1$s\nType: %2$s\nSize: %3$d bytes</string>
-    <string name="file_name_value">Name: %1$s</string>
-    <string name="file_type_value">Type: %1$s</string>
-    <string name="file_size_value">Size: %1$s</string>
-    <string name="file_last_opened_value">Last opened: %1$s</string>
-    <string name="preview_not_available">Preview not available for this file.</string>
-    <string name="unable_to_load_text">Unable to load text file.</string>
-    <string name="remove_water_amp_dust">Remove Water &amp; Dust</string>
-    <string name="intensity_level">Intensity Level</string>
-    <string name="vibration_disabled_msg">System vibration is disabled. Please enable it for this feature to work.</string>
-    <string name="enable">Enable</string>
-    <string name="start_like_a_pro">Start Like a pro</string>
-    <string name="cancel_anytime_at_least_24_hours_before_renewal_trial">Subscription renews automatically unless canceled at least 24 hours before renewal.</string>
-    <string name="cancel_anytime_at_least_24_hours_before_renewal_without_trial">Auto-renews unless canceled 24+ hours before renewal. Manage or cancel anytime in Google Play.</string>
-    <string name="unlimited_cleaning">Unlimited Cleaning</string>
-    <string name="deep_water_and_dust_removal">Deep Water And Dust Removal</string>
-    <string name="ad_free_experience">Ad-Free Experience</string>
-    <string name="boosted_sound_and_vibration">Boosted Sound And Vibration</string>
-    <string name="recent_files">Recent Files</string>
-    <string name="favorites">Favorites</string>
-    <string name="history_cleared">History cleared</string>
-    <string name="swift_cleaner">Swift Cleaner</string>
-    <string name="clean_your_phone">Clean your Phone</string>
-    <string name="free_up_space">Free Up Space</string>
-    <string name="scan_and_clean">Scan &amp; Clean</string>
-    <string name="uninstall_apps">Uninstall Apps</string>
     <string name="uninstall_app">Uninstall App</string>
     <string name="upgrade_to_pro">Upgrade to Pro</string>
-    <string name="pro_features_subtitle">No ads · all templates · HD export</string>
-    <string name="remove_all_ads_premium">Remove all ads</string>
-    <string name="unlock_premium">Unlock Premium</string>
-    <string name="yearly">Yearly</string>
-    <string name="app_name">Live Earth Map</string>
-    <string name="live_camera_marker_hint">Tap to watch live</string>
-    <string name="weekly">Weekly</string>
+    <string name="pro_features_subtitle">Unlock every premium feature</string>
+    <string name="app_name" translatable="false">BaseProject</string>
     <string name="restore">Restore</string>
-    <string name="terms">Terms</string>
     <string name="terms_of_servuce">Terms of Service</string>
-    <string name="privacy">Privacy</string>
-    <string name="initializing">Initializing...</string>
-    <string name="current_location">CURRENT LOCATION</string>
-    <string name="traffic_map">Traffic Map</string>
-    <string name="moderate_traffic_nearby">Moderate Traffic Nearby</string>
-    <string name="slow_and_fast">Slow and Fast</string>
-    <string name="current_status">Current Status</string>
     <string name="try_for_free">Try For FREE</string>
     <string name="sorry_to_see_you_go">Sorry to see you go</string>
     <string name="uninstall_description">Before you uninstall, tell us what went wrong.\nYour feedback helps us improve the app.</string>
     <string name="keep_app">Keep App</string>
     <string name="uninstall">Uninstall</string>
-    <string name="compass">Compass</string>
-    <string name="famous_places">Famous Places</string>
-    <string name="live_earth">Live Earth</string>
-    <string name="seven_wonders">7 Wonders</string>
-    <string name="world_clock">World Clock</string>
-    <string name="gallery">Gallery</string>
-    <string name="gps_camera">GPS CAMERA</string>
-    <string name="image_details">Image Details</string>
     <string name="pro">Pro</string>
     <string name="next">Next</string>
-    <string name="error_loading_panorama">Failed to load panorama image.</string>
-    <string name="error_panorama_memory">Not enough memory to load panorama. Try restarting the app.</string>
     <string name="share">Share</string>
-    <string name="delete">Delete</string>
-    <string name="add_home_location">Add Home Location</string>
-    <string name="no_photos_found">No photos found</string>
-    <string name="compass_default_bearing">0°</string>
-    <string name="compass_north_label">N</string>
-    <string name="compass_locating">Locating…</string>
-    <string name="loading_360_view">Loading 360° View…</string>
     <string name="survey_title">Choose your Features</string>
     <string name="survey_subtitle">Pick the features you want on Home. You can change these anytime.</string>
     <string name="survey_selected_count">0 item selected</string>
+    <!-- Survey feature placeholders. Replace with the fork's real feature names; they
+         were hardcoded English literals in SurveyActivity.kt, so they were neither
+         localisable nor discoverable. -->
+    <string name="survey_feature_1">Feature one</string>
+    <string name="survey_feature_2">Feature two</string>
+    <string name="survey_feature_3">Feature three</string>
+    <string name="survey_feature_4">Feature four</string>
+    <string name="survey_feature_5">Feature five</string>
+    <!-- Exit notification placeholders, mirrored in remote_config_default/global_ad_rules.json -->
+    <string name="dark_mode">Dark mode</string>
+    <!-- Placeholder home screen (also the live check of the Room chain) -->
+    <string name="home_stored_rows">Stored rows: %1$d</string>
+    <string name="home_add_sample_row">Add sample row</string>
+    <string name="home_clear_rows">Clear rows</string>
+    <string name="home_sample_label">Sample</string>
+    <string name="exit_notification_title">We miss you!</string>
+    <string name="exit_notification_description">Come back and pick up where you left off.</string>
     <string name="start_like_a_pro_caps">START LIKE A PRO</string>
     <string name="unlimited_premium">Unlimited Premium</string>
     <string name="ads_free_experience">Ads Free Experience</string>
     <string name="vip_support">VIP Support</string>
-    <string name="trial_prefix">3-day free trial, then </string>
-    <string name="default_weekly_price">$4.99/week</string>
-    <string name="cancel_anytime">Cancel anytime</string>
     <string name="cancel_anytime_sub">Subscription Auto Renews, Cancel anytime</string>
-    <string name="version_name">Version v1.0.1</string>
+    <!-- Format string, not a baked-in number. The literal "Version v1.0.1" duplicated
+         versionName from build.gradle.kts and silently drifted on every release. -->
+    <string name="version_name">Version v%1$s</string>
+    <string name="time_stamp">Time Stamp</string>
     <string name="app_update_title">Update Available</string>
     <string name="app_update_message">A new version of this app is available on Google Play. Update now to get the latest features and improvements.</string>
     <string name="app_update_message_immediate">A new version is required to continue using this app. Please update now from Google Play.</string>
@@ -312,37 +128,6 @@
     <string name="app_update_ready_title">Update Ready</string>
     <string name="app_update_ready_message">The update has been downloaded. Install it now to finish updating the app.</string>
     <string name="app_update_install">Install</string>
-    <string name="live_247">24/7 LIVE</string>
-    <string name="default_language">English (default)</string>
-    <string name="doc_zoom_placeholder" translatable="false">100%</string>
-    <string name="doc_page_placeholder" translatable="false">1 / 12</string>
-    <string name="video_placeholder_title" translatable="false">FIFA World Cup</string>
-    <string name="txt_100">100%</string>
-    <string name="txt_1_12">1 / 12</string>
     <string name="txt_symbol_9634">—</string>
     <string name="txt_symbol_1902">·</string>
-    <string name="txt_time_stamp">Time Stamp</string>
-    <string name="txt_install">INSTALL</string>
-    <string name="txt_docuview_reader">DocuView Reader</string>
-    <string name="txt_page_1_of_12">Page 1 of 12</string>
-    <string name="txt_symbol_0533">  </string>
-    <string name="txt_place_title">Place Title</string>
-    <string name="txt_country_name">Country Name</string>
-    <string name="txt_install_1">Install</string>
-    <string name="txt_app_name">App Name</string>
-    <string name="txt_altitude">ALTITUDE</string>
-    <string name="txt_date_amp_time">DATE &amp; TIME</string>
-    <string name="txt_accuracy">ACCURACY</string>
-    <string name="txt_gps_coordinates">GPS COORDINATES</string>
-    <string name="txt_altitude_1">Altitude</string>
-    <string name="txt_latitude">Latitude</string>
-    <string name="txt_coordinates">COORDINATES</string>
-    <string name="txt_check_in">Check in</string>
-    <string name="txt_symbol_7213">|</string>
-    <string name="txt_12_30_pm_03_02_2026">12:30 PM 03/02/2026</string>
-    <string name="txt_sunny">Sunny</string>
-    <string name="txt_26_c">26°C</string>
-    <string name="txt_lahore_punjab_pakistan">Lahore, Punjab, Pakistan</string>
-    <string name="txt_rs_520_00">RS 520.00</string>
-    <string name="txt_rs_999_99">RS 999.99</string>
 </resources>

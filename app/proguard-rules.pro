@@ -31,7 +31,7 @@
 # ----------------------------------------------------------------------------
 # Hilt / Dagger
 # ----------------------------------------------------------------------------
--keep class com.tf.gpsmapcamera.di.** { *; }
+-keep class com.professor.baseproject.di.** { *; }
 -keep class dagger.hilt.** { *; }
 -keep class javax.inject.** { *; }
 -keep class javax.annotation.** { *; }
@@ -68,15 +68,18 @@
 # ----------------------------------------------------------------------------
 # Models (Keep all data classes to prevent serialization issues)
 # ----------------------------------------------------------------------------
--keep class com.tf.gpsmapcamera.model.** { *; }
--keep class com.tf.gpsmapcamera.data.source.api.** { *; }
--keep class com.tf.gpsmapcamera.data.model.** { *; }
+# RENAME TOUCHPOINT: every rule below hardcodes the namespace. After a fork renames
+# its package these silently stop matching and R8 obfuscates Gson/Room models — a
+# release-only failure that no debug build reveals. Prefer @Keep on the classes
+# themselves (see model/DataModel.kt) so correctness does not depend on these.
+-keep class com.professor.baseproject.model.** { *; }
+-keep class com.professor.baseproject.data.source.api.** { *; }
 # Remote Config JSON models (parsed via Gson in RemoteConfigManager)
--keep class com.tf.gpsmapcamera.remoteconfig.data.** { *; }
-# Weather API response models (Timestamp feature)
--keep class com.tf.gpsmapcamera.ui.timeStamp.model.** { *; }
-# Gallery models (Serializable, passed via Intents)
--keep class com.tf.gpsmapcamera.ui.timeStamp.gallery.model.** { *; }
+-keep class com.professor.baseproject.remoteconfig.data.** { *; }
+# Removed: keeps for packages that do not exist in this project —
+#   com.professor.baseproject.data.model.**
+#   com.professor.baseproject.ui.timeStamp.model.**
+#   com.professor.baseproject.ui.timeStamp.gallery.model.**
 
 # Parcelable
 -keepclassmembers class * implements android.os.Parcelable {
@@ -130,7 +133,7 @@
 # ViewBinding / DataBinding
 # ----------------------------------------------------------------------------
 
--keep class com.tf.gpsmapcamera.databinding.** { *; }
+-keep class com.professor.baseproject.databinding.** { *; }
 
 # ----------------------------------------------------------------------------
 # AdMob / Google Play Services
@@ -184,34 +187,18 @@
 -dontwarn com.android.billingclient.**
 
 # ----------------------------------------------------------------------------
-# YouTube Player (pierfrancescosoffritti — WebView + JS bridge)
+# Removed: keep rules for libraries that are NOT dependencies of this project.
+# They were inherited from sibling forks and only obscured which rules are
+# actually load-bearing. Re-add per-fork if the fork adds the library.
+#   - com.pierfrancescosoffritti.androidyoutubeplayer (YouTube player)
+#   - com.panoramagl                                 (PanoramaGL)
+#   - com.cherry.lib.doc                             (DocViewer)
+#   - com.rajat.pdfviewer                            (Pdf-Viewer)
+#   - org.apache.poi + java.awt + javax.xml.stream   (Apache POI)
+# Also removed the global `@android.webkit.JavascriptInterface` keep, which
+# existed only for the YouTube WebView bridge and suppressed shrinking on any
+# class carrying such a method.
 # ----------------------------------------------------------------------------
--keep class com.pierfrancescosoffritti.androidyoutubeplayer.** { *; }
--keepclassmembers class * {
-    @android.webkit.JavascriptInterface <methods>;
-}
-
-# ----------------------------------------------------------------------------
-# PanoramaGL (OpenGL, reflection-based)
-# ----------------------------------------------------------------------------
--keep class com.panoramagl.** { *; }
--dontwarn com.panoramagl.**
-
-# ----------------------------------------------------------------------------
-# DocViewer / Pdf-Viewer
-# ----------------------------------------------------------------------------
--keep class com.cherry.lib.doc.** { *; }
--dontwarn com.cherry.lib.doc.**
--keep class com.rajat.pdfviewer.** { *; }
--dontwarn com.rajat.pdfviewer.**
-
-# ----------------------------------------------------------------------------
-# Apache POI (Fix for missing java.awt classes)
-# ----------------------------------------------------------------------------
--dontwarn java.awt.**
--dontwarn org.apache.poi.**
--keep class org.apache.poi.** { *; }
--dontwarn javax.xml.stream.**
 
 # ----------------------------------------------------------------------------
 # Firebase

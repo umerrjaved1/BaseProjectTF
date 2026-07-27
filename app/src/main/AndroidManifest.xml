@@ -2,23 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+      Only permissions this base project actually uses. Each fork must add back what it
+      needs and nothing more — every declared permission it does not use is a Play data
+      safety declaration it has to justify, and location / READ_MEDIA_IMAGES are in the
+      sensitive tier.
+
+      Removed from the base (0 call sites, no corresponding API usage anywhere):
+        ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION,
+        READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, READ_MEDIA_IMAGES
+    -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
 
+    <!--
+      usesCleartextTraffic was removed: it allowed plain HTTP app-wide with no
+      network-security-config. If a fork genuinely needs HTTP to a specific host, add a
+      networkSecurityConfig with a domain allowlist rather than opening everything.
+    -->
     <application
         android:name=".app.MyApp"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:allowClearUserData="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,6 +34,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App"
+        android:localeConfig="@xml/locales_config"
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
 
@@ -37,12 +43,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <!-- exported=false: no intent-filter, only ever launched from within the app. -->
         <activity
             android:name=".ui.screens.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.screens.OnboardingActivity"
             android:exported="false"

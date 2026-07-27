@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:alpha="0.6"
-        android:src="@drawable/iap_bg"
         android:contentDescription="@null" />
 
     <!-- Light white overlay for readability -->
@@ -336,7 +335,8 @@
                         android:layout_height="1dp"
                         android:background="#0F000000" />
 
-                    <!-- Row 4: Live Earth (both Free and Pro) -->
+                    <!-- Row 4: placeholder feature row (available on both Free and Pro).
+                         Swap @string/survey_feature_1 and the icon for a real feature. -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -348,7 +348,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/live_earth"
+                            android:text="@string/survey_feature_1"
                             android:textColor="@color/text_color_primary"
                             android:textSize="14sp"
                             android:drawablePadding="10dp"

@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivCheckbox"
-        tools:src="@drawable/ic_fammous_places" />
+        tools:src="@drawable/ic_live_earth_iap" />
 
     <TextView
         android:id="@+id/tvName"

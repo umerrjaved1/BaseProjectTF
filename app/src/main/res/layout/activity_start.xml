@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_splash_gradient"
-    tools:context="com.tf.gpsmapcamera.ui.screens.StartActivity">
+    tools:context="com.professor.baseproject.ui.screens.StartActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"

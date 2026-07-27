@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-   Sample backup rules file; uncomment and customize as necessary.
-   See https://developer.android.com/guide/topics/data/autobackup
-   for details.
-   Note: This file is ignored for devices older than API 31
-   See https://developer.android.com/about/versions/12/backup-restore
+   Auto Backup rules (API 30 and below; API 31+ uses data_extraction_rules.xml).
+   https://developer.android.com/guide/topics/data/autobackup
+
+   The entitlement flag must never be restored. `is_premium` lives in the
+   "MyPreferences" SharedPreferences file, so a user could back up a device while
+   subscribed and restore onto another one to carry premium across — a trivial paywall
+   bypass. Entitlement is re-verified against Play on resume, but excluding it here
+   means there is no window where a restored flag is trusted at all.
 -->
 <full-backup-content>
-    <!--
-   <include domain="sharedpref" path="."/>
-   <exclude domain="sharedpref" path="device.xml"/>
--->
+    <exclude
+        domain="sharedpref"
+        path="MyPreferences.xml" />
 </full-backup-content>
