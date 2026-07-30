@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Full-screen host for a medium native ad shown between two screens - the "native interstitial"
+  the ad plan asks for on the interest screen's CTA.
+
+  The ad itself is not in this layout: AdsSlot builds the shimmer and ad container inside
+  @id/adSlot, and falls back to a 300x250 banner when native does not fill. That fallback is why
+  this is not the ads library's own FullScreenNativeAdActivity, which is native-only.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <ImageView
+        android:id="@+id/btnClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:padding="4dp"
+        android:src="@drawable/ic_close_circle"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/text_color_primary" />
+
+    <!-- Ad slot. AdsSlot builds the shimmer and ad container inside it and collapses it when
+         nothing fills, so no placeholder gap is left behind. -->
+    <FrameLayout
+        android:id="@+id/adSlot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnClose" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

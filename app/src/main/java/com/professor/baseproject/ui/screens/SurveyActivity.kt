@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.professor.baseproject.R
 import com.professor.baseproject.adapter.SurveyAdapter
+import com.professor.baseproject.ads.AdsController
+import com.professor.baseproject.ads.NativeAdOverlayFragment
 import com.professor.baseproject.app.AnalyticsManager
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.databinding.ActivitySurveyBinding
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SurveyActivity : AppCompatActivity() {
+class SurveyActivity : AppCompatActivity(), NativeAdOverlayFragment.Host {
 
     private lateinit var binding: ActivitySurveyBinding
     private lateinit var adapter: SurveyAdapter
@@ -26,6 +28,9 @@ class SurveyActivity : AppCompatActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var adsController: AdsController
 
     private var hasNavigated = false
 
@@ -93,8 +98,17 @@ class SurveyActivity : AppCompatActivity() {
     private fun setupButtons() {
         binding.btnNext.setClickWithTimeout {
             analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.SURVEY_SCR_DONE)
-            moveToMain()
+            // Medium native (300x250 rectangle banner on a no-fill) on the CTA, then navigate.
+            // Navigation hangs off onNativeAdOverlayDismissed rather than happening here, so the
+            // ad is not torn down by the next screen the instant it appears. The overlay
+            // self-skips when ads are off, so there is no branch to duplicate.
+            NativeAdOverlayFragment.show(this, adsController)
         }
+    }
+
+    /** The interest-screen CTA ad is done (shown, skipped, or unfilled) — carry on to home. */
+    override fun onNativeAdOverlayDismissed() {
+        moveToMain()
     }
 
     private fun moveToMain() {

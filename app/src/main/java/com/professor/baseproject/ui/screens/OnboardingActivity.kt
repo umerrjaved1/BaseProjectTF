@@ -2,6 +2,7 @@ package com.professor.baseproject.ui.screens
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -9,6 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.professor.baseproject.ui.base.FullscreenScreen
 import com.professor.baseproject.R
 import com.professor.baseproject.adapter.OnboardingAdapter
+import com.professor.baseproject.ads.AdSlotStyle
+import com.professor.baseproject.ads.AdsSlot
+import com.professor.baseproject.ads.NativePlacement
 import com.professor.baseproject.app.AnalyticsManager
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.databinding.ActivityOnboardingBinding
@@ -32,8 +36,21 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var adsSlot: AdsSlot
+
     /** Guards against double-navigation on rapid taps. */
     private var hasNavigated = false
+
+    /**
+     * Ad containers this screen has handed to [AdsSlot], so every banner-refresh timer can be
+     * stopped in [onDestroy].
+     *
+     * Doubles as the load-once guard: `onBindViewHolder` can fire again for a slide that is
+     * already showing an ad (a `notifyDataSetChanged`, a configuration change), and each of those
+     * would otherwise be a fresh ad request.
+     */
+    private val adSlots = mutableSetOf<FrameLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +63,18 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
 
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, "activity_onboarding")
 
-        val config = RemoteConfigManager.getOnboardingScreenConfig()
+        val config = RemoteConfigManager.getAdRules()
         val onboardingItems = mutableListOf<OnboardingItem>()
 
+        // Slide presence and that slide's ad are separate remote flags: showObSlideN decides
+        // whether the slide exists at all, showObNNative whether it carries an ad.
         if (config.showObSlide1) {
             onboardingItems.add(
                 OnboardingItem(
                     title = getString(R.string.onboarding_title_1),
                     description = "",
-                    imageRes = R.drawable.ob_1
+                    imageRes = R.drawable.ob_1,
+                    adEnabled = config.showOb1Native
                 )
             )
         }
@@ -63,7 +83,8 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
                 OnboardingItem(
                     title = getString(R.string.onboarding_title_2),
                     description = "",
-                    imageRes = R.drawable.ob_2
+                    imageRes = R.drawable.ob_2,
+                    adEnabled = config.showOb2Native
                 )
             )
         }
@@ -72,7 +93,8 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
                 OnboardingItem(
                     title = getString(R.string.onboarding_title_3),
                     description = "",
-                    imageRes = R.drawable.ob_3
+                    imageRes = R.drawable.ob_3,
+                    adEnabled = config.showOb3Native
                 )
             )
         }
@@ -82,7 +104,7 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
             return
         }
 
-        adapter = OnboardingAdapter(onboardingItems)
+        adapter = OnboardingAdapter(onboardingItems, onBindAdSlot = ::loadSlideAd)
         binding.viewPager.adapter = adapter
         binding.viewPager.offscreenPageLimit = onboardingItems.size
 
@@ -113,6 +135,31 @@ class OnboardingActivity : AppCompatActivity(), FullscreenScreen {
 
         updateButtonText(binding.viewPager.currentItem)
         binding.shimmerBtn.startShakeAnimation(this)
+    }
+
+    /**
+     * Small native shaped like a banner, per slide, with a banner fallback when native does not
+     * fill. Uses the `ob_native` unit from `ad_ids`.
+     *
+     * `offscreenPageLimit` is the slide count, so all slides are alive at once and each requests
+     * its ad once - three concurrent requests against one unit, which AdMob serves independently.
+     */
+    private fun loadSlideAd(container: FrameLayout) {
+        if (!adSlots.add(container)) return
+        adsSlot.show(
+            activity = this,
+            container = container,
+            placement = NativePlacement.ONBOARDING,
+            style = AdSlotStyle.SMALL_BANNER
+        )
+    }
+
+    override fun onDestroy() {
+        // Stops each slide's banner-refresh timer; without this they keep requesting after the
+        // screen is gone.
+        adSlots.forEach { adsSlot.release(it) }
+        adSlots.clear()
+        super.onDestroy()
     }
 
     private fun updateButtonText(position: Int) {

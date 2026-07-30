@@ -18,6 +18,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.professor.baseproject.ui.base.FullscreenScreen
 import com.professor.baseproject.R
 import com.professor.baseproject.adapter.PremiumSliderAdapter
+import com.professor.baseproject.ads.AdsController
+import com.professor.baseproject.ads.InterstitialGate
 import com.professor.baseproject.app.AnalyticsManager
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.app.MyApp
@@ -29,7 +31,7 @@ import com.professor.baseproject.iab.BillingPlan
 import com.professor.baseproject.iab.ConnectResponse
 import com.professor.baseproject.iab.PurchaseResponse
 import com.professor.baseproject.iab.SubscriptionItem
-import com.professor.baseproject.remoteconfig.RemoteConfigManager
+import com.professor.baseproject.constants.AppConfigDefaults
 import com.professor.baseproject.ui.viewmodel.PremiumViewModel
 import com.professor.baseproject.utils.StartupNavigationManager
 import com.professor.baseproject.utils.UIState
@@ -48,6 +50,12 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var adsController: AdsController
+
+    @Inject
+    lateinit var interstitialGate: InterstitialGate
 
     private lateinit var binding: ActivityPremiumBinding
     private val viewModel: PremiumViewModel by viewModels()
@@ -87,9 +95,20 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
         initializeBilling()
         setupObservers()
 
-        // Modern back-press handling — replaces deprecated onBackPressed()
+        // Back is BLOCKED while the close (X) button is still hidden, then behaves like X.
+        //
+        // Blocking it outright was the other option, but a paywall with no exit at all is a
+        // Play policy risk and a common review complaint. Gating on the same signal that
+        // reveals the X gives the intended "user can't reflexively dismiss it" behaviour
+        // while guaranteeing the screen is always escapable.
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() { handleClose() }
+            override fun handleOnBackPressed() {
+                if (isCloseAvailable) {
+                    handleClose()
+                } else {
+                    Log.d(TAG, "Back ignored — close button not yet available")
+                }
+            }
         })
 
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, TAG)
@@ -234,10 +253,14 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
     private fun setupCloseButtonDelay() {
         lifecycleScope.launch {
             binding.ivClose.visibility = View.INVISIBLE
-            val delay = RemoteConfigManager.getPremiumScreenConfig().premiumCloseBtnDelay
+            isCloseAvailable = false
+            val delay = AppConfigDefaults.PREMIUM_CLOSE_BTN_DELAY_MS
             Log.d(TAG, "Close button delay: $delay ms")
             delay(delay.toLong())
             binding.ivClose.visibility = View.VISIBLE
+            // Back is unblocked at the same moment the X appears, so the screen is never
+            // inescapable — see the back-press callback in onCreate().
+            isCloseAvailable = true
         }
     }
 
@@ -351,7 +374,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
             when (sub.sku) {
                 BillingCatalog.WEEKLY.sku -> {
                     binding.tvWeeklyPrice.text = sub.formattedPrice ?: ""
-                    analyticsManager.sendAnalytics("load", "${TAG}${BillingCatalog.WEEKLY.key}")
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.VIEW, "${TAG}${BillingCatalog.WEEKLY.key}")
                 }
 
                 BillingCatalog.YEARLY.sku -> {
@@ -361,7 +384,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
                         binding.tvYearlySub.text =
                             getString(R.string.price_per_week_from, weeklyFormatted)
                     }
-                    analyticsManager.sendAnalytics("load", "${TAG}${BillingCatalog.YEARLY.key}")
+                    analyticsManager.sendAnalytics(AnalyticsManager.Action.VIEW, "${TAG}${BillingCatalog.YEARLY.key}")
                 }
             }
         }
@@ -440,18 +463,34 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
 
     private fun handlePlanSelection(plan: BillingPlan) {
         applyPlanSelection(plan)
-        analyticsManager.sendAnalytics("clicked", "${TAG}select_${plan.key}")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.CLICKED, "${TAG}select_${plan.key}")
     }
 
     private var isClosing = false
+
+    /** True once the close (X) button is visible; gates the Back button. */
+    private var isCloseAvailable = false
 
     private fun handleClose() {
         if (isClosing) return
         isClosing = true
 
-        analyticsManager.sendAnalytics("clicked", "${TAG}close_button")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.CLICKED, "${TAG}close_button")
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CROSS)
 
+        // Splash navigation flow 2: the paywall came first and the splash interstitial was deferred
+        // to this moment. Consume the flag before showing so a second close cannot replay it, and
+        // navigate only once the ad is done - otherwise the next screen appears behind it.
+        if (adsController.pendingSplashInterstitial) {
+            adsController.pendingSplashInterstitial = false
+            interstitialGate.showUncapped(this) { continueClose() }
+            return
+        }
+        continueClose()
+    }
+
+    /** The navigation half of [handleClose], split out so an ad can run in between. */
+    private fun continueClose() {
         when {
             fromProIcon -> finish()
             fromOnboardingActivity -> navigateToMain()
@@ -462,7 +501,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
     }
 
     private fun handleUpgradeNow() {
-        analyticsManager.sendAnalytics("clicked", "${TAG}subscribe_${selectedPlan.key}")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.CLICKED, "${TAG}subscribe_${selectedPlan.key}")
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PRO_CLCK)
         purchaseSubscription(selectedPlan)
     }
@@ -493,14 +532,14 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
                         // Genuinely reachable now that purchaseState is inspected.
                         // No entitlement is granted until Play reports PURCHASED.
                         showMessage(getString(R.string.purchase_pending))
-                        analyticsManager.sendAnalytics("purchase_pending", "${TAG}${plan.key}")
+                        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${TAG}${plan.key}")
                     }
                 }
 
                 override fun onPurchaseCancelled() {
                     runOnUiThread {
                         showLoading(false)
-                        analyticsManager.sendAnalytics("purchase_cancelled", "${TAG}${plan.key}")
+                        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${TAG}${plan.key}")
                     }
                 }
 
@@ -561,7 +600,7 @@ class PremiumActivity : AppCompatActivity(), View.OnClickListener, FullscreenScr
             Toast.LENGTH_SHORT
         ).show()
 
-        analyticsManager.sendAnalytics("purchase_success", "${TAG}$productId")
+        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "${TAG}$productId")
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.PURCHASE)
         if (selectedPlan.hasTrial) analyticsManager.logMetaStartTrial()
 

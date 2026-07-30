@@ -47,16 +47,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivHandPointer"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginTop="-16dp"
-        android:layout_marginBottom="4dp"
-        android:src="@drawable/ic_hand_pointer"
-        android:visibility="gone"
-        android:contentDescription="@null" />
 
 </LinearLayout>
 

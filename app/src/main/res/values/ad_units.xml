@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Offline fallback AdMob ad unit ids, one per placement.
+
+  The live values come from the `ad_ids` Remote Config parameter. These are what serve on a
+  first cold start, before Remote Config has ever resolved, and whenever the device is offline -
+  so they should stay in step with the console template in
+  `remote_config_default/ad_ids.json`. The app id itself lives in strings.xml as admob_app_id.
+
+  AdUnits.kt reads these. It also serves Google's test ids in debug builds regardless of both
+  this file and the remote value, so a developer running locally can never spend a real
+  impression.
+
+  Note the separator: the application id uses '~', ad unit ids use '/'.
+-->
+<resources>
+
+    <string name="ad_unit_app_open" translatable="false">ca-app-pub-5972202469838280/7462293241</string>
+    <string name="ad_unit_banner" translatable="false">ca-app-pub-5972202469838280/2721102455</string>
+    <string name="ad_unit_exit_interstitial" translatable="false">ca-app-pub-5972202469838280/8563742068</string>
+    <string name="ad_unit_home_interstitial" translatable="false">ca-app-pub-5972202469838280/3502987071</string>
+    <string name="ad_unit_home_native" translatable="false">ca-app-pub-5972202469838280/8403959965</string>
+    <string name="ad_unit_interest_native" translatable="false">ca-app-pub-5972202469838280/2122336652</string>
+    <string name="ad_unit_language_native" translatable="false">ca-app-pub-5972202469838280/6636296735</string>
+    <string name="ad_unit_onboarding_native" translatable="false">ca-app-pub-5972202469838280/3435418325</string>
+
+</resources>

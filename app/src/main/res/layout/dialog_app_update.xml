@@ -1,93 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  LANDSCAPE: wrapped in a NestedScrollView. In landscape (and on small screens, and
+  with large font scales) this content is taller than the available viewport, and a
+  bottom sheet / dialog does not scroll on its own — the buttons were simply clipped
+  and unreachable. wrap_content on the scroll view keeps the sheet the same height
+  whenever the content does fit.
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none">
 
-    <ImageView
-        android:id="@+id/ivUpdateIcon"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_playstore"
-        app:layout_constraintBottom_toTopOf="@id/tvUpdateTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tvUpdateTitle"
-        style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/app_update_title"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tvUpdateMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivUpdateIcon" />
-
-    <TextView
-        android:id="@+id/tvUpdateMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:text="@string/app_update_message"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUpdateTitle" />
-
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/ivUpdateIcon"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_playstore"
+            app:layout_constraintBottom_toTopOf="@id/tvUpdateTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/btnUpdateLater"
+            android:id="@+id/tvUpdateTitle"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/dialog_positive_btn_cancel"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:padding="14dp"
-            android:text="@string/app_update_later"
-            android:textColor="#212121"
-            android:textStyle="bold" />
+            android:text="@string/app_update_title"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvUpdateMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivUpdateIcon" />
 
         <TextView
-            android:id="@+id/btnUpdateNow"
+            android:id="@+id/tvUpdateMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/dialog_negative_btn_exit"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="12dp"
             android:gravity="center"
-            android:padding="14dp"
-            android:text="@string/app_update_now"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:lineSpacingExtra="4dp"
+            android:text="@string/app_update_message"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUpdateTitle" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/btnUpdateLater"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_positive_btn_cancel"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="@string/app_update_later"
+                android:textColor="#212121"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnUpdateNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_negative_btn_exit"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="@string/app_update_now"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

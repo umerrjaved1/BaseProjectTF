@@ -14,11 +14,13 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.professor.baseproject.BuildConfig
+import com.professor.baseproject.ads.AdsController
+import com.professor.baseproject.constants.AppConfigDefaults
 import com.professor.baseproject.constants.Constants
 import com.professor.baseproject.iab.AppBillingClient
 import com.professor.baseproject.iab.ConnectResponse
 import com.professor.baseproject.iab.SubscriptionItem
-import com.professor.baseproject.remoteconfig.RemoteConfigManager
 import com.professor.baseproject.ui.screens.LanguageActivity
 import com.professor.baseproject.ui.screens.OnboardingActivity
 import com.professor.baseproject.ui.screens.StartActivity
@@ -37,6 +39,12 @@ class MyApp : Application() {
 
     @Inject
     lateinit var analyticsManager: AnalyticsManager
+
+    @Inject
+    lateinit var crashReporter: CrashReporter
+
+    @Inject
+    lateinit var adsController: AdsController
 
     private lateinit var billingClient: AppBillingClient
     private var activeSubscriptions: List<SubscriptionItem> = emptyList()
@@ -76,11 +84,24 @@ class MyApp : Application() {
             appPreferences.getInt(SettingsViewModel.THEME_MODE, SettingsViewModel.DEFAULT_MODE)
         )
 
+        // Attach the state every crash report should carry. Without this, reports arrive
+        // with no indication of entitlement, locale, or build variant.
+        crashReporter.setBaseContext(
+            isPremium = appPreferences.getBoolean(AppPreferences.IS_PREMIUM),
+            languageCode = appPreferences.getString(AppPreferences.LANGUAGE_CODE),
+            buildVariant = BuildConfig.BUILD_TYPE
+        )
+
         // Initialize language settings
         initializeLanguage()
 
         // Initialize billing client
         initializeBilling()
+
+        // Installs the premium gate and the ad event listener. Must run before any screen can
+        // request an ad; it does no network work and shows nothing. The SDK itself is
+        // initialized later, from StartActivity, once consent has been gathered.
+        adsController.configure()
 
         // Setup notifications
         //setupNotifications()
@@ -140,7 +161,7 @@ class MyApp : Application() {
             return
         }
 
-        if (RemoteConfigManager.getPremiumScreenConfig().showPremiumActivityOnResume) {
+        if (AppConfigDefaults.SHOW_PREMIUM_ON_RESUME) {
             activity.startActivity(
                 Intent(activity, PremiumActivity::class.java)
                     .putExtra(Constants.EXTRA_PREMIUM_FROM_RESUME, true)
@@ -214,6 +235,9 @@ class MyApp : Application() {
             if (wasPremium != status.isSubscribed) {
                 appPreferences.setBoolean(AppPreferences.IS_PREMIUM, status.isSubscribed)
                 Log.d(TAG, "Entitlement changed: $wasPremium -> ${status.isSubscribed}")
+                // Keep the crash key in step — "was this user premium?" is the first
+                // question asked about most billing and paywall reports.
+                crashReporter.setKey(CrashReporter.KEY_IS_PREMIUM, status.isSubscribed)
             }
             onComplete?.invoke(status.isSubscribed)
         }
@@ -230,7 +254,7 @@ class MyApp : Application() {
         scheduleOneTimeNotification()
 
         // Schedule repeating notification if needed
-        if (RemoteConfigManager.shouldEnableRepeatingNotifications()) {
+        if (AppConfigDefaults.ENABLE_REPEATING_NOTIFICATIONS) {
             scheduleRepeatingNotification()
         }
     }
@@ -238,7 +262,7 @@ class MyApp : Application() {
     private fun scheduleOneTimeNotification() {
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(
-                RemoteConfigManager.getNotificationInitialDelay(),
+                AppConfigDefaults.NOTIFICATION_INITIAL_DELAY_HOURS,
                 TimeUnit.HOURS
             )
             .build()
@@ -248,7 +272,7 @@ class MyApp : Application() {
     }
 
     private fun scheduleRepeatingNotification() {
-        val repeatInterval = RemoteConfigManager.getNotificationRepeatInterval()
+        val repeatInterval = AppConfigDefaults.NOTIFICATION_REPEAT_INTERVAL_HOURS
         val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
             repeatInterval,
             TimeUnit.HOURS
@@ -277,6 +301,7 @@ class MyApp : Application() {
             }
 
             override fun onActivityResumed(activity: Activity) {
+                crashReporter.setCurrentScreen(activity.javaClass.simpleName)
                 // Keep reference up-to-date (handles activity transitions within the app)
                 currentActivity = activity
             }

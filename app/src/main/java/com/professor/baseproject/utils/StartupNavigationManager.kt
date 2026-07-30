@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.professor.baseproject.app.AppPreferences
+import com.professor.baseproject.constants.AppConfigDefaults
 import com.professor.baseproject.constants.Constants
 import com.professor.baseproject.remoteconfig.RemoteConfigManager
 import com.professor.baseproject.ui.screens.LanguageActivity
@@ -29,14 +30,12 @@ object StartupNavigationManager {
         val isSurveyDone = appPreferences.getBoolean(AppPreferences.IS_SURVEY_DONE, isOnboardingDone)
         val isPremium = appPreferences.getBoolean(AppPreferences.IS_PREMIUM)
 
-        val showLanguage =
-            !RemoteConfigManager.getLanguageScreenConfig().skipLanguageScreen && !isLanguageSelected
-        val showOnboarding =
-            !RemoteConfigManager.getOnboardingScreenConfig().skipOnboardingScreen && !isOnboardingDone
-        val showSurvey =
-            !RemoteConfigManager.getSurveyScreenConfig().skipSurveyScreen && !isSurveyDone
-        val showPremium =
-            !isPremium && !RemoteConfigManager.getPremiumScreenConfig().skipPremiumScreen
+        val rules = RemoteConfigManager.getAdRules()
+        val showLanguage = !rules.skipLanguageScreen && !isLanguageSelected
+        val showOnboarding = !rules.skipOnboardingScreen && !isOnboardingDone
+        val showSurvey = !rules.skipSurveyScreen && !isSurveyDone
+        // The paywall skip is no longer remote - see AppConfigDefaults.
+        val showPremium = !isPremium && !AppConfigDefaults.SKIP_PREMIUM_SCREEN
 
         // Evaluate from current step onwards
         var nextStep: Step? = currentStep

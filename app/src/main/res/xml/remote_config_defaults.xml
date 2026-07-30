@@ -3,30 +3,17 @@
   In-APK Remote Config defaults, used before the first successful fetch and whenever the
   device is offline.
 
-  The JSON-backed configs (splash_screen, language_screen, ...) deliberately have no
-  entries here: RemoteConfigManager falls back to the Kotlin data-class defaults in
-  ScreenConfigData.kt when the fetched string is blank, and duplicating them in XML would
-  create a second source of truth that silently drifts.
+  Deliberately empty. All three parameters this app reads — `ad_ids`, `ad_rules` and
+  `native_config` — are JSON blobs, and RemoteConfigManager already falls back to the Kotlin
+  data-class defaults in `remoteconfig/data/RemoteConfigData.kt` when the fetched string is
+  blank. Duplicating those here would create a second source of truth that silently drifts
+  from the first.
 
-  The scalar keys below DO need defaults, because firebaseRemoteConfig.getLong()/
-  getBoolean() return 0/false when no default exists — so without these, a first cold
-  start scheduled notifications with a zero-hour delay.
+  Ad unit ids have their own offline fallback in `res/values/ad_units.xml`, which is what
+  serves on a first cold start — see AdUnits.kt.
 
-  The previous content was a single entry whose key was misspelled `firs_launch`
-  (against RemoteConfigKeys.FIRST_LAUNCH = "first_launch", itself never read), so this
-  file supplied nothing at all.
+  Kept wired up (RemoteConfigManager still calls setDefaultsAsync) so that a scalar key which
+  genuinely needs an in-APK default has an obvious home: getLong()/getBoolean() return
+  0/false when no default exists, which is rarely the safe value.
 -->
-<defaultsMap>
-    <entry>
-        <key>notification_delay_time</key>
-        <value>24</value>
-    </entry>
-    <entry>
-        <key>notification_time</key>
-        <value>24</value>
-    </entry>
-    <entry>
-        <key>enable_repeating_notifications</key>
-        <value>false</value>
-    </entry>
-</defaultsMap>
+<defaultsMap />

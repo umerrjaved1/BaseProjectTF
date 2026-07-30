@@ -1,67 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  LANDSCAPE: scrollable so the content stays reachable when the viewport is short
+  (landscape, small screens, large font scales). fillViewport + a match_parent child
+  keeps it looking identical to a non-scrolling screen whenever the content does fit.
+-->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
-    <!--
-      Placeholder home screen. It doubles as a live check of the Room chain:
-      tv_home_state renders HomeViewModel.items, which is backed by DataModelDao.
-      Replace this per fork, but keep something observing the DAO so a broken persistence
-      setup is visible during development rather than in someone's fork.
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color">
 
-      The previous content was a hardcoded, unlocalised "Home Fragment" TextView with no id.
-    -->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_home_state"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:gravity="center"
-        android:textColor="@color/text_color_primary"
-        android:textSize="16sp"
-        app:fontFamily="@font/plus_jakarta_sans_medium"
-        app:layout_constraintBottom_toTopOf="@id/btn_home_add_sample"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Stored rows: 0" />
+        <!--
+          Placeholder home screen. It doubles as a live check of the Room chain:
+          tv_home_state renders HomeViewModel.items, which is backed by DataModelDao.
+          Replace this per fork, but keep something observing the DAO so a broken persistence
+          setup is visible during development rather than in someone's fork.
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_home_add_sample"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/home_add_sample_row"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/accent_color"
-        app:cornerRadius="12dp"
-        app:fontFamily="@font/plus_jakarta_sans_semi_bold"
-        app:layout_constraintBottom_toTopOf="@id/btn_home_clear"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_state" />
+          The previous content was a hardcoded, unlocalised "Home Fragment" TextView with no id.
+        -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_home_state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center"
+            android:textColor="@color/text_color_primary"
+            android:textSize="16sp"
+            app:fontFamily="@font/plus_jakarta_sans_medium"
+            app:layout_constraintBottom_toTopOf="@id/btn_home_add_sample"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Stored rows: 0" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_home_clear"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/home_clear_rows"
-        android:textAllCaps="false"
-        android:textColor="@color/text_color_secondary"
-        app:cornerRadius="12dp"
-        app:fontFamily="@font/plus_jakarta_sans_semi_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_home_add_sample"
-        app:strokeColor="@color/stroke_color" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_home_add_sample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/home_add_sample_row"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/accent_color"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/plus_jakarta_sans_semi_bold"
+            app:layout_constraintBottom_toTopOf="@id/btn_home_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_state" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_home_clear"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_clear_rows"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color_secondary"
+            app:cornerRadius="12dp"
+            app:fontFamily="@font/plus_jakarta_sans_semi_bold"
+            app:layout_constraintBottom_toTopOf="@id/ad_slot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_home_add_sample"
+            app:strokeColor="@color/stroke_color" />
+
+        <!-- Ad slot. AdsSlot builds the shimmer and ad container inside it and collapses it
+             when nothing fills, so no placeholder gap is left behind. Pinned to the bottom so
+             it never pushes the screen's own content around as it loads. -->
+        <FrameLayout
+            android:id="@+id/ad_slot"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

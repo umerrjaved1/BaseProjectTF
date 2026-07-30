@@ -1,5 +1,5 @@
 [versions]
-ads = "1.0.2"
+ads = "1.1.0"
 agp = "9.2.1"
 billingKtx = "9.1.0"
 glide = "5.0.7"
@@ -45,8 +45,6 @@ unityMediation = "4.19.0.0"
 inmobiMediation = "11.3.0.1"
 vungleMediation = "7.7.4.2"
 facebookSdk = "18.3.0"
-composeBom = "2026.06.01"
-activityCompose = "1.13.0"
 datastorePreferences = "1.2.1"
 playAppUpdate = "2.1.0"
 
@@ -117,13 +115,6 @@ mediation-vungle = { module = "com.google.ads.mediation:vungle", version.ref = "
 
 facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebookSdk" }
 
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastorePreferences" }
 play-app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "playAppUpdate" }
 
@@ -135,4 +126,3 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

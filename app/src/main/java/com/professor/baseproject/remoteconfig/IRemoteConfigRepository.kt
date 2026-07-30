@@ -1,19 +1,16 @@
 package com.professor.baseproject.remoteconfig
 
-import com.professor.baseproject.remoteconfig.data.*
+import com.professor.baseproject.remoteconfig.data.AdIdsConfig
+import com.professor.baseproject.remoteconfig.data.AdRulesConfig
+import com.professor.baseproject.remoteconfig.data.AssetsConfigData
+import com.professor.baseproject.remoteconfig.data.NativeAdColors
 
 interface IRemoteConfigRepository {
     fun fetchRemoteConfig(callback: (Boolean) -> Unit)
-    fun getStartScreenConfig(): StartScreenConfig
-    fun getLanguageScreenConfig(): LanguageScreenConfig
-    fun getOnboardingScreenConfig(): OnboardingScreenConfig
-    fun getSurveyScreenConfig(): SurveyScreenConfig
-    fun getPremiumScreenConfig(): PremiumScreenConfig
-    fun getGlobalConfig(): GlobalConfig
+    fun getAdIds(): AdIdsConfig
+    fun getAdRules(): AdRulesConfig
+    fun getNativeAdColors(): NativeAdColors
     fun getAssetsConfig(): AssetsConfigData
-    fun getNotificationInitialDelay(): Long
-    fun getNotificationRepeatInterval(): Long
-    fun shouldEnableRepeatingNotifications(): Boolean
 }
 
 class RemoteConfigRepositoryImpl : IRemoteConfigRepository {
@@ -21,14 +18,8 @@ class RemoteConfigRepositoryImpl : IRemoteConfigRepository {
         RemoteConfigManager.fetchRemoteConfig(callback)
     }
 
-    override fun getStartScreenConfig() = RemoteConfigManager.getStartScreenConfig()
-    override fun getLanguageScreenConfig() = RemoteConfigManager.getLanguageScreenConfig()
-    override fun getOnboardingScreenConfig() = RemoteConfigManager.getOnboardingScreenConfig()
-    override fun getSurveyScreenConfig() = RemoteConfigManager.getSurveyScreenConfig()
-    override fun getPremiumScreenConfig() = RemoteConfigManager.getPremiumScreenConfig()
-    override fun getGlobalConfig() = RemoteConfigManager.getGlobalConfig()
+    override fun getAdIds() = RemoteConfigManager.getAdIds()
+    override fun getAdRules() = RemoteConfigManager.getAdRules()
+    override fun getNativeAdColors() = RemoteConfigManager.getNativeAdColors()
     override fun getAssetsConfig() = RemoteConfigManager.getAssetsConfig()
-    override fun getNotificationInitialDelay() = RemoteConfigManager.getNotificationInitialDelay()
-    override fun getNotificationRepeatInterval() = RemoteConfigManager.getNotificationRepeatInterval()
-    override fun shouldEnableRepeatingNotifications() = RemoteConfigManager.shouldEnableRepeatingNotifications()
 }

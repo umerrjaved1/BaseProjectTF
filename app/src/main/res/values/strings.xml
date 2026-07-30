@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <resources>
-    <string name="admob_app_id" translatable="false">ca-app-pub-5972202469838280~1573301652</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
     <string name="facebook_app_id" translatable="false">2028491944417391</string>
     <string name="facebook_client_token" translatable="false">52ea3ff89ef85d9ed6b30da0a10920f6</string>
     <string name="privacy_policy_url" translatable="false">https://www.terafort.com/privacy.html</string>
@@ -102,8 +102,16 @@
     <string name="survey_feature_3">Feature three</string>
     <string name="survey_feature_4">Feature four</string>
     <string name="survey_feature_5">Feature five</string>
-    <!-- Exit notification placeholders, mirrored in remote_config_default/global_ad_rules.json -->
     <string name="dark_mode">Dark mode</string>
+    <string name="close">Close</string>
+    <!-- Offline guard (InternetGuard) -->
+    <string name="no_internet_title">No internet connection</string>
+    <string name="no_internet_message">You need an internet connection to continue. Check your connection and try again.</string>
+    <string name="open_network_settings">Open settings</string>
+    <!-- PermissionRequester -->
+    <string name="permission_required_title">Permission needed</string>
+    <string name="permission_required_message">This permission was denied. Enable it in app settings to use this feature.</string>
+    <string name="open_app_settings">Open app settings</string>
     <!-- Placeholder home screen (also the live check of the Room chain) -->
     <string name="home_stored_rows">Stored rows: %1$d</string>
     <string name="home_add_sample_row">Add sample row</string>
@@ -128,6 +136,11 @@
     <string name="app_update_ready_title">Update Ready</string>
     <string name="app_update_ready_message">The update has been downloaded. Install it now to finish updating the app.</string>
     <string name="app_update_install">Install</string>
+
+    <!-- Shown when AppConfigDefaults.KILL_SWITCH_ENABLED is on. Previously remote strings, which
+         meant they could never be translated. -->
+    <string name="kill_switch_title">Temporarily unavailable</string>
+    <string name="kill_switch_message">This app is temporarily unavailable. Please try again later.</string>
     <string name="txt_symbol_9634">—</string>
     <string name="txt_symbol_1902">·</string>
 </resources>

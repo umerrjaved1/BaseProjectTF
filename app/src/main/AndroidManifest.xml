@@ -41,33 +41,44 @@
         <activity
             android:name=".ui.screens.PremiumActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            />
 
         <!-- exported=false: no intent-filter, only ever launched from within the app. -->
         <activity
             android:name=".ui.screens.MainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false"/>
+
+        <!--
+          No screenOrientation lock, deliberately.
+
+          For apps targeting API 36+ (this one targets 37), Android ignores activity
+          orientation and resizability restrictions on large screens (smallest width
+          >= 600dp). A "portrait" lock therefore does nothing on tablets and unfolded
+          foldables, so relying on it would mean onboarding renders in landscape there
+          anyway — just untested. Lint also flags it (LockedOrientationActivity).
+
+          It is not needed regardless: activity_onboarding gives the pager 0dp height
+          constrained above a wrap_content bottom bar, and item_onboarding puts the
+          illustration in a 0dp/weight=1 slot, so the layout absorbs a short viewport.
+        -->
         <activity
             android:name=".ui.screens.OnboardingActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".ui.screens.SurveyActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+             />
         <activity
             android:name=".ui.screens.LanguageActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            />
         <activity
             android:name=".ui.screens.UninstallActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+             />
         <activity
             android:name=".ui.screens.StartActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

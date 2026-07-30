@@ -1,10 +1,8 @@
 package com.professor.baseproject.adapter
 
-import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +60,6 @@ class LanguageAdapter(
 
     inner class LanguageViewHolder(private val binding: ItemLanguageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private var animator: ObjectAnimator? = null
 
         fun bind(item: LanguageListItem.Language, position: Int) {
             val languageModel = item.model
@@ -75,33 +72,12 @@ class LanguageAdapter(
                 removeSelection()
             }
 
-            // Hand pointer animation logic for default language
-            if (selectedLanguageModel == null && position == 1) {
-                binding.ivHandPointer.visibility = View.VISIBLE
-                binding.ivHandPointer.rotation = 0f
-
-                animator?.cancel()
-                val density = binding.root.context.resources.displayMetrics.density
-                val translationAmount = -10f * density
-                animator = ObjectAnimator.ofFloat(
-                    binding.ivHandPointer,
-                    "translationY",
-                    0f,
-                    translationAmount
-                ).apply {
-                    duration = 800
-                    repeatCount = ObjectAnimator.INFINITE
-                    repeatMode = ObjectAnimator.REVERSE
-                    interpolator = AccelerateDecelerateInterpolator()
-                    start()
-                }
-            } else {
-                animator?.cancel()
-                binding.ivHandPointer.visibility = View.GONE
-            }
-
+            // The hand-pointer animation was removed. It only ran when
+            // `selectedLanguageModel == null`, which can no longer happen now that
+            // LanguageActivity always pre-selects a default. It was also an INFINITE
+            // ObjectAnimator started inside bind() — on a recycled view that is a leak
+            // unless every path cancels it, and the "hideHandPointer" payload path did not.
             binding.root.setClickWithTimeout {
-                val wasNullSelection = selectedLanguageModel == null
                 val oldPosition = currentList.indexOfFirst {
                     it is LanguageListItem.Language && it.model.id == selectedLanguageModel?.id
                 }
@@ -109,10 +85,6 @@ class LanguageAdapter(
                 selectedLanguageModel = languageModel
                 val newPosition = currentList.indexOfFirst {
                     it is LanguageListItem.Language && it.model.id == selectedLanguageModel?.id
-                }
-
-                if (wasNullSelection) {
-                    notifyItemChanged(1, "hideHandPointer")
                 }
 
                 if (oldPosition != newPosition) {
@@ -133,10 +105,6 @@ class LanguageAdapter(
             binding.llLanguageItem.setBackgroundResource(R.drawable.bg_lang_item_unselected)
         }
 
-        fun hideHandPointer() {
-            animator?.cancel()
-            binding.ivHandPointer.visibility = View.GONE
-        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -184,7 +152,6 @@ class LanguageAdapter(
                 when (payload) {
                     "updateSelection" -> holder.updateSelection()
                     "removeSelection" -> holder.removeSelection()
-                    "hideHandPointer" -> holder.hideHandPointer()
                 }
             }
         } else {

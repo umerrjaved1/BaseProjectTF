@@ -12,6 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import com.professor.baseproject.ads.AdsController
+import com.professor.baseproject.ads.BannerRefresher
+import com.professor.baseproject.ads.InterstitialGate
 import com.professor.baseproject.app.AnalyticsManager
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.R
@@ -46,7 +49,19 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var appUpdateManager: AppUpdateManager
 
+    @Inject
+    lateinit var adsController: AdsController
+
+    @Inject
+    lateinit var interstitialGate: InterstitialGate
+
+    @Inject
+    lateinit var bannerRefresher: BannerRefresher
+
     private lateinit var binding: ActivityMainBinding
+
+    /** Latches once the exit interstitial has been shown, so Back cannot request a second one. */
+    private var isExiting = false
 
     // Fragments are NOT held as fields any more. They were constructed eagerly, so on
     // recreation the FragmentManager restored its own instances while setupFragments()
@@ -83,6 +98,11 @@ class MainActivity : BaseActivity() {
 
         checkNotificationPermission()
 
+        // App-open resume ads stay suppressed until this point, so one can never appear over the
+        // splash, language picker, onboarding or survey. This is the screen where the user is
+        // finally past the startup flow. Honours `ad_rules.showAppOpenAdOnResume`.
+        adsController.allowResumeAds()
+
         appUpdateManager.addOnFlexibleDownloadCompleteListener(this) {
             showFlexibleUpdateReadyDialog()
         }
@@ -91,6 +111,14 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         appUpdateManager.handleOnResume(this, updateLauncher)
+        bannerRefresher.resumeAll()
+    }
+
+    override fun onPause() {
+        // Stops the 30s refresh timers while this screen is not in front. Without it a
+        // backgrounded screen keeps requesting banners nobody can see.
+        bannerRefresher.pauseAll()
+        super.onPause()
     }
 
     override fun onDestroy() {
@@ -118,8 +146,23 @@ class MainActivity : BaseActivity() {
             switchFragmentTo(TAG_HOME)
             return
         }
-        showExitNotification()
-        finish()
+        exitWithAd()
+    }
+
+    /**
+     * Back on home: interstitial first (the `exit_inter` unit), then exit.
+     *
+     * Still time-capped, so backing out of a screen the user only just arrived at cannot chain an
+     * ad onto one they have just dismissed. The exit itself hangs off the gate's callback, which
+     * always runs - so a missing or unfilled ad can never trap the user on this screen.
+     */
+    private fun exitWithAd() {
+        if (isExiting) return
+        isExiting = true
+        interstitialGate.showOnExit(this) {
+            showExitNotification()
+            finish()
+        }
     }
 
 
@@ -238,8 +281,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showExitNotification() {
-        val globalConfig = RemoteConfigManager.getGlobalConfig()
-        if (!globalConfig.enableExitNotification) return
+        val adRules = RemoteConfigManager.getAdRules()
+        if (!adRules.enableExitNotification) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -269,8 +312,8 @@ class MainActivity : BaseActivity() {
 
         val notification = androidx.core.app.NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notifications)
-            .setContentTitle(globalConfig.exitNotificationTitle)
-            .setContentText(globalConfig.exitNotificationDescription)
+            .setContentTitle(adRules.exitNotificationTitle)
+            .setContentText(adRules.exitNotificationDescription)
             .setContentIntent(pendingIntent)
             .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)

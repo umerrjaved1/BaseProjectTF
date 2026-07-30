@@ -7,6 +7,7 @@ Senior Android Developer
 Email: umerr8019@gmail.com
 
  */
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
@@ -17,6 +18,7 @@ import com.professor.baseproject.utils.ConnectivityObserver
 import com.professor.baseproject.utils.NetworkConnectivityObserver
 import com.professor.baseproject.data.db.AppDatabase
 import com.professor.baseproject.data.db.DataModelDao
+import com.umer_tf.ads.domain.core.AdMobManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,6 +42,14 @@ class DiModule {
     fun provideConnectivityObserver(@ApplicationContext context: Context): ConnectivityObserver {
         return NetworkConnectivityObserver(context)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideAdMobManager(application: Application): AdMobManager {
+        return AdMobManager.getInstance(application)
+    }
+
 
     @Provides
     @Singleton

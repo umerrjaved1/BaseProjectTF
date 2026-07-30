@@ -24,7 +24,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.professor.baseproject.R
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.constants.Constants
-import com.professor.baseproject.remoteconfig.RemoteConfigManager
+import com.professor.baseproject.constants.AppConfigDefaults
 import com.professor.baseproject.ui.screens.PremiumActivity
 
 
@@ -105,11 +105,10 @@ object PaywallTrigger {
         val isFirstRunComplete = prefs.getBoolean(AppPreferences.IS_FIRST_RUN_COMPLETE, false)
         if (isPremium || !isFirstRunComplete) return
 
-        val config = RemoteConfigManager.getPremiumScreenConfig()
-        if (!config.showPremiumActivityAfterThreeClick) return
+        if (!AppConfigDefaults.SHOW_PREMIUM_AFTER_CLICKS) return
 
         interactionCount++
-        if (interactionCount < config.clickCountPremiumActivity) return
+        if (interactionCount < AppConfigDefaults.PREMIUM_CLICK_COUNT) return
 
         shownThisSession = true
         activity.startActivity(

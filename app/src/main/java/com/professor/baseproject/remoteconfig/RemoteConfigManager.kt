@@ -4,8 +4,11 @@ import android.util.Log
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
-import com.professor.baseproject.remoteconfig.data.*
 import com.professor.baseproject.R
+import com.professor.baseproject.remoteconfig.data.AdIdsConfig
+import com.professor.baseproject.remoteconfig.data.AdRulesConfig
+import com.professor.baseproject.remoteconfig.data.AssetsConfigData
+import com.professor.baseproject.remoteconfig.data.NativeAdColors
 
 
 /**
@@ -17,21 +20,21 @@ Email: umerr8019@gmail.com
  */
 
 
+/**
+ * Reads the three Remote Config parameters listed in [RemoteConfigKeys] and caches the parsed
+ * result.
+ *
+ * Every getter is safe to call before [fetchRemoteConfig] completes: it returns the Kotlin data
+ * class defaults, which are the intended shipping behaviour. Nothing here blocks, and a fetch
+ * failure leaves the previous values in place rather than reverting to defaults mid-session.
+ */
 object RemoteConfigManager {
     private val TAG = RemoteConfigManager::class.java.simpleName
 
-    private var startScreenConfig = StartScreenConfig()
-    private var languageScreenConfig = LanguageScreenConfig()
-    private var onboardingScreenConfig = OnboardingScreenConfig()
-    private var surveyScreenConfig = SurveyScreenConfig()
-    private var premiumScreenConfig = PremiumScreenConfig()
-    private var globalConfig = GlobalConfig()
+    private var adIds = AdIdsConfig()
+    private var adRules = AdRulesConfig()
+    private var nativeAdColors = NativeAdColors()
     private var assetsConfigData: AssetsConfigData = AssetsConfigData()
-    private var notificationTime = 3L
-    private var notificationInitialDelay = 24L
-    private var notificationRepeatInterval = 24L
-    private var enableRepeatingNotifications = false
-
 
     private val firebaseRemoteConfig: FirebaseRemoteConfig by lazy {
         FirebaseRemoteConfig.getInstance().apply {
@@ -60,33 +63,12 @@ object RemoteConfigManager {
                 Log.e(TAG, "RemoteConfig fetch error: ${it.message}")
                 callback(false)
             }
-
     }
 
-
     private fun parseFetchData() {
-        // Parse new modular configs
-        startScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_START_SCREEN) ?: StartScreenConfig()
-        languageScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_LANGUAGE_SCREEN) ?: LanguageScreenConfig()
-        onboardingScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_ONBOARDING_SCREEN) ?: OnboardingScreenConfig()
-        surveyScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_SURVEY_SCREEN) ?: SurveyScreenConfig()
-        premiumScreenConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_PREMIUM_SCREEN) ?: PremiumScreenConfig()
-        globalConfig = parseJsonSafe(RemoteConfigKeys.CONFIG_GLOBAL) ?: GlobalConfig()
-
-        notificationInitialDelay =
-            firebaseRemoteConfig.getLong(RemoteConfigKeys.NOTIFICATION_DELAY_TIME)
-
-        notificationRepeatInterval =
-            firebaseRemoteConfig.getLong(RemoteConfigKeys.NOTIFICATION_REPEAT_INTERVAL)
-
-        enableRepeatingNotifications =
-            firebaseRemoteConfig.getBoolean(RemoteConfigKeys.ENABLE_REPEATING_NOTIFICATIONS)
-
-
-//        showGetStartedButton =
-//            firebaseRemoteConfig.getBoolean(RemoteConfigKeys.SHOW_GET_STARTED_BUTTON)
-
-
+        adIds = parseJsonSafe(RemoteConfigKeys.AD_IDS) ?: AdIdsConfig()
+        adRules = parseJsonSafe(RemoteConfigKeys.AD_RULES) ?: AdRulesConfig()
+        nativeAdColors = parseJsonSafe(RemoteConfigKeys.NATIVE_CONFIG) ?: NativeAdColors()
     }
 
     private inline fun <reified T> parseJsonSafe(key: String): T? {
@@ -101,31 +83,9 @@ object RemoteConfigManager {
         }
     }
 
-    private fun <T> parseConfig(key: String, clazz: Class<T>, default: T): T {
-        val json = firebaseRemoteConfig.getString(key)
-        return try {
-            if (json.isNotBlank()) {
-                Gson().fromJson(json, clazz)
-            } else default
-        } catch (ex: Exception) {
-            default
-        }
-    }
-
-    fun getStartScreenConfig() = startScreenConfig
-    fun getLanguageScreenConfig() = languageScreenConfig
-    fun getOnboardingScreenConfig() = onboardingScreenConfig
-    fun getSurveyScreenConfig() = surveyScreenConfig
-
-    fun getPremiumScreenConfig(): PremiumScreenConfig {
-        return parseConfig(RemoteConfigKeys.CONFIG_PREMIUM_SCREEN, PremiumScreenConfig::class.java, PremiumScreenConfig())
-    }
-
-    fun getGlobalConfig() = globalConfig
+    fun getAdIds(): AdIdsConfig = adIds
+    fun getAdRules(): AdRulesConfig = adRules
+    fun getNativeAdColors(): NativeAdColors = nativeAdColors
 
     fun getAssetsConfig(): AssetsConfigData = assetsConfigData
-
-    fun getNotificationInitialDelay(): Long = notificationInitialDelay // Default 24 hours
-    fun getNotificationRepeatInterval(): Long = notificationRepeatInterval
-    fun shouldEnableRepeatingNotifications(): Boolean = enableRepeatingNotifications
 }

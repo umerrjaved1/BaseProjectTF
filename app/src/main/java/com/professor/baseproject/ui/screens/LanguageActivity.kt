@@ -20,6 +20,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.professor.baseproject.adapter.LanguageAdapter
+import com.professor.baseproject.ads.AdSlotStyle
+import com.professor.baseproject.ads.AdsSlot
+import com.professor.baseproject.ads.NativePlacement
 import com.professor.baseproject.app.AnalyticsManager
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.constants.Constants
@@ -33,6 +36,9 @@ import com.professor.baseproject.utils.startShakeAnimation
 import com.professor.baseproject.R
 import com.professor.baseproject.databinding.ActivityLanguageBinding
 import com.professor.baseproject.databinding.DialogExitBinding
+import com.umer_tf.ads.domain.consent.AdsConsentManager
+import com.umer_tf.ads.domain.core.AdMobManager
+import com.umer_tf.ads.domain.viewmodel.AdViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,6 +55,15 @@ class LanguageActivity : AppCompatActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var adsSlot: AdsSlot
+
+    @Inject
+    lateinit var adMobManager: AdMobManager
+
+    lateinit var adViewModel: AdViewModel
+
     lateinit var exitDialog: Dialog
     var isFromStart = false
 
@@ -60,7 +75,24 @@ class LanguageActivity : AppCompatActivity() {
         if (::exitDialog.isInitialized && exitDialog.isShowing) {
             exitDialog.dismiss()
         }
+        // Stops the banner refresh timer for this slot; without it the timer keeps requesting
+        // after the screen is gone.
+        adsSlot.release(binding.adSlot)
         super.onDestroy()
+    }
+
+    /**
+     * Small native without media, with a banner fallback when native does not fill. Uses the
+     * `language_native` unit from `ad_ids`; [AdsSlot] collapses the slot when `ad_rules.showAds`
+     * is off.
+     */
+    private fun loadAd() {
+        adsSlot.show(
+            activity = this,
+            container = binding.adSlot,
+            placement = NativePlacement.LANGUAGE,
+            style = AdSlotStyle.SMALL_NO_MEDIA
+        )
     }
 
     private fun setupBackPressHandler() {
@@ -92,6 +124,8 @@ class LanguageActivity : AppCompatActivity() {
 
         initAdapter()
         initClickListeners()
+
+        loadAd()
 
         loadExitDialog()
         setupBackPressHandler()
@@ -211,17 +245,35 @@ class LanguageActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * Resolves the language to pre-select. There is **always** a selection now:
+     *  1. a previously saved choice, else
+     *  2. the device locale, if this app ships it, else
+     *  3. English.
+     *
+     * Two consequences, both intended: Done is enabled immediately instead of requiring a
+     * tap to become usable, and the attention-grabbing hand pointer never appears — it was
+     * gated on `selectedLanguageModel == null`, which can no longer happen.
+     */
+    private fun resolveDefaultLanguage(languageList: List<LanguageModel>): LanguageModel {
+        val savedId = appPreferences.getInt(AppPreferences.Companion.LANGUAGE_ID)
+        languageList.firstOrNull { it.id == savedId }?.let { return it }
+
+        val deviceLanguage = java.util.Locale.getDefault().language.lowercase()
+        languageList.firstOrNull { it.code.lowercase() == deviceLanguage }?.let { return it }
+
+        return languageList.firstOrNull { it.code.equals("en", ignoreCase = true) }
+            ?: languageList.first()
+    }
+
     private fun initAdapter() {
         val languageList = getLanguageList(this)
-        val savedLanguageId = appPreferences.getInt(AppPreferences.Companion.LANGUAGE_ID)
-        val savedLanguage = languageList.find { it.id == savedLanguageId }
+        val savedLanguage = resolveDefaultLanguage(languageList)
 
         val displayList = mutableListOf<LanguageListItem>()
 
-        if (savedLanguage != null) {
-            displayList.add(LanguageListItem.Header("Default"))
-            displayList.add(LanguageListItem.Language(savedLanguage))
-        }
+        displayList.add(LanguageListItem.Header("Default"))
+        displayList.add(LanguageListItem.Language(savedLanguage))
 
         displayList.add(LanguageListItem.Header("All Languages"))
         languageList.filterNot { it == savedLanguage }
@@ -232,14 +284,8 @@ class LanguageActivity : AppCompatActivity() {
             onLanguageSelected(it.model)
         }
 
-        if (savedLanguage != null) {
-            viewModel.setSelectedLanguage(savedLanguage)
-            onLanguageSelected(savedLanguage)
-        } else {
-            binding.btnDone.isEnabled = false
-            binding.btnDone.alpha = 0.5f
-            binding.shimmerBtn.stopShimmer()
-        }
+        viewModel.setSelectedLanguage(savedLanguage)
+        onLanguageSelected(savedLanguage)
 
         binding.rvLanguage.layoutManager = LinearLayoutManager(this)
         binding.rvLanguage.adapter = adapter

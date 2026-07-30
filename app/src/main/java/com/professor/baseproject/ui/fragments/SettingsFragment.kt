@@ -10,6 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.professor.baseproject.BuildConfig
 import com.professor.baseproject.R
+import com.professor.baseproject.ads.AdSlotStyle
+import com.professor.baseproject.ads.AdsSlot
+import com.professor.baseproject.ads.NativePlacement
 import com.professor.baseproject.app.AppPreferences
 import com.professor.baseproject.databinding.FragmentSettingsBinding
 import com.professor.baseproject.ui.base.BaseFragment
@@ -29,6 +32,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
     @Inject
     lateinit var appPreferences: AppPreferences
 
+    @Inject
+    lateinit var adsSlot: AdsSlot
+
     private val settingsViewModel: SettingsViewModel by viewModels()
 
     private val appUrl by lazy {
@@ -41,6 +47,34 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
         bindClicks()
         setupVersionInfo()
         setupDarkMode()
+
+        // Registered unconditionally, not passed into the sheet's constructor. This is what
+        // makes the result survive the Activity recreation a theme change causes.
+        RateUsBottomSheet.listen(this) { openStorePage() }
+
+        loadAd()
+    }
+
+    /**
+     * Small native without media, banner fallback.
+     *
+     * Reuses the `home_native` unit: `ad_ids` has no separate settings entry, and splitting one
+     * out is a console change plus a resource, not a code change - see [NativePlacement].
+     */
+    private fun loadAd() {
+        adsSlot.show(
+            activity = requireActivity(),
+            container = binding.adSlot,
+            placement = NativePlacement.HOME,
+            style = AdSlotStyle.SMALL_NO_MEDIA
+        )
+    }
+
+    override fun onDestroyView() {
+        // Stops this slot's banner-refresh timer; without it the timer keeps requesting after the
+        // view is gone.
+        adsSlot.release(binding.adSlot)
+        super.onDestroyView()
     }
 
     /**
@@ -89,7 +123,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
         }
 
         binding.rowRate.setOnClickListener {
-            RateUsBottomSheet { openStorePage() }.show(parentFragmentManager, "RateUsBottomSheet")
+            RateUsBottomSheet.newInstance()
+                .show(parentFragmentManager, RateUsBottomSheet.TAG)
         }
 
         binding.rowShare.setOnClickListener {

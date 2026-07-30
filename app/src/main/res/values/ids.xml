@@ -2,4 +2,12 @@
 <resources>
     <item name="collapsed" type="id" />
     <item name="search_mode" type="id" />
+
+    <!--
+      AdsSlot caches the two child views it builds inside a screen's ad slot against this id, so
+      re-showing an ad in the same container does not rebuild them. A resource id rather than
+      setTag(Object) because the untyped overload is one global slot per view — anything else
+      calling setTag on the same container would silently clobber it.
+    -->
+    <item name="ad_slot_views_tag" type="id" />
 </resources>

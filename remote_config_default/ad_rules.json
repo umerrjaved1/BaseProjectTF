@@ -1,0 +1,22 @@
+{
+  "showAds": true,
+  "interstitialTimer": 25,
+  "showAppOpenAdOnResume": true,
+  "enableExitNotification": false,
+  "exitNotificationTitle": "We miss you!",
+  "exitNotificationDescription": "Come back and explore the live earth map.",
+  "bannerRefreshSeconds": 30,
+  "splashAdFlow": 1,
+  "splashFlow": 1,
+  "startupTime": 8,
+  "skipLanguageScreen": false,
+  "skipOnboardingScreen": false,
+  "skipSurveyScreen": false,
+  "showObSlide1": true,
+  "showObSlide2": true,
+  "showObSlide3": true,
+  "showOb1Native": true,
+  "showOb2Native": true,
+  "showOb3Native": true,
+  "comments": "splashAdFlow: 1 = Inter first -> fallback App Open | 2 = App Open first -> fallback Inter. splashFlow: 1 = Splash -> ad -> Paywall | 2 = Splash -> Paywall (Inter on paywall cross)."
+}

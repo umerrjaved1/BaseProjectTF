@@ -1,7 +1,7 @@
 package com.professor.baseproject.data.source
 
 import android.content.Context
-import android.util.Log
+import com.professor.baseproject.app.CrashReporter
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +20,9 @@ Email: umerr8019@gmail.com
  */
 
 @Singleton
-class LocalSource @Inject constructor() : DataSource {
+class LocalSource @Inject constructor(
+    private val crashReporter: CrashReporter
+) : DataSource {
 
     override suspend fun <T> loadData(context: Context, keyOrFile: String, type: Type): List<T> {
         return withContext(Dispatchers.IO) {
@@ -34,7 +36,9 @@ class LocalSource @Inject constructor() : DataSource {
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Failed to load asset '$keyOrFile'", e)
+                // Non-fatal, not a swallowed Log line: a malformed bundled asset is a
+                // build-time mistake that is invisible in production otherwise.
+                crashReporter.nonFatal(TAG, "Failed to load asset '$keyOrFile'", e)
                 emptyList()
             }
         }
