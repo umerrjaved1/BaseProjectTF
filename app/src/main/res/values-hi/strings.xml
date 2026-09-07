@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">ऑटो क्लीनर</string>
+    <string name="onboarding_title_2">मैनुअल कंट्रोल</string>
+    <string name="onboarding_title_3">कंपन मोड</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">भाषा चुनें</string>
+    <string name="language_subtitle">इंटरफ़ेस और निर्देशों के लिए अपनी पसंदीदा भाषा चुनें।</string>
+    <string name="please_select_a_language">कृपया एक भाषा चुनें</string>
+    <string name="exit_application">एप्लिकेशन से बाहर निकलें</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">क्या आप वाकई इस एप्लिकेशन से बाहर निकलना चाहते हैं?</string>
+    <string name="no">नहीं</string>
+    <string name="yes">हाँ</string>
+    <string name="do_you_want_to_open_network_settings">क्या आप नेटवर्क सेटिंग्स खोलना चाहते हैं?</string>
+    <string name="no_internet_connection">इंटरनेट कनेक्शन नहीं है!</string>
+    <string name="skip">छोड़ें</string>
+    <string name="continuee">जारी रखें</string>
+    <string name="get_started">शुरू करें</string>
+    <string name="unable_to_load_ad">विज्ञापन लोड करने में असमर्थ</string>
+    <string name="home">होम</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="rate_on_play_store">प्ले स्टोर पर रेट करें</string>
+    <string name="purchase_successfully">सफलतापूर्वक खरीदा गया</string>
+    <string name="close">बंद करें</string>
+    <string name="weekly_subscription">साप्ताहिक सदस्यता</string>
+    <string name="loading">लोड हो रहा है</string>
+    <string name="allow">अनुमति दें</string>
+    <string name="stay_updated_with_notifications">सूचनाओं के साथ अपडेट रहें</string>
+    <string name="notification_description">हमें महत्वपूर्ण अपडेट के बारे में आपको सूचित रखने के लिए सूचना अनुमति की आवश्यकता है। यह समय पर सतर्कता के साथ बेहतर उपयोगकर्ता अनुभव सुनिश्चित करता है।</string>
+    <string name="allow_access">पहुंच की अनुमति दें</string>
+    <string name="maybe_later">शायद बाद में</string>
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">इस कार्रवाई में विज्ञापन शामिल हो सकते हैं</string>
+    <string name="yearly">सालाना</string>
+    <string name="weekly">साप्ताहिक</string>
+    <string name="restore">पुनर्स्थापित करना</string>
+    <string name="terms_of_servuce">सेवा की शर्तें</string>
+    <string name="next">अगला</string>
+    <string name="survey_title">अपनी विशेषताएँ चुनें</string>
+</resources>

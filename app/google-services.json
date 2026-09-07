@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "712016730327",
+    "project_id": "video-downloader---vidwave",
+    "storage_bucket": "video-downloader---vidwave.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712016730327:android:f173d561b6f13226393892",
+        "android_client_info": {
+          "package_name": "com.example.message.recovery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApiswMuRhvIrkqK727-a3RFFuyv2rXyyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

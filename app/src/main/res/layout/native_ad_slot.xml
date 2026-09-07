@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Host for a single native ad slot, used by NativeAdSlot() in Compose.
+
+  Both children wrap their content: the AdsManager SDK inflates the chosen native layout into
+  adFrame and the matching shimmer skeleton into shimmerContainer, so neither is ever clipped.
+  Nothing here is design-specific — the layout to render is chosen per slot at the call site.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/adFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/shimmerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</FrameLayout>

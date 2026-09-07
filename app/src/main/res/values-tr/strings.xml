@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">Otomatik Temizleyici</string>
+    <string name="onboarding_title_2">Manuel Kontrol</string>
+    <string name="onboarding_title_3">Titreşim Modu</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">Dil Seç</string>
+    <string name="language_subtitle">Arayüz ve talimatlar için tercih ettiğiniz dili seçin.</string>
+    <string name="please_select_a_language">Lütfen Bir Dil Seçin</string>
+    <string name="exit_application">Uygulamadan Çık</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">Bu uygulamadan çıkmak istediğinizden emin misiniz?</string>
+    <string name="no">Hayır</string>
+    <string name="yes">Evet</string>
+    <string name="do_you_want_to_open_network_settings">Ağ ayarlarını açmak istiyor musunuz?</string>
+    <string name="no_internet_connection">İnternet bağlantısı yok!</string>
+    <string name="skip">Atla</string>
+    <string name="continuee">Devam Et</string>
+    <string name="get_started">Başla</string>
+    <string name="unable_to_load_ad">Reklam yüklenemedi</string>
+    <string name="home">Ana Sayfa</string>
+    <string name="settings">Ayarlar</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="rate_on_play_store">Play Store da Değerlendir</string>
+    <string name="purchase_successfully">Satın Alma Başarılı</string>
+    <string name="close">Kapat</string>
+    <string name="weekly_subscription">Haftalık Abonelik</string>
+    <string name="loading">Yükleniyor</string>
+    <string name="allow">İzin Ver</string>
+    <string name="stay_updated_with_notifications">Bildirimlerle Güncel Kalın</string>
+    <string name="notification_description">Önemli güncellemeler hakkında sizi bilgilendirmek için bildirim iznine ihtiyacımız var. Bu, zamanında uyarılarla daha iyi bir kullanıcı deneyimi sağlar.</string>
+    <string name="allow_access">Erişime İzin Ver</string>
+    <string name="maybe_later">Belki Sonra</string>
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">Bu Eylem Reklam İçerebilir</string>
+    <string name="yearly">Yıllık</string>
+    <string name="weekly">Haftalık</string>
+    <string name="restore">Eski haline getirmek</string>
+    <string name="terms_of_servuce">Hizmet Şartları</string>
+    <string name="next">Sonraki</string>
+    <string name="survey_title">Özelliklerinizi seçin</string>
+</resources>

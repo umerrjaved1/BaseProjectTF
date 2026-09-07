@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="accent_color">#FD5C02</color>
+    <color name="accent_color_ad">#FD5C02</color>
+    <color name="bg_color">#fff</color>
+    <color name="ad_btn_color2">#FD5C02</color>
+    <color name="ad_bg_color">#E7E7E7</color>
+    <color name="ad_title_color">#04061A</color>
+    <color name="ad_body_color">#6F6F6F</color>
+    <color name="shimmer_color">#666666</color>
+    <color name="grey_color">#6F6F6F</color>
+    <color name="splash_gradient_start">#FFA471</color>
+    <color name="splash_gradient_end">#FD5C02</color>
+</resources>

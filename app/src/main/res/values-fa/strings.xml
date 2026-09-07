@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">پاک‌کننده خودکار</string>
+    <string name="onboarding_title_2">کنترل دستی</string>
+    <string name="onboarding_title_3">حالت لرزش</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">انتخاب زبان</string>
+    <string name="language_subtitle">زبان مورد نظر خود را برای رابط کاربری و دستورالعمل‌ها انتخاب کنید.</string>
+    <string name="please_select_a_language">لطفاً یک زبان انتخاب کنید</string>
+    <string name="exit_application">خروج از برنامه</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">آیا مطمئن هستید که می‌خواهید از این برنامه خارج شوید؟</string>
+    <string name="no">خیر</string>
+    <string name="yes">بله</string>
+    <string name="do_you_want_to_open_network_settings">آیا می‌خواهید تنظیمات شبکه را باز کنید؟</string>
+    <string name="no_internet_connection">اتصال به اینترنت وجود ندارد!</string>
+    <string name="skip">رد کردن</string>
+    <string name="continuee">ادامه</string>
+    <string name="get_started">شروع کنید</string>
+    <string name="unable_to_load_ad">قادر به بارگذاری تبلیغ نیست</string>
+    <string name="home">صفحه اصلی</string>
+    <string name="settings">تنظیمات</string>
+    <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
+    <string name="rate_on_play_store">امتیاز در پلی استور</string>
+    <string name="purchase_successfully">خرید با موفقیت انجام شد</string>
+    <string name="close">بستن</string>
+    <string name="weekly_subscription">اشتراک هفتگی</string>
+    <string name="loading">در حال بارگذاری</string>
+    <string name="allow">اجازه دادن</string>
+    <string name="stay_updated_with_notifications">با اعلان‌ها به‌روز بمانید</string>
+    <string name="notification_description">ما برای مطلع نگه داشتن شما از به‌روزرسانی‌های مهم به مجوز اعلان نیاز داریم. این امر تجربه کاربری بهتری با هشدارهای به موقع را تضمین می‌کند.</string>
+    <string name="allow_access">اجازه دسترسی</string>
+    <string name="maybe_later">شاید بعداً</string>
+
+
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">این اقدام ممکن است حاوی تبلیغات باشد</string>
+    <string name="yearly">سالانه</string>
+    <string name="weekly">هفتگی</string>
+    <string name="restore">بازیابی کنید</string>
+    <string name="terms_of_servuce">شرایط خدمات</string>
+    <string name="next">بعدی</string>
+    <string name="survey_title">ویژگی های خود را انتخاب کنید</string>
+</resources>

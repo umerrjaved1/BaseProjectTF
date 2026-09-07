@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">Limpeza Automática</string>
+    <string name="onboarding_title_2">Controle Manual</string>
+    <string name="onboarding_title_3">Modo Vibração</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">Escolher Idioma</string>
+    <string name="language_subtitle">Escolha seu idioma preferido para a interface e instruções.</string>
+    <string name="please_select_a_language">Por favor, selecione um idioma</string>
+    <string name="exit_application">Sair do Aplicativo</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">Tem certeza de que deseja sair deste aplicativo?</string>
+    <string name="no">Não</string>
+    <string name="yes">Sim</string>
+    <string name="do_you_want_to_open_network_settings">Deseja abrir as configurações de rede?</string>
+    <string name="no_internet_connection">Sem conexão com a internet!</string>
+    <string name="skip">Pular</string>
+    <string name="continuee">Continuar</string>
+    <string name="get_started">Começar</string>
+    <string name="unable_to_load_ad">Não foi possível carregar o anúncio</string>
+    <string name="home">Início</string>
+    <string name="settings">Configurações</string>
+    <string name="privacy_policy">Política de Privacidade</string>
+    <string name="rate_on_play_store">Avaliar na Play Store</string>
+    <string name="purchase_successfully">Compra Bem-sucedida</string>
+    <string name="close">Fechar</string>
+    <string name="weekly_subscription">Assinatura Semanal</string>
+    <string name="loading">Carregando</string>
+    <string name="allow">Permitir</string>
+    <string name="stay_updated_with_notifications">Mantenha-se Atualizado com Notificações</string>
+    <string name="notification_description">Precisamos de permissão de notificação para mantê-lo informado sobre atualizações importantes. Isso garante uma melhor experiência do usuário com alertas oportunos.</string>
+    <string name="allow_access">Permitir Acesso</string>
+    <string name="maybe_later">Talvez Mais Tarde</string>
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">Esta ação pode conter anúncios</string>
+    <string name="yearly">Anual</string>
+    <string name="weekly">Semanalmente</string>
+    <string name="restore">Restaurar</string>
+    <string name="terms_of_servuce">Termos de Serviço</string>
+    <string name="next">Próximo</string>
+    <string name="survey_title">Escolha seus recursos</string>
+</resources>

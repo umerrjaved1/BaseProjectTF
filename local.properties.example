@@ -1,0 +1,10 @@
+## Copy to local.properties (gitignored) and fill in.
+sdk.dir=C\:\\Users\\YOU\\AppData\\Local\\Android\\Sdk
+
+# Required to resolve com.umer_tf.ads from GitHub Packages.
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_PAT
+
+# Optional BuildConfig fields (empty string if omitted).
+# API_KEY=
+# BASE_URL=

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">منظف تلقائي</string>
+    <string name="onboarding_title_2">تحكم يدوي</string>
+    <string name="onboarding_title_3">وضع الاهتزاز</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">اختر اللغة</string>
+    <string name="language_subtitle">اختر لغتك المفضلة للواجهة والتعليمات.</string>
+    <string name="please_select_a_language">يرجى اختيار اللغة</string>
+    <string name="exit_application">خروج من التطبيق</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">هل أنت متأكد أنك تريد الخروج من هذا التطبيق؟</string>
+    <string name="no">لا</string>
+    <string name="yes">نعم</string>
+    <string name="do_you_want_to_open_network_settings">هل تريد فتح إعدادات الشبكة؟</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت!</string>
+    <string name="skip">تخطي</string>
+    <string name="continuee">متابعة</string>
+    <string name="get_started">ابدأ الآن</string>
+    <string name="unable_to_load_ad">تعذر تحميل الإعلان</string>
+    <string name="home">الرئيسية</string>
+    <string name="settings">الإعدادات</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="rate_on_play_store">قيم على متجر Play</string>
+    <string name="purchase_successfully">تم الشراء بنجاح</string>
+    <string name="close">إغلاق</string>
+    <string name="weekly_subscription">اشتراك أسبوعي</string>
+    <string name="loading">جاري التحميل</string>
+    <string name="allow">السماح</string>
+    <string name="stay_updated_with_notifications">ابق على اطلاع بالإشعارات</string>
+    <string name="notification_description">نحتاج إلى إذن الإشعارات لإبقائك على اطلاع بالتحديثات المهمة. يضمن ذلك تجربة مستخدم أفضل مع تنبيهات في الوقت المناسب.</string>
+    <string name="allow_access">السماح بالوصول</string>
+    <string name="maybe_later">ربما لاحقًا</string>
+
+
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">قد يحتوي هذا الإجراء على إعلانات</string>
+    <string name="yearly">سنوي</string>
+    <string name="weekly">أسبوعي</string>
+    <string name="restore">يعيد</string>
+    <string name="terms_of_servuce">شروط الخدمة</string>
+    <string name="next">التالي</string>
+    <string name="survey_title">اختر الميزات الخاصة بك</string>
+</resources>

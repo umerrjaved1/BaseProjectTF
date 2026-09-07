@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<resources>
+    <string name="onboarding_title_1">Автоматическая очистка</string>
+    <string name="onboarding_title_2">Ручное управление</string>
+    <string name="onboarding_title_3">Режим вибрации</string>
+    <string name="english" translatable="false">English</string>
+    <string name="arabic" translatable="false">Arabic (العربیتہ)</string>
+    <string name="bengali" translatable="false">Bengali (বাংলা)</string>
+    <string name="hindi" translatable="false">Hindi (हिंदी)</string>
+    <string name="spanish" translatable="false">Spanish (Español)</string>
+    <string name="indonesian" translatable="false">Indonesian (Bahasa Indonesia)</string>
+    <string name="persian" translatable="false">(فارسی) Persian</string>
+    <string name="russian" translatable="false">Russian (Русский)</string>
+    <string name="portuguese" translatable="false">Portuguese (Português)</string>
+    <string name="turkish" translatable="false">Turkish (Türkçe)</string>
+    <string name="done_in_english" translatable="false">Done</string>
+    <string name="done_in_spanish" translatable="false">Hecho</string>
+    <string name="done_in_french" translatable="false">Terminé</string>
+    <string name="done_in_arabic" translatable="false">تم</string>
+    <string name="done_in_portuguese" translatable="false">Concluído</string>
+    <string name="done_in_russian" translatable="false">Готово</string>
+    <string name="done_in_turkish" translatable="false">Bitti</string>
+    <string name="done_in_persian" translatable="false">انجام شد</string>
+    <string name="done_in_indonesian" translatable="false">Selesai</string>
+    <string name="done_in_bengali" translatable="false">সম্পন্ন</string>
+    <string name="done_in_hindi" translatable="false">पूर्ण</string>
+    <string name="choose_language">Выбрать Язык</string>
+    <string name="language_subtitle">Выберите предпочитаемый язык для интерфейса и инструкций.</string>
+    <string name="please_select_a_language">Пожалуйста, выберите язык</string>
+    <string name="exit_application">Выйти из Приложения</string>
+    <string name="are_you_sure_you_want_to_exit_this_application">Вы уверены, что хотите выйти из этого приложения?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="do_you_want_to_open_network_settings">Хотите открыть настройки сети?</string>
+    <string name="no_internet_connection">Нет интернет-соединения!</string>
+    <string name="skip">Пропустить</string>
+    <string name="continuee">Продолжить</string>
+    <string name="get_started">Начать</string>
+    <string name="unable_to_load_ad">Не удалось загрузить рекламу</string>
+    <string name="home">Главная</string>
+    <string name="settings">Настройки</string>
+    <string name="privacy_policy">Политика Конфиденциальности</string>
+    <string name="rate_on_play_store">Оценить в Play Store</string>
+    <string name="purchase_successfully">Покупка Успешна</string>
+    <string name="close">Закрыть</string>
+    <string name="weekly_subscription">Еженедельная Подписка</string>
+    <string name="loading">Загрузка</string>
+    <string name="allow">Разрешить</string>
+    <string name="stay_updated_with_notifications">Оставайтесь в Курсе с Уведомлениями</string>
+    <string name="notification_description">Нам нужно разрешение на уведомления, чтобы держать вас в курсе важных обновлений. Это обеспечивает лучший пользовательский опыт с своевременными оповещениями.</string>
+    <string name="allow_access">Разрешить Доступ</string>
+    <string name="maybe_later">Возможно Позже</string>
+
+    <string name="privacy_policy_url">https://www.terafort.com/privacy.html</string>
+    <string name="terms_url">https://www.terafort.com/T&amp;C.html</string>
+    <string name="app_name">Message Recovery</string>
+    <string name="this_action_may_contain_ads">Это действие может содержать рекламу</string>
+    <string name="yearly">Ежегодно</string>
+    <string name="weekly">Еженедельно</string>
+    <string name="restore">Восстановить</string>
+    <string name="terms_of_servuce">Условия использования</string>
+    <string name="next">Следующий</string>
+    <string name="survey_title">Выберите свои функции</string>
+</resources>
