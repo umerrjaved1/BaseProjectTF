@@ -87,6 +87,13 @@ object AdUtils {
         lifecycleScope: LifecycleCoroutineScope,
         analyticsManager: AnalyticsManager? = null,
         eventNamePrefix: String? = null,
+        /**
+         * Reports the load result, before the ad is shown. [onComplete] only fires once the ad has
+         * been *dismissed*, so it is too late for a caller that needs to react to the ad merely
+         * being ready — the splash progress bar being the case this exists for. Called exactly
+         * once, on the UI thread.
+         */
+        onLoaded: (Boolean) -> Unit = {},
         onComplete: (Boolean) -> Unit = {}
     ) {
         val TAG = "SplashNav"
@@ -96,8 +103,13 @@ object AdUtils {
             activity.runOnUiThread { onComplete(shown) }
         }
 
+        fun reportLoaded(isLoaded: Boolean) {
+            activity.runOnUiThread { onLoaded(isLoaded) }
+        }
+
         if (adUnit.isBlank()) {
             Log.w(TAG, "loadAndShowInterSplash: empty ad unit")
+            reportLoaded(false)
             complete(false)
             return
         }
@@ -111,6 +123,7 @@ object AdUtils {
         Log.i(TAG, "loadAndShowInterSplash load unit=$adUnit")
         adMobManager.interstitialAdLoader.loadAd(adUnit) { isLoaded ->
             Log.i(TAG, "loadAndShowInterSplash loaded=$isLoaded finishing=${activity.isFinishing} destroyed=${activity.isDestroyed} state=${lifecycle.currentState}")
+            reportLoaded(isLoaded)
             if (!isLoaded) {
                 eventNamePrefix?.let {
                     analyticsManager?.sendAnalytics(

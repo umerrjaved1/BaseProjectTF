@@ -15,7 +15,6 @@ import com.example.message.recovery.ui.navigation.Home
 import com.example.message.recovery.ui.navigation.Language
 import com.example.message.recovery.ui.navigation.Onboarding
 import com.example.message.recovery.ui.navigation.Premium
-import com.example.message.recovery.ui.navigation.Survey
 import com.umer_tf.ads.domain.core.AdMobManager
 
 object StartupNavigationManager {
@@ -35,7 +34,6 @@ object StartupNavigationManager {
 
         val showLanguage = isFirstFlow && !RemoteConfigManager.getAdRules().skipLanguageScreen && !isLanguageSelected
         val showOnboarding = isFirstFlow && !RemoteConfigManager.getAdRules().skipOnboardingScreen
-        val showSurvey = isFirstFlow && !RemoteConfigManager.getAdRules().skipSurveyScreen
 
         val premiumConfig = RemoteConfigManager.getAdRules()
         val canShowPremium = !isPremium && !premiumConfig.skipPremiumScreen
@@ -66,7 +64,6 @@ object StartupNavigationManager {
                 showPremiumAfterSurvey = $showPremiumAfterSurvey
                 showLanguage = $showLanguage
                 showOnboarding = $showOnboarding
-                showSurvey = $showSurvey
             ================================================================
             """.trimIndent()
         )
@@ -100,14 +97,6 @@ object StartupNavigationManager {
                         Log.d(TAG, "Skipping Onboarding (showOnboarding = false)")
                     }
                 }
-                Step.SURVEY -> {
-                    if (showSurvey) {
-                        Log.i(TAG, "-> Resolved Next Screen: Survey")
-                        return Survey()
-                    } else {
-                        Log.d(TAG, "Skipping Survey (showSurvey = false)")
-                    }
-                }
                 Step.PREMIUM_AFTER_SURVEY -> {
                     if (showPremiumAfterSurvey) {
                         Log.i(TAG, "-> Resolved Next Screen: Premium (FROM_SURVEY)")
@@ -129,7 +118,10 @@ object StartupNavigationManager {
             Step.START -> Step.PREMIUM_AFTER_SPLASH
             Step.PREMIUM_AFTER_SPLASH, Step.PREMIUM -> Step.LANGUAGE
             Step.LANGUAGE -> Step.ONBOARDING
-            Step.ONBOARDING -> Step.SURVEY
+            // Survey is no longer part of the startup chain -- it is reachable only from Home as
+            // the watched-app picker (Survey(fromHome = true)). Step.SURVEY is kept because that
+            // Home entry still routes through navigateNextWithAd.
+            Step.ONBOARDING -> Step.PREMIUM_AFTER_SURVEY
             Step.SURVEY -> Step.PREMIUM_AFTER_SURVEY
             Step.PREMIUM_AFTER_SURVEY -> null
         }
@@ -150,7 +142,6 @@ object StartupNavigationManager {
 
         val showLanguage = isFirstFlow && !RemoteConfigManager.getAdRules().skipLanguageScreen && !isLanguageSelected
         val showOnboarding = isFirstFlow && !RemoteConfigManager.getAdRules().skipOnboardingScreen
-        val showSurvey = isFirstFlow && !RemoteConfigManager.getAdRules().skipSurveyScreen
 
         var nextStep: Step? = currentStep
         while (true) {
@@ -169,16 +160,7 @@ object StartupNavigationManager {
                     if (showOnboarding) {
                         if (RemoteConfigManager.getAdRules().showOb1Native) {
                             Log.d(TAG, "Preloading Onboarding Native Ad")
-                            adMobManager.nativeAdLoader.loadAd(AdIds.getNativeOb1AdId(), activity)
-                        }
-                        return
-                    }
-                }
-                Step.SURVEY -> {
-                    if (showSurvey) {
-                        if (RemoteConfigManager.getAdRules().showSurveyNative1) {
-                            Log.d(TAG, "Preloading Survey Native Ad")
-                            adMobManager.nativeAdLoader.loadAd(AdIds.getSurveyNative1AdId(), activity)
+                            adMobManager.nativeAdLoader.loadAd(AdIds.getObNativeAdId(), activity)
                         }
                         return
                     }

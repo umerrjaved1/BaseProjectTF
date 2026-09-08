@@ -41,8 +41,6 @@ import com.example.message.recovery.R
 import com.example.message.recovery.model.OnboardingItem
 import com.example.message.recovery.ui.compose.NativeAdContainer
 import com.example.message.recovery.ui.compose.PageIndicatorDots
-import com.example.message.recovery.ui.compose.PermissionBadgeType
-import com.example.message.recovery.ui.compose.PermissionCard
 import com.example.message.recovery.ui.compose.PrimaryPillButton
 import com.example.message.recovery.ui.theme.Accent
 import com.example.message.recovery.ui.theme.BgColor
@@ -60,14 +58,6 @@ sealed class OnboardingPage {
     data class Content(val item: OnboardingItem, val itemIndex: Int) : OnboardingPage()
     data object FullNativeAd : OnboardingPage()
 
-    /**
-     * Only built when something is actually missing, and it lists just the missing items — asking
-     * for access the user has already granted reads as if the app didn't notice.
-     */
-    data class Permissions(
-        val needsListener: Boolean,
-        val needsNotifications: Boolean,
-    ) : OnboardingPage()
 }
 
 @Composable
@@ -95,7 +85,6 @@ fun OnboardingScreen(
 
     val current = pages.getOrNull(currentPage)
     val isAdPage = current is OnboardingPage.FullNativeAd
-    val isPermissionPage = current is OnboardingPage.Permissions
     val indicatorCount = pages.count { it !is OnboardingPage.FullNativeAd }
     val indicatorIndex = pages.take(currentPage + 1).count { it !is OnboardingPage.FullNativeAd } - 1
     val window = windowSize()
@@ -104,7 +93,6 @@ fun OnboardingScreen(
         HorizontalPager(
             state = pagerState,
             modifier = m,
-            userScrollEnabled = !isPermissionPage,
             beyondViewportPageCount = 1,
         ) { index ->
             when (val page = pages[index]) {
@@ -116,10 +104,6 @@ fun OnboardingScreen(
                         onReady = onFullNativeReady,
                     )
                 }
-                is OnboardingPage.Permissions -> PermissionOnboardingPage(
-                    needsListener = page.needsListener,
-                    needsNotifications = page.needsNotifications,
-                )
             }
         }
     }
@@ -137,17 +121,14 @@ fun OnboardingScreen(
                 )
             }
             PrimaryPillButton(
-                text = when {
-                    isPermissionPage -> stringResource(R.string.allow_access)
-                    else -> stringResource(R.string.next)
-                },
+                text = stringResource(R.string.next),
                 onClick = onContinue,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
             )
         }
     }
 
-    val showInlineAd = adSlot != null && !isAdPage && !isPermissionPage
+    val showInlineAd = adSlot != null && !isAdPage
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -302,91 +283,6 @@ private fun OnboardingCopy(
     }
 }
 
-/**
- * The permission cards sit in one column on a phone and in two on a wide screen, where a single
- * stretched column of short cards reads badly.
- */
-@Composable
-private fun PermissionOnboardingPage(
-    needsListener: Boolean = true,
-    needsNotifications: Boolean = true,
-) {
-    val window = windowSize()
-    val cards: List<@Composable (Modifier) -> Unit> = buildList {
-        if (needsListener) {
-            add { m ->
-                PermissionCard(
-                    iconRes = R.drawable.ic_bell_green,
-                    title = stringResource(R.string.permission_notification_title),
-                    description = stringResource(R.string.permission_notification_desc),
-                    badgeType = PermissionBadgeType.Required,
-                    badgeText = stringResource(R.string.permission_required),
-                    modifier = m,
-                )
-            }
-        }
-        if (needsNotifications) {
-            add { m ->
-                PermissionCard(
-                    iconRes = R.drawable.ic_megaphone_green,
-                    title = stringResource(R.string.permission_alerts_title),
-                    description = stringResource(R.string.permission_alerts_desc),
-                    badgeType = PermissionBadgeType.Optional,
-                    badgeText = stringResource(R.string.permission_optional),
-                    modifier = m,
-                )
-            }
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = window.screenHorizontalPadding, vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .widthIn(max = window.contentMaxWidth),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_permission_shield),
-                contentDescription = null,
-                modifier = Modifier.heightIn(max = if (window.isShortScreen) 44.dp else 72.dp),
-                contentScale = ContentScale.Fit,
-            )
-            Spacer(Modifier.height(if (window.isShortScreen) 8.dp else 20.dp))
-            Text(
-                text = stringResource(R.string.onboarding_permission_title),
-                fontSize = if (window.isShortScreen) 18.sp else 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextPrimary,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(Modifier.height(if (window.isShortScreen) 4.dp else 8.dp))
-            Text(
-                text = stringResource(R.string.onboarding_permission_subtitle),
-                fontSize = if (window.isShortScreen) 13.sp else 14.sp,
-                color = TextSecondary,
-                textAlign = TextAlign.Center,
-                lineHeight = if (window.isShortScreen) 18.sp else 20.sp,
-            )
-            Spacer(Modifier.height(if (window.isShortScreen) 12.dp else 20.dp))
-            if (window.prefersSideBySide) {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    cards.forEach { card -> card(Modifier.weight(1f)) }
-                }
-            } else {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    cards.forEach { card -> card(Modifier.fillMaxWidth()) }
-                }
-            }
-        }
-    }
-}
 
 @DevicePreviews
 @Composable
@@ -402,7 +298,6 @@ private fun OnboardingContentPreview() {
                     ),
                     itemIndex = 0,
                 ),
-                OnboardingPage.Permissions(needsListener = true, needsNotifications = true),
             ),
             currentPage = 0,
             onPageChanged = {},
@@ -413,8 +308,3 @@ private fun OnboardingContentPreview() {
     }
 }
 
-@DevicePreviews
-@Composable
-private fun OnboardingPermissionsPreview() {
-    AppTheme { PermissionOnboardingPage() }
-}

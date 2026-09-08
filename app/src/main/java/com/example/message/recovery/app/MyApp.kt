@@ -12,6 +12,9 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.bytedance.sdk.openadsdk.api.init.PAGConfig
+import com.bytedance.sdk.openadsdk.api.init.PAGSdk
+import com.example.message.recovery.BuildConfig
 import com.umer_tf.ads.domain.core.AdMobManager
 import com.example.message.recovery.iab.AppBillingClient
 import com.example.message.recovery.iab.ConnectResponse
@@ -19,6 +22,17 @@ import com.example.message.recovery.iab.SubscriptionItem
 import com.example.message.recovery.remoteconfig.RemoteConfigManager
 import com.example.message.recovery.ui.navigation.CurrentNavDestination
 import com.example.message.recovery.utils.AdUtils
+import com.ironsource.mediationsdk.logger.IronSourceError
+import com.mbridge.msdk.MBridgeConstans
+import com.mbridge.msdk.out.MBridgeSDKFactory
+import com.unity3d.ads.InitializationConfiguration
+import com.unity3d.ads.UnityAds
+import com.unity3d.ironsourceads.InitListener
+import com.unity3d.ironsourceads.InitRequest
+import com.unity3d.ironsourceads.IronSourceAds
+import com.vungle.ads.InitializationListener
+import com.vungle.ads.VungleAds
+import com.vungle.ads.VungleError
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +41,18 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import dagger.Lazy
+
+private const val PANGLE_APP_ID = "8889520"
+
+private const val IRON_SOURCE_APP_ID = "27e7db28d"
+
+private const val MINTEGRAL_APP_ID = "5530828"
+
+private const val MINTEGRAL_APP_KEY = "864b2d0fa6bcc315357848822816594a"
+
+private const val UNITY_APP_ID = "6184165"
+
+private const val VUNGLE_APP_ID = "6a98126745d118b487f23405"
 
 @HiltAndroidApp
 class MyApp : Application() {
@@ -131,6 +157,88 @@ class MyApp : Application() {
         )
     }
 
+    private fun initializeMediationSdks() {
+        try {
+            val panglePackage = BuildConfig.APPLICATION_ID
+            runCatching {
+                PAGConfig::class.java.getMethod("setPackageName", String::class.java)
+                    .invoke(null, panglePackage)
+            }
+            val pangleConfig = PAGConfig.Builder()
+                .appId(PANGLE_APP_ID)
+                .setPackageName(panglePackage)
+                .build()
+            PAGSdk.init(this, pangleConfig, object : PAGSdk.PAGInitCallback {
+                override fun success() {
+                    Log.d(TAG, "Pangle initialized")
+                }
+
+                override fun fail(code: Int, msg: String) {
+                    Log.e(TAG, "Pangle init failed: $code $msg")
+                }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "Pangle init error", e)
+        }
+
+        try {
+            val ironSourceRequest =
+                InitRequest.Builder(IRON_SOURCE_APP_ID).build()
+            IronSourceAds.init(this, ironSourceRequest, object : InitListener {
+                override fun onInitSuccess() {
+                    Log.d(TAG, "IronSource initialized")
+                }
+
+                override fun onInitFailed(ironSourceError: IronSourceError) {
+                    Log.e(TAG, "IronSource init failed: ${ironSourceError.errorMessage}")
+                }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "IronSource init error", e)
+        }
+
+        try {
+            VungleAds.init(this, VUNGLE_APP_ID, object : InitializationListener {
+                override fun onSuccess() {
+                    Log.d(TAG, "Liftoff/Vungle initialized")
+                }
+
+                override fun onError(vungleError: VungleError) {
+                    Log.e(TAG, "Liftoff/Vungle init failed: ${vungleError.errorMessage}")
+                }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "Liftoff/Vungle init error", e)
+        }
+
+        try {
+            val mtgSdk = MBridgeSDKFactory.getMBridgeSDK()
+            val mtgConfig = HashMap<String, String>()
+            mtgConfig[MBridgeConstans.APP_ID] = MINTEGRAL_APP_ID
+            mtgConfig[MBridgeConstans.APP_KEY] = MINTEGRAL_APP_KEY
+            mtgSdk.init(mtgConfig, this)
+            Log.d(TAG, "Mintegral initialized")
+        } catch (e: Exception) {
+            Log.e(TAG, "Mintegral init error", e)
+        }
+
+        try {
+            val unityConfig =
+                InitializationConfiguration.Builder(UNITY_APP_ID).build()
+            UnityAds.initialize(unityConfig) { unityAdsError ->
+                if (unityAdsError != null) {
+                    Log.e(
+                        TAG,
+                        "Unity Ads init failed: ${unityAdsError.code}, ${unityAdsError.message}"
+                    )
+                } else {
+                    Log.d(TAG, "Unity Ads initialized")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Unity Ads init error", e)
+        }
+    }
 
 
     // -----------------------------------------------------------------------

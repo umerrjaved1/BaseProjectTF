@@ -70,19 +70,35 @@ class MainActivity : BaseActivity() {
         var hasAskedListenerPermissionThisSession = false
     }
 
-    @Inject lateinit var analyticsManager: AnalyticsManager
-    @Inject lateinit var analyticsManagerLazy: Lazy<AnalyticsManager>
-    @Inject lateinit var adMobManager: AdMobManager
-    @Inject lateinit var adMobManagerLazy: Lazy<AdMobManager>
-    @Inject lateinit var appPreferences: AppPreferences
-    @Inject lateinit var rateUsManager: RateUsManager
-    @Inject lateinit var appNavigator: AppNavigator
-    @Inject lateinit var currentNavDestination: CurrentNavDestination
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
+
+    @Inject
+    lateinit var analyticsManagerLazy: Lazy<AnalyticsManager>
+
+    @Inject
+    lateinit var adMobManager: AdMobManager
+
+    @Inject
+    lateinit var adMobManagerLazy: Lazy<AdMobManager>
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var rateUsManager: RateUsManager
+
+    @Inject
+    lateinit var appNavigator: AppNavigator
+
+    @Inject
+    lateinit var currentNavDestination: CurrentNavDestination
 
     private var showExitDialog by mutableStateOf(false)
     private var showNotificationDialog by mutableStateOf(false)
     private var showListenerPermissionDialog by mutableStateOf(false)
     private var showRateUsDialog by mutableStateOf(false)
+
     // Plain field, not snapshot state: nothing in the composition reads it, so making it observable
     // only cost a snapshot write (and a global snapshot invalidation) on every onResume.
     private var listenerEnabled = false
@@ -125,85 +141,85 @@ class MainActivity : BaseActivity() {
                 ) {
                     key(appNavigator.navHostGeneration) {
                         val navController = rememberNavController()
-                    DisposableEffect(pendingNavRoute) {
-                        pendingNavRoute?.let { route ->
-                            when (route) {
-                                is Premium -> appNavigator.navigate(route)
-                                Settings -> appNavigator.navigateTab(Settings)
-                                Home -> appNavigator.navigateTab(Home)
-                                else -> appNavigator.navigate(route)
+                        DisposableEffect(pendingNavRoute) {
+                            pendingNavRoute?.let { route ->
+                                when (route) {
+                                    is Premium -> appNavigator.navigate(route)
+                                    Settings -> appNavigator.navigateTab(Settings)
+                                    Home -> appNavigator.navigateTab(Home)
+                                    else -> appNavigator.navigate(route)
+                                }
+                                pendingNavRoute = null
                             }
-                            pendingNavRoute = null
+                            onDispose { }
                         }
-                        onDispose { }
-                    }
-                    val eventHandler = remember {
-                        MainContract.EventHandler(
-                            onTabSelected = { tab ->
-                                if (tab != currentNavDestination.kind.toTab()) {
-                                    analyticsManager.sendAnalytics(
-                                        AnalyticsManager.Action.CLICKED,
-                                        AnalyticsManager.Events.TAB_CLICK,
-                                    )
-                                    handleTabInterstitial { appNavigator.navigateTab(tab) }
-                                }
-                            },
-                            onPremium = { appNavigator.openPremiumFromIcon() },
-                            onLanguage = { appNavigator.navigate(Language(fromStart = false)) },
-                            onRequestListenerAccess = { openNotificationListenerSettings() },
-                            onHomeBack = { showExitDialog = true },
-                            onSettingsBack = { appNavigator.navigateTab(Home) },
-                            onAddApps = { appNavigator.navigate(Survey(fromHome = true)) },
-                            onExitConfirm = {
-                                showExitDialog = false
-                                showExitInterstitialThenLeave()
-                            },
-                            onExitDismiss = { showExitDialog = false },
-                            onNotificationAllow = {
-                                showNotificationDialog = false
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                }
-                            },
-                            onNotificationDismiss = { showNotificationDialog = false },
-                            onListenerAllow = {
-                                showListenerPermissionDialog = false
-                                openNotificationListenerSettings()
-                            },
-                            onListenerDismiss = { showListenerPermissionDialog = false },
-                            onRate = {
-                                showRateUsDialog = false
-                                rateUsManager.onUserRated()
-                                openPlayStore()
-                            },
-                            onRateDismiss = { showRateUsDialog = false },
+                        val eventHandler = remember {
+                            MainContract.EventHandler(
+                                onTabSelected = { tab ->
+                                    if (tab != currentNavDestination.kind.toTab()) {
+                                        analyticsManager.sendAnalytics(
+                                            AnalyticsManager.Action.CLICKED,
+                                            AnalyticsManager.Events.TAB_CLICK,
+                                        )
+                                        handleTabInterstitial { appNavigator.navigateTab(tab) }
+                                    }
+                                },
+                                onPremium = { appNavigator.openPremiumFromIcon() },
+                                onLanguage = { appNavigator.navigate(Language(fromStart = false)) },
+                                onRequestListenerAccess = { openNotificationListenerSettings() },
+                                onHomeBack = { showExitDialog = true },
+                                onSettingsBack = { appNavigator.navigateTab(Home) },
+                                onAddApps = { appNavigator.navigate(Survey(fromHome = true)) },
+                                onExitConfirm = {
+                                    showExitDialog = false
+                                    showExitInterstitialThenLeave()
+                                },
+                                onExitDismiss = { showExitDialog = false },
+                                onNotificationAllow = {
+                                    showNotificationDialog = false
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                    }
+                                },
+                                onNotificationDismiss = { showNotificationDialog = false },
+                                onListenerAllow = {
+                                    showListenerPermissionDialog = false
+                                    openNotificationListenerSettings()
+                                },
+                                onListenerDismiss = { showListenerPermissionDialog = false },
+                                onRate = {
+                                    showRateUsDialog = false
+                                    rateUsManager.onUserRated()
+                                    openPlayStore()
+                                },
+                                onRateDismiss = { showRateUsDialog = false },
+                            )
+                        }
+                        AppNavHost(
+                            navController = navController,
+                            startDestination = initialRoute,
+                            navigator = appNavigator,
+                            currentNavDestination = currentNavDestination,
+                            adMobManagerLazy = adMobManagerLazy,
+                            adMobManager = adMobManager,
+                            analyticsManagerLazy = analyticsManagerLazy,
+                            analyticsManager = analyticsManager,
+                            appPreferences = appPreferences,
+                            eventHandler = eventHandler,
+                            onMainVisible = { onEnteredMain() },
                         )
-                    }
-                    AppNavHost(
-                        navController = navController,
-                        startDestination = initialRoute,
-                        navigator = appNavigator,
-                        currentNavDestination = currentNavDestination,
-                        adMobManagerLazy = adMobManagerLazy,
-                        adMobManager = adMobManager,
-                        analyticsManagerLazy = analyticsManagerLazy,
-                        analyticsManager = analyticsManager,
-                        appPreferences = appPreferences,
-                        eventHandler = eventHandler,
-                        onMainVisible = { onEnteredMain() },
-                    )
-                    // Deliberately a sibling of the NavHost rather than a child of it. When the
-                    // dialog flags were passed down as AppNavHost parameters, opening or closing
-                    // any dialog — and every onResume, via listenerEnabled — recomposed the whole
-                    // navigation graph and the visible screen with it. Read here, only this call
-                    // recomposes.
-                    MainDialogs(
-                        showExitDialog = showExitDialog,
-                        showNotificationDialog = showNotificationDialog,
-                        showListenerPermissionDialog = showListenerPermissionDialog,
-                        showRateUsDialog = showRateUsDialog,
-                        eventHandler = eventHandler,
-                    )
+                        // Deliberately a sibling of the NavHost rather than a child of it. When the
+                        // dialog flags were passed down as AppNavHost parameters, opening or closing
+                        // any dialog — and every onResume, via listenerEnabled — recomposed the whole
+                        // navigation graph and the visible screen with it. Read here, only this call
+                        // recomposes.
+                        MainDialogs(
+                            showExitDialog = showExitDialog,
+                            showNotificationDialog = showNotificationDialog,
+                            showListenerPermissionDialog = showListenerPermissionDialog,
+                            showRateUsDialog = showRateUsDialog,
+                            eventHandler = eventHandler,
+                        )
                     }
                 }
             }
@@ -253,7 +269,9 @@ class MainActivity : BaseActivity() {
         val targetScreen = intent.getStringExtra(AppFirebaseMessagingService.EXTRA_TARGET_SCREEN)
             ?: intent.getStringExtra("screen")
         if (!isFromFcm && targetScreen.isNullOrEmpty()) return
-        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "fcm_notification_clicked")
+        analyticsManager.sendAnalytics(
+            AnalyticsManager.Action.ACTION_TYPE, "fcm_notification_clicked"
+        )
         if (!consumeIfStart) return
         pendingNavRoute = when (targetScreen?.lowercase()) {
             AppFirebaseMessagingService.TARGET_PREMIUM -> Premium(fromIcon = true)
@@ -265,8 +283,10 @@ class MainActivity : BaseActivity() {
     override fun handleBackPress() {
         when (currentNavDestination.kind) {
             NavScreenKind.Home -> showExitDialog = true
-            NavScreenKind.Media, NavScreenKind.Status, NavScreenKind.Settings ->
-                appNavigator.navigateTab(Home)
+            NavScreenKind.Media, NavScreenKind.Status, NavScreenKind.Settings -> appNavigator.navigateTab(
+                Home
+            )
+
             NavScreenKind.Start -> finishAffinity()
             NavScreenKind.Survey -> if (!appNavigator.pop()) finishAffinity()
             else -> if (!appNavigator.pop()) finishAffinity()
@@ -279,7 +299,9 @@ class MainActivity : BaseActivity() {
         if (hasEnteredMain) return
         hasEnteredMain = true
         analyticsManager.sendAnalytics(AnalyticsManager.Action.OPENED, "MainActivity")
-        analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.HOME_VIEW)
+        analyticsManager.sendAnalytics(
+            AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.HOME_VIEW
+        )
         checkNotificationPermission()
         checkNotificationListenerPermission()
         appPreferences.setBoolean(AppPreferences.IS_ONBOARDING, true)
@@ -339,8 +361,9 @@ class MainActivity : BaseActivity() {
     private fun checkNotificationPermission() {
         if (appPreferences.getBoolean(AppPreferences.IS_ONBOARDING, false)) return
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-            PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
         ) return
         if (hasAskedNotificationPermissionThisSession) return
         hasAskedNotificationPermissionThisSession = true
@@ -405,7 +428,10 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
         } catch (_: Exception) {
             startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                )
             )
         }
     }
@@ -413,13 +439,14 @@ class MainActivity : BaseActivity() {
     private fun showExitNotification() {
         val adRules = RemoteConfigManager.getAdRules()
         if (!adRules.enableExitNotification) return
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
-            PackageManager.PERMISSION_GRANTED
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(
+                this, Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
         ) return
 
         val channelId = "${getString(R.string.app_name)}_channel"
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+        val notificationManager =
+            getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
                 android.app.NotificationChannel(
@@ -437,14 +464,11 @@ class MainActivity : BaseActivity() {
             },
             android.app.PendingIntent.FLAG_IMMUTABLE or android.app.PendingIntent.FLAG_UPDATE_CURRENT,
         )
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_notifications)
-            .setContentTitle(adRules.exitNotificationTitle)
-            .setContentText(adRules.exitNotificationDescription)
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-            .build()
+        val notification =
+            NotificationCompat.Builder(this, channelId).setSmallIcon(R.drawable.ic_notifications)
+                .setContentTitle(adRules.exitNotificationTitle)
+                .setContentText(adRules.exitNotificationDescription).setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH).setAutoCancel(true).build()
         try {
             NotificationManagerCompat.from(this).notify(1002, notification)
         } catch (e: SecurityException) {

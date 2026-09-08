@@ -1,12 +1,8 @@
 package com.example.message.recovery.ui.screens.onboarding
 
-import android.Manifest
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -20,8 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.lifecycleScope
 import com.example.message.recovery.R
 import com.example.message.recovery.app.AdIds
@@ -29,12 +23,10 @@ import com.example.message.recovery.app.AnalyticsManager
 import com.example.message.recovery.app.AppPreferences
 import com.example.message.recovery.app.MyApp
 import com.example.message.recovery.model.OnboardingItem
-import com.example.message.recovery.notification.NotificationListenerHelper
 import com.example.message.recovery.remoteconfig.RemoteConfigManager
 import com.example.message.recovery.ui.compose.NativeOrBannerAdSlot
 import com.example.message.recovery.ui.navigation.AppNavigator
 import com.example.message.recovery.utils.AdUtils
-import com.example.message.recovery.utils.PermissionNavigationHelper
 import com.example.message.recovery.utils.StartupNavigationManager
 import com.umer_tf.ads.domain.ads.native_ad.NativeAdLayout
 import com.umer_tf.ads.domain.core.AdMobManager
@@ -64,11 +56,6 @@ fun OnboardingRoute(
     var showSmallNative by remember { mutableStateOf(false) }
     var hasNavigated by remember { mutableStateOf(false) }
     var fullNativeFrame by remember { mutableStateOf<android.widget.FrameLayout?>(null) }
-    // Set when we send the user to system Settings, cleared only once they have actually come
-    // back. hasLeftScreen guards against the resume that fires before we leave — see the
-    // LifecycleResumeEffect below.
-    var awaitingSettingsReturn by remember { mutableStateOf(false) }
-    var hasLeftScreen by remember { mutableStateOf(false) }
 
     fun continueStartup() {
         if (hasNavigated) return
@@ -83,22 +70,6 @@ fun OnboardingRoute(
             adMobManager = adMobManager,
             analyticsManager = analyticsManager,
         )
-    }
-
-    val notificationPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { continueStartup() }
-
-    fun requestPostNotificationsIfNeeded() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) !=
-            PackageManager.PERMISSION_GRANTED
-        ) {
-            MyApp.ignoreNextResume = true
-            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            continueStartup()
-        }
     }
 
     LaunchedEffect(Unit) {
@@ -129,41 +100,14 @@ fun OnboardingRoute(
         if (hasAdPage && config.fullNativeAdPosition >= built.size) {
             built.add(OnboardingPage.FullNativeAd)
         }
-        // Only ask for what is actually missing. A returning user who already granted both (for
-        // example after reinstalling onboarding state, or coming back through Settings) should not
-        // be shown a permission wall they have nothing to do on.
-        val needsListener = !NotificationListenerHelper.isEnabled(activity)
-        val needsNotifications = !PermissionNavigationHelper.hasPostNotifications(activity)
-        if (needsListener || needsNotifications) {
-            built.add(
-                OnboardingPage.Permissions(
-                    needsListener = needsListener,
-                    needsNotifications = needsNotifications,
-                ),
-            )
-        }
         pages = built
-    }
-
-    // Keyed on Unit, not on the pending flag. Keying it on the flag meant that setting the flag
-    // re-keyed the effect, which then fired straight away while the screen was still RESUMED —
-    // i.e. before startActivity() had actually taken the user to Settings. The flag was consumed
-    // on the way out instead of on the way back, so returning from Settings did nothing and the
-    // Allow Access button appeared dead. Requiring an intervening pause makes the handoff explicit.
-    LifecycleResumeEffect(Unit) {
-        if (awaitingSettingsReturn && hasLeftScreen) {
-            awaitingSettingsReturn = false
-            hasLeftScreen = false
-            requestPostNotificationsIfNeeded()
-        }
-        onPauseOrDispose { hasLeftScreen = true }
     }
 
     fun updateSmallNativeVisibility(position: Int) {
         val adRules = RemoteConfigManager.getAdRules()
         val page = pages.getOrNull(position)
         analyticsManager.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, "ob${position + 1}_view")
-        if (page is OnboardingPage.FullNativeAd || page is OnboardingPage.Permissions || AdMobManager.isPremium) {
+        if (page is OnboardingPage.FullNativeAd || AdMobManager.isPremium) {
             showSmallNative = false
             return
         }
@@ -200,7 +144,7 @@ fun OnboardingRoute(
         movableContentOf { slotModifier: Modifier ->
             NativeOrBannerAdSlot(
                 enabled = true,
-                nativeAdUnitId = AdIds.getNativeOb1AdId(),
+                nativeAdUnitId = AdIds.getObNativeAdId(),
                 bannerAdUnitId = AdIds.getBannerOnboardingAdId(),
                 nativeSlotKey = ONBOARDING_NATIVE_SLOT_KEY,
                 modifier = slotModifier,
@@ -238,32 +182,12 @@ fun OnboardingRoute(
                 OnboardingPage.FullNativeAd -> {
                     if (currentPage < pages.lastIndex) currentPage += 1
                 }
-                is OnboardingPage.Permissions -> {
-                    analyticsManager.sendAnalytics(
-                        AnalyticsManager.Action.ACTION_TYPE,
-                        AnalyticsManager.Events.OB4_GET_STARTED,
-                    )
-                    if (NotificationListenerHelper.isEnabled(activity)) {
-                        // Listener already granted (or granted on a previous trip to Settings) —
-                        // nothing to send them out for, so go straight to the runtime permission.
-                        requestPostNotificationsIfNeeded()
-                    } else {
-                        awaitingSettingsReturn = true
-                        hasLeftScreen = false
-                        PermissionNavigationHelper.openNotificationListenerSettings(activity)
-                    }
-                }
                 null -> continueStartup()
             }
         },
-        onSkip = {
-            val permissionIndex = pages.indexOfFirst { it is OnboardingPage.Permissions }
-            if (permissionIndex >= 0 && currentPage < permissionIndex) {
-                currentPage = permissionIndex
-            } else {
-                continueStartup()
-            }
-        },
+        // Nothing left to skip ahead to now that the permission page is gone -- Skip leaves
+        // onboarding, and MainActivity does the permission asking on Home.
+        onSkip = { continueStartup() },
         onFullNativeReady = { frame, shimmer ->
             if (fullNativeFrame === frame) return@OnboardingScreen
             fullNativeFrame = frame

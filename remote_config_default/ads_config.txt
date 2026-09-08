@@ -3,7 +3,7 @@
   "interstitialMinTimer": 30,
   "interstitialCounter": 1,
   "openAdResumeTimer": 15,
-  "splashAdLoadOrder": "app_open_then_inter",
+  "splashAdLoadOrder": 2,
   "showAppOpenSplashAd": true,
   "showSplashInterstitialAd": true,
   "showFullScreenNativeSplashAd": false,

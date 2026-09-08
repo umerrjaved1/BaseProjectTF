@@ -5,6 +5,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -57,7 +57,6 @@ import com.example.message.recovery.app.AppPreferences
 import com.example.message.recovery.app.MyApp
 import com.example.message.recovery.fcm.FcmManager
 import com.example.message.recovery.remoteconfig.RemoteConfigManager
-import com.example.message.recovery.remoteconfig.data.SplashAdLoadOrder
 import com.example.message.recovery.ui.navigation.AppNavigator
 import com.example.message.recovery.ui.theme.DevicePreviews
 import com.example.message.recovery.ui.theme.SplashGradientEnd
@@ -87,12 +86,11 @@ fun StartRoute(
     appPreferences: AppPreferences,
     viewModel: StartViewModel = hiltViewModel(),
 ) {
-    val activity = LocalContext.current as AppCompatActivity
+    val activity = LocalActivity.current as AppCompatActivity
     val adMobManager = remember { adMobManagerLazy.get() }
     val adsConsentManager = remember { AdsConsentManager(activity) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var loadingProgress by remember { mutableFloatStateOf(0.15f) }
     var showGetStarted by remember { mutableStateOf(false) }
     var showProgress by remember { mutableStateOf(true) }
     var isPremium by remember { mutableStateOf(false) }
@@ -105,15 +103,27 @@ fun StartRoute(
     var splashJob by remember { mutableStateOf<Job?>(null) }
     val mainHandler = remember { Handler(Looper.getMainLooper()) }
 
-    fun setSplashProgress(value: Float) {
-        if (value > loadingProgress) {
-            loadingProgress = value
-            showProgress = !isAdLoadingFinished
-        }
+    // The bar is indeterminate: it reports "still working", not how far along. There is nothing
+    // honest to measure here anyway -- the splash waits on an ad fill whose duration is unknown
+    // until it happens, so any fraction would be invented.
+    //
+    // "Complete" therefore means stop: the sweep runs until the splash resolves, then the bar goes
+    // away. Same two triggers as before -- full-screen ad loaded, or the splash timed out.
+    var splashComplete by remember { mutableStateOf(false) }
+
+    /** Idempotent: the first caller to finish the splash wins, later ones are no-ops. */
+    fun completeSplashProgress(reason: String) {
+        if (splashComplete) return
+        Log.i(TAG, "splash loading finished reason=$reason")
+        splashComplete = true
+        showProgress = false
     }
 
     fun moveToNextScreen(reason: String) {
         Log.i(TAG, "moveToNextScreen reason=$reason hasMoved=$hasMovedToNext")
+        // Leaving the splash means its loading is over by definition. Covers every exit path that
+        // does not go through an ad — premium, no-internet, no-ad-configured — in one place.
+        completeSplashProgress(reason)
         if (hasMovedToNext || activity.isFinishing || activity.isDestroyed) return
         mainHandler.post {
             if (hasMovedToNext || activity.isFinishing || activity.isDestroyed) return@post
@@ -146,11 +156,18 @@ fun StartRoute(
         hasTriggeredInterstitialNavigation = true
         pendingNavigationAfterAd = true
 
-        val tryAppOpen = adRules.showAppOpenSplashAd
-        val tryInter = adRules.showSplashInterstitialAd
-        val interFirst = adRules.splashAdLoadOrder == SplashAdLoadOrder.INTER_THEN_APP_OPEN
+        // Order NONE is a hard off switch for the whole splash placement, so it also suppresses
+        // the full-screen native fallback below -- "no ad on splash" means no ad. The two boolean
+        // flags stay as independent per-format switches for orders 1 and 2.
+        val noSplashAd = adRules.splashAdLoadOrder == 3
+        val tryAppOpen = !noSplashAd && adRules.showAppOpenSplashAd
+        val tryInter = !noSplashAd && adRules.showSplashInterstitialAd
+        val interFirst = adRules.splashAdLoadOrder == 1
 
         fun showFullScreenNativeOrLeave(reason: String) {
+            // Reached once the app-open/interstitial waterfall has resolved, so the splash has
+            // nothing left to wait on either way.
+            completeSplashProgress(reason)
             if (adRules.showFullScreenNativeSplashAd && !tryAppOpen && !tryInter) {
                 AdUtils.loadAndShowFullScreenNativeAdWithDialog(
                     activity = activity,
@@ -177,6 +194,11 @@ fun StartRoute(
                 lifecycleScope = activity.lifecycleScope,
                 analyticsManager = analyticsManager.get(),
                 eventNamePrefix = "splash_int",
+                // Fires on the load result, before the ad is shown. onComplete below only runs
+                // after the ad is dismissed, by which point the splash is gone.
+                onLoaded = { isLoaded ->
+                    if (isLoaded) completeSplashProgress("interstitial_loaded")
+                },
             ) { shown ->
                 if (shown) navigateAfterAd("interstitial_complete") else onFail()
             }
@@ -188,23 +210,37 @@ fun StartRoute(
                 return
             }
             val analytics = analyticsManager.get()
-            analytics.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST)
+            analytics.sendAnalytics(
+                AnalyticsManager.Action.ACTION_TYPE,
+                AnalyticsManager.Events.APPOPEN_REQUEST
+            )
             adMobManager.appOpenAdLoader.loadAppOpenAd(activity) { isLoaded ->
                 if (isLoaded) {
-                    analytics.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST_PASS)
+                    completeSplashProgress("app_open_loaded")
+                    analytics.sendAnalytics(
+                        AnalyticsManager.Action.ACTION_TYPE,
+                        AnalyticsManager.Events.APPOPEN_REQUEST_PASS
+                    )
                     MyApp.ignoreNextResume = true
                     adMobManager.appOpenAdLoader.showAppOpenAdIfAvailable {
-                        analytics.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_VIEW)
+                        analytics.sendAnalytics(
+                            AnalyticsManager.Action.ACTION_TYPE,
+                            AnalyticsManager.Events.APPOPEN_VIEW
+                        )
                         navigateAfterAd("app_open_complete")
                     }
                 } else {
-                    analytics.sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.APPOPEN_REQUEST_FAIL)
+                    analytics.sendAnalytics(
+                        AnalyticsManager.Action.ACTION_TYPE,
+                        AnalyticsManager.Events.APPOPEN_REQUEST_FAIL
+                    )
                     onFail()
                 }
             }
         }
 
         when {
+            noSplashAd -> moveToNextScreen("splash_order_none")
             !tryAppOpen && !tryInter -> showFullScreenNativeOrLeave("no_splash_ad")
             interFirst -> loadInter { loadAppOpen { showFullScreenNativeOrLeave("waterfall_fail") } }
             else -> loadAppOpen { loadInter { showFullScreenNativeOrLeave("waterfall_fail") } }
@@ -213,8 +249,8 @@ fun StartRoute(
 
     fun showGetStartedButton() {
         isAdLoadingFinished = true
-        setSplashProgress(1f)
-        showProgress = false
+        // The splash timing out is the other way the bar completes.
+        completeSplashProgress("loading_finished")
         val showButton = RemoteConfigManager.getAdRules().showGetStartedButton
         if (showButton) {
             showGetStarted = true
@@ -225,11 +261,12 @@ fun StartRoute(
     }
 
     fun proceedWithAds() {
-        setSplashProgress(0.7f)
         val startConfig = RemoteConfigManager.getAdRules()
         val adRules = RemoteConfigManager.getAdRules()
-        val hasSplashFullscreenAd =
-            adRules.showAppOpenSplashAd || adRules.showSplashInterstitialAd || adRules.showFullScreenNativeSplashAd
+        // Checked here too so order NONE skips setSplash(true) and the next-screen preload rather
+        // than setting up an ad pipeline that triggerNextNavigationStep would immediately abandon.
+        val hasSplashFullscreenAd = adRules.splashAdLoadOrder != 3 &&
+                (adRules.showAppOpenSplashAd || adRules.showSplashInterstitialAd || adRules.showFullScreenNativeSplashAd)
         if (!hasSplashFullscreenAd) {
             if (startConfig.showGetStartedButton) showGetStartedButton() else moveToNextScreen("no_fullscreen_ad")
             return
@@ -243,7 +280,6 @@ fun StartRoute(
     }
 
     fun initConsent() {
-        setSplashProgress(0.55f)
         if (!adsConsentManager.canRequestAds) {
             adsConsentManager.showGDPRConsent(activity, false) { error ->
                 error?.let { Log.w(TAG, "Consent error: ${it.errorCode} - ${it.message}") }
@@ -270,10 +306,14 @@ fun StartRoute(
         // present, then the heavy work runs against a screen that is already up.
         withFrameNanos { }
 
-        Log.i("StartupTiming", "first frame work starting at +${SystemClock.elapsedRealtime() - MyApp.appStartTimeMs}ms")
+        Log.i(
+            "StartupTiming",
+            "first frame work starting at +${SystemClock.elapsedRealtime() - MyApp.appStartTimeMs}ms"
+        )
         (activity.application as MyApp).initializeAdsIfNeeded()
         analyticsManager.get().sendAnalytics(AnalyticsManager.Action.OPENED, "StartActivity")
-        analyticsManager.get().sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.SPLASH_VIEW)
+        analyticsManager.get()
+            .sendAnalytics(AnalyticsManager.Action.ACTION_TYPE, AnalyticsManager.Events.SPLASH_VIEW)
         viewModel.initialize()
         splashJob = activity.lifecycleScope.launch {
             delay(SPLASH_MAX_MS)
@@ -296,7 +336,6 @@ fun StartRoute(
             is UIState.Success -> {
                 if (hasHandledState) return@LaunchedEffect
                 hasHandledState = true
-                setSplashProgress(0.4f)
                 isPremium = state.data.isPremium
                 AdMobManager.isPremium = isPremium
                 if (isPremium) {
@@ -334,7 +373,6 @@ fun StartRoute(
     BackHandler { activity.finishAffinity() }
 
     StartContent(
-        progress = loadingProgress,
         showProgress = showProgress,
         showGetStarted = showGetStarted,
         onGetStarted = { triggerNextNavigationStep() },
@@ -343,7 +381,6 @@ fun StartRoute(
 
 @Composable
 private fun StartContent(
-    progress: Float,
     showProgress: Boolean,
     showGetStarted: Boolean,
     onGetStarted: () -> Unit,
@@ -383,20 +420,18 @@ private fun StartContent(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 16.dp),
             )
-            if (showProgress) {
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .width(180.dp)
-                        .height(6.dp),
-                    color = Color.White,
-                    trackColor = Color.White.copy(alpha = 0.3f),
-                    strokeCap = StrokeCap.Round,
-                    gapSize = 0.dp,
-                    drawStopIndicator = {},
-                )
-            }
+
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .width(180.dp)
+                    .height(6.dp),
+                color = Color.White,
+                trackColor = Color.White.copy(alpha = 0.3f),
+                strokeCap = StrokeCap.Round,
+                gapSize = 0.dp,
+            )
+
         }
         if (showGetStarted) {
             Column(
@@ -415,7 +450,10 @@ private fun StartContent(
                         // font scale grows the button instead of clipping its label.
                         .widthIn(min = 220.dp)
                         .padding(bottom = 8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color(0xFF1A1A1A)),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color(0xFF1A1A1A)
+                    ),
                     shape = RoundedCornerShape(24.dp),
                 ) {
                     Text(stringResource(R.string.get_started), fontWeight = FontWeight.Bold)
@@ -434,7 +472,6 @@ private fun StartContent(
 @Composable
 private fun StartContentPreview() {
     StartContent(
-        progress = 0.6f,
         showProgress = true,
         showGetStarted = true,
         onGetStarted = {},

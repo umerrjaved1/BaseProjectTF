@@ -14,8 +14,13 @@ data class AdRules(
     val showAppOpenSplashAd: Boolean = true,
     val showSplashInterstitialAd: Boolean = true,
     val showFullScreenNativeSplashAd: Boolean = false,
-    /** `app_open_then_inter` (default) or `inter_then_app_open`. */
-    val splashAdLoadOrder: String = SplashAdLoadOrder.APP_OPEN_THEN_INTER,
+    /**
+     * Which splash ad to try first, as one of the [SplashAdLoadOrder] codes.
+     * 1 -> Inter ad is loaded first , then app open
+     * 2 -> App open is loaded first , then inter ad
+     * 3 -> No Ad is shown on Splash navigation
+     */
+    val splashAdLoadOrder: Int = 1,
 
     val showLanguageNative1: Boolean = true,
     val showLanguageNative2: Boolean = true,
@@ -69,10 +74,7 @@ data class AdRules(
     val homeNativeLayout: String = "large",
 )
 
-object SplashAdLoadOrder {
-    const val APP_OPEN_THEN_INTER = "app_open_then_inter"
-    const val INTER_THEN_APP_OPEN = "inter_then_app_open"
-}
+
 
 data class AdIdsConfig(
     val appOpenAdID: String? = "ca-app-pub-5972202469838280/5581156399",
@@ -81,10 +83,8 @@ data class AdIdsConfig(
     val nativeLanguageID: String? = "ca-app-pub-5972202469838280/7178711469",
     val nativeLanguage2ID: String? = "ca-app-pub-5972202469838280/8463872973",
     val interstitialLanguageID: String? = "ca-app-pub-5972202469838280/1979309967",
-    val nativeOb1AdID: String? = "ca-app-pub-5972202469838280/8782034800",
-    val nativeOb2AdID: String? = "ca-app-pub-5972202469838280/8782034800",
-    val nativeOb3AdID: String? = "ca-app-pub-5972202469838280/8782034800",
-    val nativeOb4AdID: String? = "ca-app-pub-5972202469838280/8782034800",
+    val nativeObAdID: String? = "ca-app-pub-5972202469838280/8782034800",
+    val nativeFSObAdID: String? = "ca-app-pub-5972202469838280/8782034800",
     val interstitialOnboardingID: String? = "ca-app-pub-5972202469838280/1979309967",
     val nativeSurvey1AdID: String? = "ca-app-pub-5972202469838280/3071945497",
     val nativeSurvey2AdID: String? = "ca-app-pub-5972202469838280/9119433389",
